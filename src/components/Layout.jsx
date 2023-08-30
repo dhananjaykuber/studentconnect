@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 
 const Layout = ({ children }) => {
   return (
-    <div className="max-w-screen-xl mx-auto py-10 px-5 font-montserrat">
+    <div className="mx-auto max-w-screen-xl px-5 py-10 font-montserrat">
       {children}
     </div>
   );

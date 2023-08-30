@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const FormInput = ({
+const FormTextarea = ({
   label,
   type,
   placeholder,
@@ -12,7 +12,6 @@ const FormInput = ({
   error,
   resetError,
   leftIcon,
-  rightIcon,
 }) => {
   //   const [isValid, setIsValid] = useState(true);
 
@@ -27,16 +26,16 @@ const FormInput = ({
 
   return (
     <div className="mb-2">
-      <label className="block mb-1 text-sm font-semibold text-gray-800">
+      <label className="mb-1 block text-sm font-semibold text-gray-900">
         {label}
       </label>
       <div className="relative">
         {leftIcon && (
-          <div className="absolute inset-y-0 letf-0 flex items-center pl-3 pointer-events-none">
+          <div className="letf-0 pointer-events-none absolute inset-y-0 -top-10 flex items-center pl-3">
             {leftIcon}
           </div>
         )}
-        <input
+        <textarea
           onFocus={resetError}
           type={type}
           name={name}
@@ -44,16 +43,12 @@ const FormInput = ({
           value={value}
           onChange={handleInputChange}
           required={required}
+          rows={3}
           className={`border ${
-            error ? 'border-red-600' : 'border-gray-400'
-          }  text-gray-900 text-sm rounded-lg focus:ring-2 focus:ring-blue-200 focus:border-blue-500 block
-           w-full ${leftIcon && 'pl-9'} p-2 outline-none `}
+            error ? "border-red-600" : "border-gray-400"
+          }  block w-full rounded-lg text-sm text-gray-900 focus:border-blue-500 focus:ring-2
+          focus:ring-blue-200 ${leftIcon && "pl-9"} p-2 outline-none `}
         />
-        {rightIcon && (
-          <div className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer">
-            {rightIcon}
-          </div>
-        )}
       </div>
       {/* {!isValid?.isValid && error === null && (
         <span className="mt-2 text-sm text-red-600">{isValid?.msg}</span>
@@ -63,4 +58,4 @@ const FormInput = ({
   );
 };
 
-export default FormInput;
+export default FormTextarea;
