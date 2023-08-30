@@ -7,7 +7,7 @@ import About from "./pages/About";
 import Contact from "./pages/Contact";
 import Blog from "./pages/Blog";
 import Blogs from "./pages/Blogs";
-import Login from "./pages/login";
+import Login from "./pages/Login";
 
 function App() {
   return (
