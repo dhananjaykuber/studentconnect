@@ -41,16 +41,16 @@ const Navbar = () => {
   const [showMobileNav, setShowMobileNav] = useState(false);
 
   return (
-    <nav className="border-b-2 border-gray-100 bg-white font-montserrat dark:bg-gray-900">
+    <nav className="border-b-2 border-gray-100 bg-white font-montserrat dark:border-gray-700  dark:bg-gray-900">
       <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
         <Link to="/" className="flex items-center">
           <img src={logo} className="h-12" alt="logo" />
         </Link>
         <div className="flex items-center md:order-2">
           {/* <Button
-            label={'Login'}
+            label={"Login"}
             leftIcon={<FaSignInAlt />}
-            onclick={() => navigate('/login')}
+            onclick={() => navigate("/login")}
           /> */}
           <button
             type="button"
@@ -66,7 +66,7 @@ const Navbar = () => {
           >
             <img
               className="h-8 w-8 rounded-full"
-              src="/docs/images/people/profile-picture-3.jpg"
+              src="https://avatars.githubusercontent.com/u/64325240?s=400&u=ba6b0053fd1b620eb4a6ddf7c450524e64181f48&v=4"
               alt="user photo"
             />
           </button>

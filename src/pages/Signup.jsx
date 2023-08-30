@@ -30,9 +30,9 @@ const Signup = () => {
       <Button label={"Signup"} radius={"lg"} />
 
       <div className="my-4 flex items-center">
-        <div className="h-[1.2px] flex-1 bg-slate-400"></div>
+        <div className="h-[1.2px] flex-1 bg-slate-400 dark:h-[0.9px]"></div>
         <span className="mx-4 text-xs font-semibold text-slate-500">OR</span>
-        <div className="h-[1.2px] flex-1 bg-slate-400"></div>
+        <div className="h-[1.2px] flex-1 bg-slate-400 dark:h-[0.9px]"></div>
       </div>
       <div className="flex flex-col">
         <button

@@ -21,17 +21,17 @@ const SingleArticle = () => {
         designers and developers influence both web designers and developers.
       </p>
       <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-4">
+        <Link to={"#"} className="flex items-center space-x-4">
           <img
             className="h-7 w-7 rounded-full"
             src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/avatars/jese-leos.png"
             alt="Jese Leos avatar"
           />
           <span className="text-sm font-medium dark:text-white">Jese Leos</span>
-        </div>
+        </Link>
         <Link
           to="/"
-          className="text-primary-600 dark:text-primary-500 inline-flex items-center gap-2 text-sm font-medium hover:underline"
+          className="text-primary-600 inline-flex items-center gap-2 text-sm font-medium hover:underline dark:text-white"
         >
           Read more
           <FaArrowRight className="w-2" />

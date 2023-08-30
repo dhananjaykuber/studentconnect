@@ -26,8 +26,8 @@ const FormInput = ({
   };
 
   return (
-    <div className="mb-2">
-      <label className="mb-1 block text-sm font-semibold text-gray-900">
+    <div className="mb-3">
+      <label className="mb-1 block text-sm font-semibold text-gray-900 dark:text-gray-100">
         {label}
       </label>
       <div className="relative">
