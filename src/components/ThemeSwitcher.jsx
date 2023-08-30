@@ -32,7 +32,6 @@ const svg = {
 
 const ThemeSwitcher = () => {
   const dispatch = useDispatch();
-  const { theme } = useSelector((store) => store.theme);
 
   const switcher = useRef(null);
   const switcherButton = useRef(null);
@@ -52,7 +51,7 @@ const ThemeSwitcher = () => {
 
     setActiveTheme(theme);
     setShowDropdown(false);
-
+    
     dispatch(setTheme(theme));
   }, []);
 
