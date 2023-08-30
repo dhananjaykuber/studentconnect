@@ -1,8 +1,10 @@
 import React, { useState } from "react";
 import { FaBars, FaSignInAlt } from "react-icons/fa";
-import logo from "../assets/studentconnect-logo.jpg";
+import Profile from "../assets/profile.png";
 import { Link, useNavigate } from "react-router-dom";
 import Button from "./Button";
+import ThemeSwitcher from "./ThemeSwitcher";
+import { useSelector } from "react-redux";
 
 const links = [
   {
@@ -35,6 +37,7 @@ const dropdown = [
 ];
 
 const Navbar = () => {
+  const { theme } = useSelector((store) => store.theme);
   const navigate = useNavigate();
 
   const [showProfile, setShowProfile] = useState(false);
@@ -43,8 +46,17 @@ const Navbar = () => {
   return (
     <nav className="border-b-2 border-gray-100 bg-white font-montserrat dark:border-gray-700  dark:bg-gray-900">
       <div className="mx-auto flex max-w-screen-xl flex-wrap items-center justify-between p-4">
-        <Link to="/" className="flex items-center">
-          <img src={logo} className="h-12" alt="logo" />
+        <Link
+          to="/"
+          className="flex h-12 w-36 items-center bg-cover bg-center"
+          style={{
+            backgroundImage:
+              theme === "dark"
+                ? "url('/studentconnect-logo-dark.svg')"
+                : "url('/studentconnect-logo-light.svg')",
+          }}
+        >
+          {/* <img src={Logo} className="h-12" alt="logo" /> */}
         </Link>
         <div className="flex items-center md:order-2">
           {/* <Button
@@ -52,6 +64,7 @@ const Navbar = () => {
             leftIcon={<FaSignInAlt />}
             onclick={() => navigate("/login")}
           /> */}
+          <ThemeSwitcher />
           <button
             type="button"
             className="mr-3 flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 md:mr-0"
@@ -66,7 +79,7 @@ const Navbar = () => {
           >
             <img
               className="h-8 w-8 rounded-full"
-              src="https://avatars.githubusercontent.com/u/64325240?s=400&u=ba6b0053fd1b620eb4a6ddf7c450524e64181f48&v=4"
+              src={Profile}
               alt="user photo"
             />
           </button>
