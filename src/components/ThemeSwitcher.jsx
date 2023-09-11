@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import { twMerge } from "tailwind-merge";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { setTheme } from "../features/theme/themeSlice";
 
 const svg = {
@@ -40,7 +40,7 @@ const ThemeSwitcher = () => {
   const [showDropdown, setShowDropdown] = useState(false);
 
   const dropdownMenuClasses = twMerge(
-    "min-w-max absolute bg-white text-base z-[1000] overflow-hidden float-left list-none text-left rounded-lg shadow-lg m-0 bg-clip-padding border-none dark:bg-neutral-800",
+    "min-w-max absolute bg-white text-base z-[1000] overflow-hidden float-left list-none text-left rounded-lg shadow-lg m-0 bg-clip-padding border-none dark:bg-gray-800",
     showDropdown ? "block -translate-x-full -translate-y-full" : "hidden",
   );
 
@@ -51,7 +51,7 @@ const ThemeSwitcher = () => {
 
     setActiveTheme(theme);
     setShowDropdown(false);
-    
+
     dispatch(setTheme(theme));
   }, []);
 
@@ -109,7 +109,7 @@ const ThemeSwitcher = () => {
         <div className="relative">
           <button
             ref={switcherButton}
-            className="flex h-[30px] w-[30px] items-center justify-center whitespace-nowrap rounded-full uppercase text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-200 hover:shadow-lg focus:bg-neutral-300 focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg motion-reduce:transition-none dark:text-white dark:hover:bg-neutral-700 dark:focus:bg-neutral-700"
+            className="flex h-[30px] w-[30px] items-center justify-center whitespace-nowrap rounded-full uppercase text-neutral-800 transition duration-150 ease-in-out hover:bg-neutral-200 hover:shadow-lg focus:bg-neutral-300 focus:shadow-lg focus:outline-none focus:ring-0 active:shadow-lg motion-reduce:transition-none dark:text-white dark:hover:bg-gray-800 dark:focus:bg-gray-800"
             type="button"
             id="themeSwitcher"
             aria-expanded="false"

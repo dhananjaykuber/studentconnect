@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { FaBars, FaSignInAlt } from "react-icons/fa";
 import Profile from "../assets/profile.png";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import Button from "./Button";
-import ThemeSwitcher from "./ThemeSwitcher";
 import { useSelector } from "react-redux";
 
 const links = [
@@ -37,11 +36,18 @@ const dropdown = [
 ];
 
 const Navbar = () => {
-  const { theme } = useSelector((store) => store.theme);
   const navigate = useNavigate();
+
+  const location = useLocation();
+
+  const { theme } = useSelector((store) => store.theme);
 
   const [showProfile, setShowProfile] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
+
+  // if (location.pathname.includes("/kanban")) {
+  //   return null;
+  // }
 
   return (
     <nav className="border-b-2 border-gray-100 bg-white font-montserrat dark:border-gray-700  dark:bg-gray-900">
@@ -63,7 +69,6 @@ const Navbar = () => {
             leftIcon={<FaSignInAlt />}
             onclick={() => navigate("/login")}
           /> */}
-          <ThemeSwitcher />
           <button
             type="button"
             className="mr-3 flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 md:mr-0"

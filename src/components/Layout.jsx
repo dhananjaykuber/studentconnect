@@ -1,10 +1,17 @@
 import React from "react";
+import { twMerge } from "tailwind-merge";
+import ThemeSwitcher from "./ThemeSwitcher";
 
-const Layout = ({ children }) => {
+const Layout = ({ children, classes }) => {
   return (
     <div className="min-h-screen dark:bg-gray-900">
-      <div className="mx-auto max-w-screen-xl px-5 py-10 font-montserrat">
+      <div
+        className={twMerge(
+          `mx-auto max-w-screen-xl px-5 py-10 font-montserrat transition duration-1000 ease-in-out ${classes}`,
+        )}
+      >
         {children}
+        <ThemeSwitcher />
       </div>
     </div>
   );
