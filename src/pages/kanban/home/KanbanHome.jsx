@@ -38,7 +38,7 @@ const KanbanHome = () => {
             <tbody>
               <tr className="border-b bg-white text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400">
                 <td className="px-6 py-4">
-                  <Link to="#">Canteen Hub</Link>
+                  <Link to="/kanban/canteen-hub">Canteen Hub</Link>
                 </td>
                 <td className="px-6 py-4">
                   <Link to="#">Dhananjay Kuber</Link>

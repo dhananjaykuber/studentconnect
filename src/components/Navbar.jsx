@@ -22,6 +22,10 @@ const links = [
     label: "Blogs",
     url: "/blogs",
   },
+  {
+    label: "Kanban",
+    url: "/kanban",
+  },
 ];
 
 const dropdown = [
