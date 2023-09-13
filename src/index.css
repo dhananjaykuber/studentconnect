@@ -29,3 +29,7 @@
 ::-webkit-scrollbar-track:horizontal {
   background-color: transparent;
 }
+
+.modal-open {
+  overflow: hidden;
+}

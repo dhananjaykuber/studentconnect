@@ -1,22 +1,68 @@
 import { useState } from "react";
 import FormInput from "../../../components/form/FormInput";
 import Button from "../../../components/Button";
-import { FaEnvelope, FaEye, FaGithub, FaGoogle, FaLock } from "react-icons/fa";
+import {
+  FaEnvelope,
+  FaEye,
+  FaGithub,
+  FaGoogle,
+  FaLock,
+  FaUser,
+  FaUserAlt,
+} from "react-icons/fa";
 import Form from "../../../components/form/Form";
 import Layout from "../../../components/Layout";
+import axios from "axios";
 
 const Signup = () => {
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleRegister = async () => {
+    const res = await axios.post(
+      `${import.meta.env.VITE_DJANGO_API}/authentication/register/`,
+      {
+        full_name: name,
+        user_name: username,
+        email: email,
+        password: password,
+      },
+    );
+
+    const json = await res.json();
+
+    console.log(json);
+  };
 
   return (
     <Layout>
       <Form label={"Signup"}>
         <FormInput
+          label="Full Name"
+          placeholder="John Doe"
+          type="text"
+          required={true}
+          value={name}
+          onChange={(text) => setName(text)}
+          leftIcon={<FaUser className="text-sm text-slate-400" />}
+        />
+        <FormInput
+          label="Username"
+          placeholder="johndoe"
+          type="text"
+          required={true}
+          value={username}
+          onChange={(text) => setUsername(text)}
+          leftIcon={<FaUserAlt className="text-sm text-slate-400" />}
+        />
+        <FormInput
           label="Email"
           placeholder="studentconnect@gmail.com"
           type="email"
           required={true}
-          name="email"
+          value={email}
           onChange={(text) => setEmail(text)}
           leftIcon={<FaEnvelope className="text-sm text-slate-400" />}
         />
@@ -25,11 +71,12 @@ const Signup = () => {
           placeholder="Password"
           type="password"
           required={true}
-          name="password"
+          value={password}
+          onChange={(text) => setPassword(text)}
           leftIcon={<FaLock className="text-sm text-slate-400" />}
           rightIcon={<FaEye className="text-sm text-slate-400" />}
         />
-        <Button label={"Signup"} radius={"lg"} />
+        <Button label={"Signup"} radius={"lg"} onclick={handleRegister} />
 
         <div className="my-4 flex items-center">
           <div className="h-[1.2px] flex-1 bg-slate-400 dark:h-[0.9px]"></div>

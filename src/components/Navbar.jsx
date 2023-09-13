@@ -45,6 +45,7 @@ const Navbar = () => {
   const location = useLocation();
 
   const { theme } = useSelector((store) => store.theme);
+  const { user } = useSelector((store) => store.user);
 
   const [showProfile, setShowProfile] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
@@ -68,58 +69,65 @@ const Navbar = () => {
           onClick={() => setShowMobileNav(false)}
         ></Link>
         <div className="flex items-center md:order-2">
-          {/* <Button
-            label={"Login"}
-            leftIcon={<FaSignInAlt />}
-            onclick={() => navigate("/login")}
-          /> */}
-          <button
-            type="button"
-            className="mr-3 flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 md:mr-0"
-            id="user-menu-button"
-            aria-expanded="false"
-            data-dropdown-toggle="user-dropdown"
-            data-dropdown-placement="bottom"
-            onClick={() => {
-              setShowProfile(!showProfile);
-              setShowMobileNav(false);
-            }}
-          >
-            <img
-              className="h-8 w-8 rounded-full"
-              src={Profile}
-              alt="user photo"
-            />
-          </button>
-          <div className="relative">
-            <div
-              className={`absolute -right-10 top-3 z-50 my-4 list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:divide-gray-600 dark:bg-gray-700 md:right-1 ${
-                !showProfile && "hidden"
-              }`}
-              id="user-dropdown"
-            >
-              <div className="px-4 py-3">
-                <span className="block text-sm text-gray-900 dark:text-white">
-                  Dhananjay Kuber
-                </span>
-                <span className="block truncate  text-sm text-gray-500 dark:text-gray-400">
-                  dhananjay@gmail.com
-                </span>
+          {user ? (
+            <>
+              <button
+                type="button"
+                className="mr-3 flex rounded-full bg-gray-800 text-sm focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600 md:mr-0"
+                id="user-menu-button"
+                aria-expanded="false"
+                data-dropdown-toggle="user-dropdown"
+                data-dropdown-placement="bottom"
+                onClick={() => {
+                  setShowProfile(!showProfile);
+                  setShowMobileNav(false);
+                }}
+              >
+                <img
+                  className="h-8 w-8 rounded-full"
+                  src={Profile}
+                  alt="user photo"
+                />
+              </button>
+              <div className="relative">
+                <div
+                  className={`absolute -right-10 top-3 z-50 my-4 list-none divide-y divide-gray-100 rounded-lg bg-white text-base shadow dark:divide-gray-600 dark:bg-gray-700 md:right-1 ${
+                    !showProfile && "hidden"
+                  }`}
+                  id="user-dropdown"
+                >
+                  <div className="px-4 py-3">
+                    <span className="block text-sm text-gray-900 dark:text-white">
+                      Dhananjay Kuber
+                    </span>
+                    <span className="block truncate  text-sm text-gray-500 dark:text-gray-400">
+                      dhananjay@gmail.com
+                    </span>
+                  </div>
+                  <ul className="py-2" aria-labelledby="user-menu-button">
+                    {dropdown.map((item, index) => (
+                      <li key={index}>
+                        <a
+                          href={item.url}
+                          className="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+                        >
+                          {item.label}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
-              <ul className="py-2" aria-labelledby="user-menu-button">
-                {dropdown.map((item, index) => (
-                  <li key={index}>
-                    <a
-                      href={item.url}
-                      className="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
-                    >
-                      {item.label}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </div>
+            </>
+          ) : (
+            <Button
+              label={"Login"}
+              leftIcon={<FaSignInAlt />}
+              onclick={() => navigate("/login")}
+              radius={"lg"}
+            />
+          )}
+
           <button
             data-collapse-toggle="navbar-user"
             type="button"
