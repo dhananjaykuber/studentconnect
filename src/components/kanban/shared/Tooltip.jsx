@@ -12,7 +12,7 @@ const ToolTip = ({ children, message }) => {
         {children}
       </span>
       <div
-        className={`absolute bottom-full flex flex-col items-center whitespace-nowrap  group-hover:flex ${
+        className={`absolute bottom-full flex flex-col items-center  whitespace-nowrap group-hover:flex ${
           !show ? "hidden" : null
         }`}
       >

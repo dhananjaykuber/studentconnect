@@ -1,11 +1,56 @@
-import React from "react";
+import React, { useState } from "react";
 import Modal from "../../modal/Modal";
 import FormInput from "../../../form/FormInput";
 import Button from "../../../Button";
 import FormTextarea from "../../../form/FormTextarea";
 import { Search } from "lucide-react";
+import AssignedToDropdown from "../dropdowns/AssignedToDropdown";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import {
+  deleteTask,
+  updateTask,
+} from "../../../../features/kanban/kanbanSlice";
 
-const EditTask = ({ openModal, setOpenModal }) => {
+const EditTask = ({ openModal, setOpenModal, stageIndex, task, taskIndex }) => {
+  const dispatch = useDispatch();
+
+  const [title, setTitle] = useState(task.title);
+  const [description, setDescription] = useState(task.description);
+  const [contributors, setContributors] = useState(task.assignedTo);
+
+  const handleUpdateTask = async () => {
+    let contributorsIds = [];
+    contributors?.map((contributor) => contributorsIds.push(contributor._id));
+
+    console.log(contributorsIds);
+
+    const res = await axios.put(
+      `${import.meta.env.VITE_NODE_API}/kanban/task/${task._id}`,
+      {
+        title: title,
+        description: description,
+        assignedTo: contributorsIds,
+      },
+    );
+
+    console.log(res.data);
+
+    dispatch(updateTask({ stageIndex, taskIndex, task: res.data }));
+
+    setOpenModal(false);
+  };
+
+  const handleDeleteTask = async () => {
+    const res = await axios.delete(
+      `${import.meta.env.VITE_NODE_API}/kanban/task/${task._id}`,
+    );
+
+    console.log(res.data);
+
+    dispatch(deleteTask({ stageIndex, taskIndex }));
+  };
+
   return (
     <Modal
       openModal={openModal}
@@ -20,54 +65,38 @@ const EditTask = ({ openModal, setOpenModal }) => {
                 placeholder="Write task name"
                 type="text"
                 required={true}
-                // onChange={(text) => setEmail(text)}
-                // leftIcon={<FaEnvelope className="text-sm text-slate-400" />}
+                value={title}
+                onChange={(text) => setTitle(text)}
               />
               <FormTextarea
                 label="Description"
                 placeholder="Write descrition about task"
                 type="text"
                 required={true}
-                // onChange={(text) => {}}
-                // leftIcon={<FaCommentAlt className="text-sm text-slate-400" />}
+                value={description}
+                onChange={(text) => setDescription(text)}
               />
             </div>
           </div>
 
-          <div className="-mt-4 mb-4">
-            <div className="sm:col-span-2">
-              <FormInput
-                label="Name, email or username"
-                placeholder="John Doe, johndoe@gmail.com"
-                type="text"
-                required={true}
-                // onChange={(text) => setEmail(text)}
-                rightIcon={
-                  <Search className="h-5 w-5 text-sm text-slate-400" />
-                }
-              />
-            </div>
-            <div>
-              <ul className="border border-gray-200 bg-white p-2 dark:border-gray-700 dark:bg-gray-800">
-                <li className="flex cursor-pointer items-center gap-3 rounded-md p-2 hover:bg-gray-200 hover:dark:bg-gray-700">
-                  <img
-                    src="https://flowbite.com/application-ui/demo/images/users/bonnie-green.png"
-                    className="h-6 w-6 rounded-full"
-                  />
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    Dhananjay Kuber
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <Button label={"Add Task"} radius={"lg"} classes={"-mt-2"} />
+          <AssignedToDropdown
+            contributors={contributors}
+            setContributors={setContributors}
+          />
+
           <Button
-            label={"Delete Task"}
+            label={"Save"}
+            radius={"lg"}
+            classes={"-mt-2"}
+            onclick={handleUpdateTask}
+          />
+          <Button
+            label={"Delete"}
             radius={"lg"}
             classes={
               "-mt-2 ml-2 bg-red-500 dark:bg-red-600 dark:hover:bg-red-700 focus:ring-red-300 dark:focus:ring-red-900 hover:bg-red-700"
             }
+            onclick={handleDeleteTask}
           />
         </>
       }

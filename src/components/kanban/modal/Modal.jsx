@@ -20,7 +20,7 @@ const Modal = ({ title, children, openModal, setOpenModal }) => {
       ></div>
       <div
         className={twMerge(
-          `fixed left-[50%] top-[50%] z-50 h-full w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 transform p-4  md:h-auto ${
+          `fixed left-[50%] top-[50%] z-50 h-full max-h-screen w-full max-w-2xl -translate-x-1/2 -translate-y-1/2 transform  overflow-y-scroll p-4 md:h-auto ${
             openModal ? "" : "hidden"
           }`,
         )}

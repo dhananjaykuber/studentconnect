@@ -63,12 +63,13 @@ const Board = () => {
       <Header />
       <div className="mt-10 flex gap-5 overflow-x-auto">
         <DragDropContext onDragEnd={onDragEnd}>
-          {stages?.map((stage) => (
+          {stages?.map((stage, index) => (
             <Stage
               key={stage._id}
               title={stage.title}
               tasks={stage.tasks}
               stageId={stage._id}
+              stageIndex={index}
             />
           ))}
         </DragDropContext>

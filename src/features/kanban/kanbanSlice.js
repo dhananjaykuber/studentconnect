@@ -19,27 +19,39 @@ const kanbanSlice = createSlice({
       state.stages = [...state.stages, action.payload];
     },
     addTask: (state, action) => {
-      const index = state.stages.findIndex(
-        (stage) => stage._id === action.payload.stageId,
+      const { stageId, task } = action.payload;
+      const stageIndex = state.stages.findIndex(
+        (stage) => stage._id === stageId,
       );
 
-      if (index !== -1) {
-        const updatedState = { ...state };
-        const updatedStage = { ...updatedState.stages[index] };
-
-        updatedStage.tasks.push(action.payload.task);
-
-        updatedState.stages[index] = updatedStage;
-
-        state = updatedStage;
+      if (stageIndex !== -1) {
+        state.stages[stageIndex].tasks.push(task);
       }
     },
+    updateTask: (state, action) => {
+      const { stageIndex, taskIndex, task } = action.payload;
+
+      const addedby = state.details.members.find(
+        (item) => item._id === task.addedBy,
+      );
+
+      const assignedTo = task.assignedTo.map((assigned) =>
+        state.details.members.find((item) => item._id === assigned),
+      );
+
+      state.stages[stageIndex].tasks[taskIndex] = {
+        ...task,
+        assignedTo: assignedTo,
+        addedBy: addedby._id,
+      };
+    },
+    deleteTask: (state, action) => {
+      const { stageIndex, taskIndex } = action.payload;
+
+      state.stages[stageIndex].tasks.splice(taskIndex, 1);
+    },
     addMember: (state, action) => {
-      const updatedState = { ...state.details };
-
-      updatedState.members.push(action.payload);
-
-      state.details = updatedState;
+      state.details?.members.push(action.payload);
     },
     moveTask: (state, action) => {
       const source = action.payload.source;
@@ -54,6 +66,7 @@ const kanbanSlice = createSlice({
 
       if (sourceStageIndex !== -1 && destinationStageIndex !== -1) {
         const taskToMove = state.stages[sourceStageIndex].tasks[source.index];
+
         state.stages[sourceStageIndex].tasks.splice(source.index, 1);
 
         state.stages[destinationStageIndex].tasks.splice(
@@ -63,6 +76,20 @@ const kanbanSlice = createSlice({
         );
       }
     },
+    addComment: (state, action) => {
+      const { stageIndex, taskIndex, comment } = action.payload;
+
+      state.stages[stageIndex].tasks[taskIndex].comments.push(comment);
+    },
+    deleteComment: (state, action) => {
+      const { stageIndex, taskIndex, _id } = action.payload;
+
+      const updatedComments = state.stages[stageIndex].tasks[
+        taskIndex
+      ].comments.filter((comment) => comment._id !== _id);
+
+      state.stages[stageIndex].tasks[taskIndex].comments = updatedComments;
+    },
   },
 });
 
@@ -71,8 +98,12 @@ export const {
   setProjectStages,
   addStage,
   addTask,
+  updateTask,
+  deleteTask,
   addMember,
   moveTask,
+  addComment,
+  deleteComment,
 } = kanbanSlice.actions;
 
 export default kanbanSlice.reducer;
