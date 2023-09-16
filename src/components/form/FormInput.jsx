@@ -13,6 +13,8 @@ const FormInput = ({
   resetError,
   leftIcon,
   rightIcon,
+  handleFocusCaputer,
+  handleOnBlur,
 }) => {
   const [isValid, setIsValid] = useState(true);
 
@@ -44,6 +46,8 @@ const FormInput = ({
           value={value}
           onChange={handleInputChange}
           required={required}
+          onFocusCapture={handleFocusCaputer}
+          onBlur={handleOnBlur}
           className={`border ${
             error ? "border-red-600" : "border-gray-400"
           }  block w-full rounded-lg text-sm text-gray-900 focus:border-blue-500 focus:ring-2

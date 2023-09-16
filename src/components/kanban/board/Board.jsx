@@ -1,27 +1,77 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Header from "./header/Header";
 import Stage from "./stage/Stage";
 import { PlusIcon } from "lucide-react";
 import CreateStage from "./stage/CreateStage";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { DragDropContext } from "react-beautiful-dnd";
+import { moveTask } from "../../../features/kanban/kanbanSlice";
+import axios from "axios";
 
 const Board = () => {
+  const dispatch = useDispatch();
+
+  const { user } = useSelector((store) => store.user);
   const { stages } = useSelector((store) => store.kanban);
 
   const [openModal, setOpenModal] = useState(false);
+
+  const onDragEnd = async (result) => {
+    const { source, destination } = result;
+
+    console.log(result);
+
+    if (!destination) {
+      return;
+    }
+
+    if (
+      source.index === destination.index &&
+      source.droppableId === destination.droppableId
+    ) {
+      return;
+    }
+    if (source.droppableId === destination.droppableId) {
+      dispatch(moveTask(result));
+      return;
+    }
+
+    const stageIndex = stages.findIndex(
+      (stage) => stage._id === source.droppableId,
+    );
+    const taskId = stages[stageIndex].tasks[source.index]._id;
+
+    const res = await axios.put(
+      `${import.meta.env.VITE_NODE_API}/kanban/move-task/${taskId}`,
+      {
+        destinationStage: destination.droppableId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.user_id}`,
+        },
+      },
+    );
+
+    dispatch(moveTask(result));
+
+    // console.log(res.data);
+  };
 
   return (
     <div className="overflow-hidden p-3 px-6">
       <Header />
       <div className="mt-10 flex gap-5 overflow-x-auto">
-        {stages?.map((stage) => (
-          <Stage
-            key={stage.id}
-            title={stage.title}
-            tasks={stage.tasks}
-            stageId={stage.id}
-          />
-        ))}
+        <DragDropContext onDragEnd={onDragEnd}>
+          {stages?.map((stage) => (
+            <Stage
+              key={stage._id}
+              title={stage.title}
+              tasks={stage.tasks}
+              stageId={stage._id}
+            />
+          ))}
+        </DragDropContext>
 
         <div className="select-none">
           <div className="text-sm font-semibold text-gray-700 dark:text-gray-300">

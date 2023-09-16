@@ -39,7 +39,7 @@ const CreateStage = ({ openModal, setOpenModal, stageId }) => {
     setDescription("");
     setOpenModal(false);
 
-    dispatch(addStage({ ...res.data, title: res.data.name }));
+    dispatch(addStage({ ...res.data, tasks: [], title: res.data.name }));
   };
 
   return (
