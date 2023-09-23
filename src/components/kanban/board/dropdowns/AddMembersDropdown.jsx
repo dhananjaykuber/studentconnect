@@ -20,7 +20,6 @@ const AddMembersDropdown = ({ label, memberInfo, setMemberInfo }) => {
       );
 
       setUsers(res.data);
-      console.log(res.data);
     }, 2000);
   };
 

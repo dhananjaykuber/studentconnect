@@ -16,15 +16,16 @@ import {
 import Notifications from "../../../components/kanban/notification/Notifications";
 
 const KanbanBoard = () => {
-  const [screen, setScreen] = useState("Board");
-
   const { id } = useParams();
 
   const dispatch = useDispatch();
 
   const { user } = useSelector((store) => store.user);
 
+  const [screen, setScreen] = useState("Board");
+
   useEffect(() => {
+    // get the project related data (details, stages)
     const getProjectDetails = async () => {
       const res = await axios.get(
         `${import.meta.env.VITE_NODE_API}/kanban/project/${id}`,
@@ -37,8 +38,6 @@ const KanbanBoard = () => {
 
       dispatch(setProjectDetails(res.data.project));
       dispatch(setProjectStages(res.data.stages));
-      console.log(res.data.project);
-      console.log(res.data.stages);
 
       const notifi = await axios.get(
         `${import.meta.env.VITE_NODE_API}/kanban/notification/${
@@ -51,22 +50,16 @@ const KanbanBoard = () => {
         },
       );
 
-      console.log(notifi.data);
-
       dispatch(setNotifications(notifi.data));
     };
     getProjectDetails();
   }, []);
 
+  // Socket Connection
   useEffect(() => {
     const socket = io("http://localhost:3000");
 
-    socket.on("connect", () => {
-      console.log("Connected to server");
-    });
-
     socket.on(`notification_${user.user_id}`, (notification) => {
-      console.log("hello ", notification);
       dispatch(addNotification(JSON.parse(notification)));
     });
 

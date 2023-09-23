@@ -16,9 +16,10 @@ const AddContributors = ({ openModal, setOpenModal }) => {
 
   const [memberInfo, setMemberInfo] = useState("");
 
+  // add member to project
   const handleAddMember = async () => {
     const res = await axios.post(
-      `${import.meta.env.VITE_NODE_API}/kanban/project/${id}/members`,
+      `${import.meta.env.VITE_NODE_API}/kanban/member/${id}`,
       {
         memberId: memberInfo._id,
       },
@@ -28,8 +29,6 @@ const AddContributors = ({ openModal, setOpenModal }) => {
         },
       },
     );
-
-    console.log(res.data);
 
     dispatch(addMember(memberInfo));
 

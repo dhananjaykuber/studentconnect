@@ -8,6 +8,8 @@ import {
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { updateNotificationStatus } from "../../../features/kanban/kanbanSlice";
 
 const Notification = ({ notification }) => {
   const dispatch = useDispatch();

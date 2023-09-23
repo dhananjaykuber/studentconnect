@@ -35,7 +35,7 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
 
   const handleAddComment = async () => {
     const res = await axios.put(
-      `${import.meta.env.VITE_NODE_API}/kanban/task/${task._id}/comment`,
+      `${import.meta.env.VITE_NODE_API}/kanban/comment/${task._id}`,
       {
         message: comment,
         commented_at: new Date(),
@@ -76,8 +76,6 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
           },
         },
       );
-
-      console.log(res.data);
 
       dispatch(
         updateTask({

@@ -12,9 +12,7 @@ const Comment = ({ comment, stageIndex, taskIndex, taskId }) => {
 
   const handleDeleteComment = async () => {
     const res = await axios.delete(
-      `${import.meta.env.VITE_NODE_API}/kanban/task/${taskId}/comment/${
-        comment._id
-      }`,
+      `${import.meta.env.VITE_NODE_API}/kanban/comment/${comment._id}`,
       {
         headers: {
           Authorization: `Basic ${user.user_id}`,

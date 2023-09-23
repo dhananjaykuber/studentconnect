@@ -21,7 +21,7 @@ const EditStage = ({ openModal, setOpenModal, stageIndex }) => {
 
   const handleUpdateStage = async () => {
     const res = await axios.put(
-      `${import.meta.env.VITE_NODE_API}/kanban/project/${details._id}/stage/${
+      `${import.meta.env.VITE_NODE_API}/kanban/stage/${details._id}/${
         stages[stageIndex]._id
       }`,
       {
@@ -35,8 +35,6 @@ const EditStage = ({ openModal, setOpenModal, stageIndex }) => {
       },
     );
 
-    console.log(res.data);
-
     dispatch(
       updateStage({
         stageIndex,
@@ -48,20 +46,7 @@ const EditStage = ({ openModal, setOpenModal, stageIndex }) => {
     setOpenModal(false);
   };
 
-  //   const handleDeleteTask = async () => {
-  //     const res = await axios.delete(
-  //       `${import.meta.env.VITE_NODE_API}/kanban/task/${task._id}`,
-  //       {
-  //         headers: {
-  //           Authorization: `Basic ${user.user_id}`,
-  //         },
-  //       },
-  //     );
-
-  //     console.log(res.data);
-
-  //     dispatch(deleteTask({ stageIndex, taskIndex }));
-  //   };
+  const handleDeleteStage = async () => {};
 
   return (
     <Modal
@@ -103,7 +88,7 @@ const EditStage = ({ openModal, setOpenModal, stageIndex }) => {
             classes={
               "-mt-2 ml-2 bg-red-500 dark:bg-red-600 dark:hover:bg-red-700 focus:ring-red-300 dark:focus:ring-red-900 hover:bg-red-700"
             }
-            // onclick={handleDeleteTask}
+            onclick={handleDeleteStage}
           />
         </>
       }

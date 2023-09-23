@@ -20,8 +20,6 @@ const Board = () => {
   const onDragEnd = async (result) => {
     const { source, destination } = result;
 
-    console.log(result);
-
     if (!destination) {
       return;
     }
@@ -57,8 +55,6 @@ const Board = () => {
     );
 
     dispatch(moveTask(result));
-
-    // console.log(res.data);
   };
 
   return (

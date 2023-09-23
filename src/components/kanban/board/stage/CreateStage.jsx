@@ -20,7 +20,7 @@ const CreateStage = ({ openModal, setOpenModal, stageId }) => {
 
   const handleCreateStage = async () => {
     const res = await axios.post(
-      `${import.meta.env.VITE_NODE_API}/kanban/project/${id}/stage`,
+      `${import.meta.env.VITE_NODE_API}/kanban/stage/${id}`,
       {
         name: title,
         description: description,
@@ -32,8 +32,6 @@ const CreateStage = ({ openModal, setOpenModal, stageId }) => {
         },
       },
     );
-
-    console.log(res);
 
     setTitle("");
     setDescription("");

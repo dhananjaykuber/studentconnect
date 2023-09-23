@@ -20,6 +20,7 @@ const KanbanHome = () => {
   const [description, setDescription] = useState("");
   const [leadInfo, setLeadInfo] = useState("");
 
+  // create projects
   const handleCreateProject = async () => {
     const res = await axios.post(
       `${import.meta.env.VITE_NODE_API}/kanban/project`,
@@ -31,13 +32,12 @@ const KanbanHome = () => {
       },
       {
         headers: {
-          Authorization: `Basic ${user.user_id}`,
+          Authorization: `Bearer ${user.user_id}`,
         },
       },
     );
 
     const data = { ...res.data, lead: leadInfo };
-    console.log(res);
 
     setTitle("");
     setDescription("");
@@ -48,6 +48,7 @@ const KanbanHome = () => {
   };
 
   useEffect(() => {
+    // get all projects in which user is involved
     const handleGetProjects = async () => {
       const res = await axios.get(
         `${import.meta.env.VITE_NODE_API}/kanban/project`,
@@ -57,7 +58,6 @@ const KanbanHome = () => {
           },
         },
       );
-      console.log(res.data);
       setProjects(res.data);
     };
 
@@ -91,7 +91,6 @@ const KanbanHome = () => {
                     value={description}
                     onChange={(text) => setDescription(text)}
                   />
-                  {/* Project lead */}
                   <div className="mt-7"></div>
                   <AddMembersDropdown
                     memberInfo={leadInfo}

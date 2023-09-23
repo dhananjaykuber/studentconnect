@@ -25,7 +25,7 @@ const CreateTask = ({ openModal, setOpenModal, stageId }) => {
     contributors?.map((contributor) => contributorsIds.push(contributor._id));
 
     const res = await axios.post(
-      `${import.meta.env.VITE_NODE_API}/kanban/stage/${stageId}/task`,
+      `${import.meta.env.VITE_NODE_API}/kanban/task/${stageId}`,
       {
         title: title,
         description: description,
@@ -43,8 +43,6 @@ const CreateTask = ({ openModal, setOpenModal, stageId }) => {
     );
 
     const data = { ...res.data, assignedTo: contributors };
-
-    console.log(data);
 
     dispatch(addTask({ stageId: stageId, task: data }));
 

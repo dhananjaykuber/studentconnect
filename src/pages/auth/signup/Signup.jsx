@@ -32,8 +32,6 @@ const Signup = () => {
     );
 
     const json = await res.json();
-
-    console.log(json);
   };
 
   return (

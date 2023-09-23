@@ -26,8 +26,6 @@ const EditTask = ({ openModal, setOpenModal, stageIndex, task, taskIndex }) => {
     let contributorsIds = [];
     contributors?.map((contributor) => contributorsIds.push(contributor._id));
 
-    console.log(contributorsIds);
-
     const res = await axios.put(
       `${import.meta.env.VITE_NODE_API}/kanban/task/${task._id}`,
       {
@@ -43,8 +41,6 @@ const EditTask = ({ openModal, setOpenModal, stageIndex, task, taskIndex }) => {
       },
     );
 
-    console.log(res.data);
-
     dispatch(updateTask({ stageIndex, taskIndex, task: res.data }));
 
     setOpenModal(false);
@@ -59,8 +55,6 @@ const EditTask = ({ openModal, setOpenModal, stageIndex, task, taskIndex }) => {
         },
       },
     );
-
-    console.log(res.data);
 
     dispatch(deleteTask({ stageIndex, taskIndex }));
   };
