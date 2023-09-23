@@ -12,6 +12,7 @@ const CreateTask = ({ openModal, setOpenModal, stageId }) => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((store) => store.user);
+  const { details } = useSelector((store) => store.kanban);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -32,6 +33,7 @@ const CreateTask = ({ openModal, setOpenModal, stageId }) => {
         assignedTo: contributorsIds,
         dueDate: dueDate,
         labels: [""],
+        projectId: details._id,
       },
       {
         headers: {

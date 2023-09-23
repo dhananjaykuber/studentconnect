@@ -11,12 +11,6 @@ const Comment = ({ comment, stageIndex, taskIndex, taskId }) => {
   const { user } = useSelector((store) => store.user);
 
   const handleDeleteComment = async () => {
-    console.log(
-      `${import.meta.env.VITE_NODE_API}/kanban/task/${taskId}/comment/${
-        comment._id
-      }`,
-    );
-
     const res = await axios.delete(
       `${import.meta.env.VITE_NODE_API}/kanban/task/${taskId}/comment/${
         comment._id

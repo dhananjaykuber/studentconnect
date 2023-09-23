@@ -3,11 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   user: {
     token: "435c8e226c86f7b62cf4db3a9ead49a90087e0b8",
-    user_id: "650065c02529d1b568f96f1d",
+    user_id: "650edbae0ca9033028b49a21",
     is_email_validated: false,
   },
 };
-
+//  650edbae0ca9033028b49a19 650edbae0ca9033028b49a21
 const userSlice = createSlice({
   name: "user",
   initialState,

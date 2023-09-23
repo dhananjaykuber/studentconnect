@@ -24,12 +24,12 @@ const Settings = () => {
         <Link to={"#"} className="hover:underline">
           Projects
         </Link>{" "}
-        / Canteen Hub / Project Settings
+        / Project Settings / {details?.name}
       </div>
       <div className="mb-5 mt-4 text-xl font-semibold text-gray-900 dark:text-gray-300">
         Details
       </div>
-      <div className="">
+      <div>
         <div className="mb-4 grid gap-4 sm:grid-cols-2">
           <div className="sm:col-span-2">
             <FormInput

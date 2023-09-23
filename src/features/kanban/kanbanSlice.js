@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   details: null,
   stages: null,
+  notifications: [],
 };
 
 const kanbanSlice = createSlice({
@@ -17,6 +18,11 @@ const kanbanSlice = createSlice({
     },
     addStage: (state, action) => {
       state.stages = [...state.stages, action.payload];
+    },
+    updateStage: (state, action) => {
+      const { stageIndex, title, description } = action.payload;
+      state.stages[stageIndex].title = title;
+      state.stages[stageIndex].description = description;
     },
     addTask: (state, action) => {
       const { stageId, task } = action.payload;
@@ -90,6 +96,20 @@ const kanbanSlice = createSlice({
 
       state.stages[stageIndex].tasks[taskIndex].comments = updatedComments;
     },
+    setNotifications: (state, action) => {
+      state.notifications = action.payload.reverse();
+    },
+    addNotification: (state, action) => {
+      state.notifications.unshift(action.payload);
+    },
+    updateNotificationStatus: (state, action) => {
+      const { id, status } = action.payload;
+
+      const notification = state.notifications.find((not) => not._id === id);
+      if (notification) {
+        notification.status = status;
+      }
+    },
   },
 });
 
@@ -97,6 +117,7 @@ export const {
   setProjectDetails,
   setProjectStages,
   addStage,
+  updateStage,
   addTask,
   updateTask,
   deleteTask,
@@ -104,6 +125,9 @@ export const {
   moveTask,
   addComment,
   deleteComment,
+  setNotifications,
+  addNotification,
+  updateNotificationStatus,
 } = kanbanSlice.actions;
 
 export default kanbanSlice.reducer;

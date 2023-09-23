@@ -1,19 +1,35 @@
 import React, { useState } from "react";
 import Modal from "../../modal/Modal";
-import { FileText, MessageSquare, PlusIcon } from "lucide-react";
+import {
+  ArrowRightIcon,
+  FileText,
+  GoalIcon,
+  Link2Icon,
+  MessageSquare,
+  PlusIcon,
+} from "lucide-react";
 import ToolTip from "../../shared/ToolTip";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import FormTextarea from "../../../form/FormTextarea";
 import Button from "../../../Button";
 import Comment from "./Comment";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
-import { addComment } from "../../../../features/kanban/kanbanSlice";
+import {
+  addComment,
+  moveTask,
+  updateTask,
+} from "../../../../features/kanban/kanbanSlice";
+import { notifySuccess } from "../../../../utils/toastsPopup";
 
 const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
+  const { id } = useParams();
+
   const dispatch = useDispatch();
 
   const { user } = useSelector((store) => store.user);
+  const { stages } = useSelector((store) => store.kanban);
+  const { details } = useSelector((store) => store.kanban);
 
   const [comment, setComment] = useState("");
 
@@ -23,6 +39,7 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
       {
         message: comment,
         commented_at: new Date(),
+        projectId: details._id,
       },
       {
         headers: {
@@ -38,6 +55,61 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
     setComment("");
   };
 
+  const handleJoinTask = async () => {
+    const alreadyExist = task?.assignedTo?.some(
+      (assigned) => assigned._id === user.user_id,
+    );
+
+    if (!alreadyExist) {
+      let contributorsIds = [];
+      task?.assignedTo?.map((assigned) => contributorsIds.push(assigned._id));
+      contributorsIds.push(user.user_id);
+
+      const res = await axios.put(
+        `${import.meta.env.VITE_NODE_API}/kanban/task/${task._id}`,
+        {
+          assignedTo: contributorsIds,
+        },
+        {
+          headers: {
+            Authorization: `Basic ${user.user_id}`,
+          },
+        },
+      );
+
+      console.log(res.data);
+
+      dispatch(
+        updateTask({
+          stageIndex,
+          taskIndex,
+          task: res.data,
+        }),
+      );
+    }
+  };
+
+  const handleMoveTask = async (destinationStageId) => {
+    const res = await axios.put(
+      `${import.meta.env.VITE_NODE_API}/kanban/move-task/${task._id}`,
+      {
+        destinationStage: destinationStageId,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user.user_id}`,
+        },
+      },
+    );
+
+    dispatch(
+      moveTask({
+        source: { index: taskIndex, droppableId: stages[stageIndex]._id },
+        destination: { index: 0, droppableId: destinationStageId },
+      }),
+    );
+  };
+
   return (
     <Modal
       openModal={openModal}
@@ -46,14 +118,14 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
       children={
         <div>
           <div>
-            <div className="mb-5 flex justify-between">
+            <div className="mb-2 flex justify-between">
               <div className="flex gap-1 text-sm dark:text-gray-300">
                 Added by{" "}
                 <span className="font-semibold text-blue-600 dark:text-blue-500">
                   {task.addedBy.user_name}
                 </span>
               </div>
-              <div className="flex">
+              <div className="flex" onClick={handleJoinTask}>
                 <div className="mr-4 flex cursor-pointer items-center gap-1 rounded-md border border-gray-300 px-1 text-xs font-semibold text-gray-600 dark:border-gray-400 dark:text-gray-400">
                   <PlusIcon className="h-3 w-3 dark:text-gray-400" /> Join
                 </div>
@@ -75,6 +147,41 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
                 </div>
               </div>
             </div>
+            <div
+              className="mb-4 mr-4 flex w-fit cursor-pointer items-center gap-1 rounded-md border border-gray-300 p-1 text-xs font-semibold text-gray-600 dark:border-gray-400 dark:text-gray-400"
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `${import.meta.env.VITE_ROOT_URL}/kanban/${id}?taskId=${
+                    task._id
+                  }`,
+                );
+
+                notifySuccess("Link copied.");
+              }}
+            >
+              <Link2Icon className="h-3 w-3 dark:text-gray-400" /> Share
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <GoalIcon className="h-4 w-4 text-gray-800 dark:text-gray-300" />
+                <span className="text-sm font-semibold text-gray-800 dark:text-gray-300">
+                  Actions
+                </span>
+              </div>
+              <div className="mb-5 ml-5 mt-2">
+                {stages?.map((stage) => (
+                  <div
+                    className="my-1 flex cursor-pointer items-center gap-1 text-xs text-gray-800 hover:underline dark:text-gray-300"
+                    key={stage._id}
+                    onClick={() => handleMoveTask(stage._id)}
+                  >
+                    <span>Move to </span>
+                    <span>{stage.title}</span>
+                    <ArrowRightIcon className="h-3 w-3 " />
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className="flex items-center gap-2">
               <FileText className="h-4 w-4 text-gray-800 dark:text-gray-300" />
               <span className="text-sm font-semibold text-gray-800 dark:text-gray-300">
@@ -92,34 +199,38 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
                     Comments
                   </span>
                 </div>
-                {task.comments.map((comment, index) => (
-                  <Comment
-                    key={index}
-                    comment={comment}
-                    stageIndex={stageIndex}
-                    taskIndex={taskIndex}
-                    taskId={task._id}
-                  />
-                ))}
-              </div>
 
-              <FormTextarea
-                label=""
-                placeholder="Write a comment..."
-                type="text"
-                required={true}
-                value={comment}
-                onChange={(text) => {
-                  setComment(text);
-                }}
-              />
-              <Button
-                label={"Post a comment"}
-                radius={"lg"}
-                leftIcon={<MessageSquare className="h-3 w-3" />}
-                classes={"p-2 text-xs"}
-                onclick={handleAddComment}
-              />
+                <FormTextarea
+                  label=""
+                  placeholder="Write a comment..."
+                  type="text"
+                  required={true}
+                  value={comment}
+                  onChange={(text) => {
+                    setComment(text);
+                  }}
+                />
+                <Button
+                  label={"Post a comment"}
+                  radius={"lg"}
+                  leftIcon={<MessageSquare className="h-3 w-3" />}
+                  classes={"p-2 text-xs mb-2"}
+                  onclick={handleAddComment}
+                />
+
+                {task.comments
+                  .slice()
+                  .reverse()
+                  .map((comment, index) => (
+                    <Comment
+                      key={index}
+                      comment={comment}
+                      stageIndex={stageIndex}
+                      taskIndex={taskIndex}
+                      taskId={task._id}
+                    />
+                  ))}
+              </div>
             </div>
           </div>
         </div>

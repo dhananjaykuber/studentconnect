@@ -13,6 +13,7 @@ const Board = () => {
 
   const { user } = useSelector((store) => store.user);
   const { stages } = useSelector((store) => store.kanban);
+  const { details } = useSelector((store) => store.kanban);
 
   const [openModal, setOpenModal] = useState(false);
 
@@ -45,6 +46,8 @@ const Board = () => {
       `${import.meta.env.VITE_NODE_API}/kanban/move-task/${taskId}`,
       {
         destinationStage: destination.droppableId,
+        title: stages[stageIndex].title,
+        projectId: details,
       },
       {
         headers: {

@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import AddContributors from "./AddContributors";
 import { useSelector } from "react-redux";
 import ToolTip from "../../shared/ToolTip";
+import { notifySuccess } from "../../../../utils/toastsPopup";
 
 const Header = () => {
   const { details } = useSelector((store) => store.kanban);
@@ -24,7 +25,16 @@ const Header = () => {
           <div className="text-xl font-semibold text-gray-900 dark:text-white md:text-2xl">
             {details?.name}
           </div>
-          <Link2Icon className="h-6 w-6 cursor-pointer rounded-md bg-gray-200 p-1 text-gray-800 dark:bg-gray-800 dark:text-gray-100" />
+          <Link2Icon
+            className="h-6 w-6 cursor-pointer rounded-md bg-gray-200 p-1 text-gray-800 dark:bg-gray-800 dark:text-gray-100"
+            onClick={() => {
+              navigator.clipboard.writeText(
+                `${import.meta.env.VITE_ROOT_URL}/kanban/${details._id}`,
+              );
+
+              notifySuccess("Link copied");
+            }}
+          />
         </div>
         <div className="flex gap-5">
           <div

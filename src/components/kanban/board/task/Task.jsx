@@ -1,11 +1,12 @@
-import { Edit } from "lucide-react";
-import React, { useState } from "react";
+import { Edit, EyeIcon } from "lucide-react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import EditTask from "./EditTask";
 import DateLabel from "./Date";
 import { Draggable } from "react-beautiful-dnd";
 import FullTask from "./FullTask";
 import ToolTip from "../../shared/ToolTip";
+import { useSearchParams } from "react-router-dom";
 
 const monthNames = [
   "Jan",
@@ -23,8 +24,16 @@ const monthNames = [
 ];
 
 const Task = ({ task, index, stageIndex }) => {
+  const [searchParam] = useSearchParams();
+
   const [fullDescriptionModal, setFullDescriptionModal] = useState(false);
   const [editModal, setEditModal] = useState(false);
+
+  useEffect(() => {
+    if (searchParam?.get("taskId") === task._id) {
+      setFullDescriptionModal(true);
+    }
+  }, []);
 
   return (
     <>
@@ -48,11 +57,6 @@ const Task = ({ task, index, stageIndex }) => {
         className="mb-3 select-none rounded-lg"
       /> */}
             <div onClick={() => setFullDescriptionModal(true)}>
-              <p className="mb-5 select-none text-sm text-gray-500 dark:text-gray-400">
-                {task?.description?.length <= 100
-                  ? task.description
-                  : task.description.slice(0, 100) + "..."}
-              </p>
               <div className="flex items-center justify-between">
                 <div className="ml-1 flex">
                   {task?.assignedTo?.map((assigned) => (
@@ -70,7 +74,10 @@ const Task = ({ task, index, stageIndex }) => {
                     />
                   ))}
                 </div>
-                <DateLabel dueDate={task.dueDate} monthNames={monthNames} />
+                <div className="flex">
+                  <EyeIcon className="h-7 w-9 cursor-pointer rounded-lg p-[6px]  text-gray-500" />
+                  <DateLabel dueDate={task.dueDate} monthNames={monthNames} />
+                </div>
               </div>
             </div>
           </div>

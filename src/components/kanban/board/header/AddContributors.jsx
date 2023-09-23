@@ -4,13 +4,15 @@ import Button from "../../../Button";
 import AddMembersDropdown from "../dropdowns/AddMembersDropdown";
 import axios from "axios";
 import { useParams } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addMember } from "../../../../features/kanban/kanbanSlice";
 
 const AddContributors = ({ openModal, setOpenModal }) => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
+
+  const { user } = useSelector((store) => store.user);
 
   const [memberInfo, setMemberInfo] = useState("");
 
@@ -19,6 +21,11 @@ const AddContributors = ({ openModal, setOpenModal }) => {
       `${import.meta.env.VITE_NODE_API}/kanban/project/${id}/members`,
       {
         memberId: memberInfo._id,
+      },
+      {
+        headers: {
+          Authorization: `Basic ${user.user_id}`,
+        },
       },
     );
 

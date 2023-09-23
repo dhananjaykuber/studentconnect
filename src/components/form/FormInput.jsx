@@ -16,6 +16,7 @@ const FormInput = ({
   handleFocusCaputer,
   handleOnBlur,
 }) => {
+  const [localType, setLocalType] = useState(type);
   const [isValid, setIsValid] = useState(true);
 
   const handleInputChange = (event) => {
@@ -25,6 +26,14 @@ const FormInput = ({
 
     // setIsValid(response); // Update the validity state
     onChange(inputValue); // Pass the input value to
+  };
+
+  const handleIconClick = () => {
+    if (localType === "password") {
+      setLocalType("text");
+    } else {
+      setLocalType("password");
+    }
   };
 
   return (
@@ -40,7 +49,7 @@ const FormInput = ({
         )}
         <input
           onFocus={resetError}
-          type={type}
+          type={localType}
           name={name}
           placeholder={placeholder}
           value={value}
@@ -56,7 +65,10 @@ const FormInput = ({
           } p-2 outline-none dark:bg-gray-700 dark:text-white `}
         />
         {rightIcon && (
-          <div className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3">
+          <div
+            className="absolute inset-y-0 right-0 flex cursor-pointer items-center pr-3"
+            onClick={handleIconClick}
+          >
             {rightIcon}
           </div>
         )}

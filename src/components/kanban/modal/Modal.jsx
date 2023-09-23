@@ -1,8 +1,21 @@
 import React from "react";
 import { X } from "lucide-react";
 import { twMerge } from "tailwind-merge";
+import { useSearchParams } from "react-router-dom";
 
 const Modal = ({ title, children, openModal, setOpenModal }) => {
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  const removeQueryParams = () => {
+    const param = searchParams.get("taskId");
+
+    if (param) {
+      searchParams.delete("taskId");
+
+      setSearchParams(searchParams);
+    }
+  };
+
   if (openModal) {
     document.body.classList.add("modal-open");
   } else {
@@ -16,7 +29,10 @@ const Modal = ({ title, children, openModal, setOpenModal }) => {
           `fixed bottom-0 left-0 right-0 top-0 z-10 cursor-pointer bg-gray-700 opacity-40 dark:bg-gray-100
            ${openModal ? "" : "hidden"}`,
         )}
-        onClick={() => setOpenModal(false)}
+        onClick={() => {
+          removeQueryParams();
+          setOpenModal(false);
+        }}
       ></div>
       <div
         className={twMerge(
@@ -33,7 +49,10 @@ const Modal = ({ title, children, openModal, setOpenModal }) => {
             <button
               type="button"
               className="ml-auto inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white"
-              onClick={() => setOpenModal(false)}
+              onClick={() => {
+                removeQueryParams();
+                setOpenModal(false);
+              }}
             >
               <X />
             </button>

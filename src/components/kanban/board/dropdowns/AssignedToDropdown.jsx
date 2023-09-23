@@ -19,9 +19,9 @@ const AssignedToDropdown = ({ contributors, setContributors }) => {
     }
   };
 
-  const handleRemoveContributor = async (index) => {
+  const handleRemoveContributor = async (indexToDelete) => {
     setContributors((contributors) =>
-      contributors.filter((_, index) => index !== 0),
+      contributors.filter((_, index) => index !== indexToDelete),
     );
   };
 

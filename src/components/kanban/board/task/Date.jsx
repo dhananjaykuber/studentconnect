@@ -28,7 +28,7 @@ const DateLabel = ({ dueDate, monthNames }) => {
           }`,
         )}
       >
-        {daysLeft < 0 ? `Overdue ${date} ${month}` : `${date} ${month}`}
+        {daysLeft < 0 ? `${date} ${month}` : `${date} ${month}`}
       </span>
     </div>
   );
