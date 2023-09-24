@@ -4,8 +4,11 @@ import { Edit, PlusIcon } from "lucide-react";
 import CreateTask from "../task/CreateTask";
 import { Droppable } from "react-beautiful-dnd";
 import EditStage from "./EditStage";
+import { useSelector } from "react-redux";
 
 const Stage = ({ title, tasks, stageId, stageIndex }) => {
+  const { users } = useSelector((store) => store.kanbanFilter);
+
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [openStageEditModal, setOpenStageEditModal] = useState(false);
 

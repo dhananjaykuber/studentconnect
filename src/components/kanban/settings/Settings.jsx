@@ -8,6 +8,7 @@ import { FaTrash } from "react-icons/fa";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import AddMembersDropdown from "../board/dropdowns/AddMembersDropdown";
+import Breadcrumb from "../board/header/Breadcrumb";
 
 const Settings = () => {
   const { details } = useSelector((store) => store.kanban);
@@ -20,13 +21,13 @@ const Settings = () => {
 
   return (
     <div className="w-full overflow-hidden p-3 px-6">
-      <div className="text-sm font-normal text-gray-700 dark:text-gray-300">
-        <Link to={"#"} className="hover:underline">
-          Projects
-        </Link>{" "}
-        / Project Settings / {details?.name}
-      </div>
-      <div className="mb-5 mt-4 text-xl font-semibold text-gray-900 dark:text-gray-300">
+      <Breadcrumb
+        toLink={"#"}
+        toText={"Projects"}
+        title={`/ Project Settings / ${details?.name}`}
+      />
+
+      <div className="mb-5 text-xl font-semibold text-gray-900 dark:text-gray-300">
         Details
       </div>
       <div>

@@ -1,10 +1,24 @@
 import React, { useState } from "react";
-import { Link2Icon, PlusIcon, UserPlus2 } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronRight,
+  ChevronsRight,
+  FilterIcon,
+  FilterXIcon,
+  Link2Icon,
+  ListFilterIcon,
+  LucideFilter,
+  PanelRightCloseIcon,
+  PlusIcon,
+  UserPlus2,
+} from "lucide-react";
 import { Link } from "react-router-dom";
 import AddContributors from "./AddContributors";
 import { useSelector } from "react-redux";
 import ToolTip from "../../shared/ToolTip";
 import { notifySuccess } from "../../../../utils/toastsPopup";
+import Breadcrumb from "./Breadcrumb";
+import Filters from "./Filters";
 
 const Header = () => {
   const { details } = useSelector((store) => store.kanban);
@@ -13,14 +27,13 @@ const Header = () => {
 
   return (
     <div>
-      <div className="text-sm font-normal text-gray-700 dark:text-gray-300">
-        <Link to={"/kanban"} className="hover:underline">
-          Projects
-        </Link>{" "}
-        / Board / {details?.name}
-      </div>
+      <Breadcrumb
+        toLink={"/kanban"}
+        toText={"Projects"}
+        title={`/ Board / ${details?.name}`}
+      />
 
-      <div className="mt-10 flex flex-col gap-5 sm:flex-row sm:justify-between">
+      <div className="flex flex-col gap-5 sm:flex-row sm:justify-between">
         <div className="flex items-center gap-5">
           <div className="text-xl font-semibold text-gray-900 dark:text-white md:text-2xl">
             {details?.name}
@@ -66,6 +79,8 @@ const Header = () => {
       </div>
 
       <AddContributors openModal={openModal} setOpenModal={setOpenModal} />
+
+      <Filters />
     </div>
   );
 };

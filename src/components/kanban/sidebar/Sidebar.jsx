@@ -29,13 +29,14 @@ const links = [
 const Sidebar = ({ setScreen }) => {
   const { details } = useSelector((store) => store.kanban);
   const { notifications } = useSelector((store) => store.kanban);
+  const { openSidebar } = useSelector((store) => store.kanbanSidebar);
 
   const [collapse, setCollapse] = useState(false);
 
   return (
     <div
       className={twMerge(
-        `hidden min-h-screen min-w-[280px] border-r-2 border-gray-100 bg-white p-3 dark:border-gray-700 dark:bg-gray-900 lg:block ${
+        `hidden min-h-screen min-w-[280px] border-r-2 border-gray-100 bg-white p-3 dark:border-gray-700 dark:bg-gray-900 lg:relative lg:block ${
           collapse && "min-w-fit"
         }`,
       )}
