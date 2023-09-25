@@ -1,4 +1,5 @@
 import React from "react";
+import Linkify from "react-linkify";
 import { formatDistanceToNow } from "date-fns";
 import { useDispatch, useSelector } from "react-redux";
 import { Trash2Icon } from "lucide-react";
@@ -50,8 +51,8 @@ const Comment = ({ comment, stageIndex, taskIndex, taskId }) => {
             </div>
           )}
         </div>
-        <p className="mt-1 text-xs font-medium text-gray-800 dark:font-light dark:text-gray-300">
-          {comment.text}
+        <p className="text-links mt-1 text-xs font-medium text-gray-800 dark:font-light dark:text-gray-300">
+          <Linkify>{comment.text}</Linkify>
         </p>
       </div>
     </div>

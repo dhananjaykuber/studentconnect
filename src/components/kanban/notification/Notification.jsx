@@ -9,7 +9,10 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { updateNotificationStatus } from "../../../features/kanban/kanbanSlice";
+import {
+  deleteNotification,
+  updateNotificationStatus,
+} from "../../../features/kanban/kanbanSlice";
 
 const Notification = ({ notification }) => {
   const dispatch = useDispatch();
@@ -25,12 +28,25 @@ const Notification = ({ notification }) => {
       },
       {
         headers: {
-          Authorization: `Basic ${user.user_id}`,
+          Authorization: `Bearer ${user.user_id}`,
         },
       },
     );
 
     dispatch(updateNotificationStatus({ id: res.data._id, status: status }));
+  };
+
+  const handleDeleteNotification = async (_id) => {
+    const res = await axios.delete(
+      `${import.meta.env.VITE_NODE_API}/kanban/notification/${_id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${user.user_id}`,
+        },
+      },
+    );
+
+    dispatch(deleteNotification(_id));
   };
 
   return (
@@ -55,7 +71,10 @@ const Notification = ({ notification }) => {
             {notification.from}
           </span>
 
-          <Trash2Icon className="h-3 w-3 cursor-pointer text-red-500" />
+          <Trash2Icon
+            className="h-3 w-3 cursor-pointer text-red-500"
+            onClick={() => handleDeleteNotification(notification._id)}
+          />
         </p>
         <div className="flex items-center gap-2">
           <p className="text-sm font-medium text-gray-900 dark:text-gray-300">

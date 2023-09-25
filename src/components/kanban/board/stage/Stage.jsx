@@ -19,6 +19,9 @@ const Stage = ({ title, tasks, stageId, stageIndex }) => {
           <div className="flex items-center justify-between">
             <div className="cursor-move select-none text-sm font-semibold text-gray-700 dark:text-gray-300">
               {title}
+              <span className="ml-3 cursor-pointer rounded-full bg-gray-200 px-[7px] py-[2px] text-xs text-gray-900 dark:bg-gray-500 dark:text-gray-50">
+                {tasks?.length}
+              </span>
             </div>
 
             <Edit

@@ -11,6 +11,7 @@ import {
 import ToolTip from "../../shared/ToolTip";
 import { Link, useParams } from "react-router-dom";
 import FormTextarea from "../../../form/FormTextarea";
+import Linkify from "react-linkify";
 import Button from "../../../Button";
 import Comment from "./Comment";
 import axios from "axios";
@@ -186,8 +187,8 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
                 Description
               </span>
             </div>
-            <div className="mb-4 mt-2 text-sm text-gray-500 dark:text-gray-400">
-              {task.description}
+            <div className="text-links mb-4 mt-2 text-sm text-gray-500 dark:text-gray-400">
+              <Linkify>{task.description}</Linkify>
             </div>
             <div>
               <div>

@@ -20,18 +20,35 @@ const Signup = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleRegister = async () => {
-    const res = await axios.post(
-      `${import.meta.env.VITE_DJANGO_API}/authentication/register/`,
-      {
-        full_name: name,
-        user_name: username,
-        email: email,
-        password: password,
-      },
-    );
+  const [usernameError, setUsernameError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
 
-    const json = await res.json();
+  const handleRegister = async () => {
+    setUsernameError(null);
+    setEmailError(null);
+
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_DJANGO_API}/authentication/register/`,
+        {
+          full_name: name,
+          user_name: username,
+          email: email,
+          password: password,
+        },
+      );
+
+      console.log(res);
+    } catch (error) {
+      if (error.response?.data?.error[0]?.email) {
+        setEmailError(error.response?.data?.error[0]?.email);
+      }
+      if (error.response?.data?.error[0]?.user_name) {
+        setUsernameError(error.response?.data?.error[0]?.user_name);
+      }
+
+      console.log(error.response);
+    }
   };
 
   return (
@@ -54,6 +71,7 @@ const Signup = () => {
           value={username}
           onChange={(text) => setUsername(text)}
           leftIcon={<FaUserAlt className="text-sm text-slate-400" />}
+          error={usernameError}
         />
         <FormInput
           label="Email"
@@ -63,6 +81,7 @@ const Signup = () => {
           value={email}
           onChange={(text) => setEmail(text)}
           leftIcon={<FaEnvelope className="text-sm text-slate-400" />}
+          error={emailError}
         />
         <FormInput
           label="Password"
@@ -84,7 +103,7 @@ const Signup = () => {
         <div className="flex flex-col">
           <button
             type="button"
-            className="mb-2 mr-2 inline-flex w-full items-center justify-center rounded-lg bg-[#24292F] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#24292F]/90 focus:outline-none focus:ring-4 focus:ring-[#24292F]/50 dark:hover:bg-[#050708]/30 dark:focus:ring-gray-500"
+            className="mb-2 mr-2 inline-flex w-full items-center justify-center rounded-lg bg-[#24292F] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#24292F]/90 focus:outline-none focus:ring-4 focus:ring-[#24292F]/50 dark:bg-gray-500 dark:hover:bg-gray-400 dark:focus:ring-gray-500"
           >
             <FaGithub className="mr-2" />
             Sign up with Github

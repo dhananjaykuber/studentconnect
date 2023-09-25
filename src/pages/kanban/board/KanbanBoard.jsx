@@ -3,7 +3,7 @@ import Sidebar from "../../../components/kanban/sidebar/Sidebar";
 import Layout from "../../../components/Layout";
 import Board from "../../../components/kanban/board/Board";
 import Settings from "../../../components/kanban/settings/Settings";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import io from "socket.io-client";
 import axios from "axios";
@@ -20,6 +20,8 @@ const KanbanBoard = () => {
 
   const dispatch = useDispatch();
 
+  const navigate = useNavigate();
+
   const { user } = useSelector((store) => store.user);
 
   const [screen, setScreen] = useState("Board");
@@ -27,30 +29,35 @@ const KanbanBoard = () => {
   useEffect(() => {
     // get the project related data (details, stages)
     const getProjectDetails = async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_NODE_API}/kanban/project/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.user_id}`,
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_NODE_API}/kanban/project/${id}`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.user_id}`,
+            },
           },
-        },
-      );
+        );
 
-      dispatch(setProjectDetails(res.data.project));
-      dispatch(setProjectStages(res.data.stages));
+        dispatch(setProjectDetails(res.data.project));
+        dispatch(setProjectStages(res.data.stages));
 
-      const notifi = await axios.get(
-        `${import.meta.env.VITE_NODE_API}/kanban/notification/${
-          res.data.project._id
-        }`,
-        {
-          headers: {
-            Authorization: `Bearer ${user.user_id}`,
+        const notifi = await axios.get(
+          `${import.meta.env.VITE_NODE_API}/kanban/notification/${
+            res.data.project._id
+          }`,
+          {
+            headers: {
+              Authorization: `Bearer ${user.user_id}`,
+            },
           },
-        },
-      );
+        );
 
-      dispatch(setNotifications(notifi.data));
+        dispatch(setNotifications(notifi.data));
+      } catch (error) {
+        // current user is not involved in this project
+        navigate("/kanban");
+      }
     };
     getProjectDetails();
   }, []);

@@ -110,6 +110,11 @@ const kanbanSlice = createSlice({
         notification.status = status;
       }
     },
+    deleteNotification: (state, action) => {
+      state.notifications = state.notifications.filter(
+        (notification) => notification._id !== action.payload,
+      );
+    },
   },
 });
 
@@ -128,6 +133,7 @@ export const {
   setNotifications,
   addNotification,
   updateNotificationStatus,
+  deleteNotification,
 } = kanbanSlice.actions;
 
 export default kanbanSlice.reducer;

@@ -22,12 +22,18 @@ const KanbanHome = () => {
 
   // create projects
   const handleCreateProject = async () => {
+    let membersIds = [user.user_id];
+
+    if (leadInfo._id !== user.user_id) {
+      membersIds.push(leadInfo._id);
+    }
+
     const res = await axios.post(
       `${import.meta.env.VITE_NODE_API}/kanban/project`,
       {
         name: title,
         description: description,
-        members: [user.user_id],
+        members: membersIds,
         lead: leadInfo._id,
       },
       {

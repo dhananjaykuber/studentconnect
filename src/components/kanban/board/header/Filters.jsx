@@ -6,9 +6,9 @@ import {
   addUser,
   removeUser,
   setDate,
+  setUsers,
 } from "../../../../features/kanban/filterSlice";
 import Button from "../../../Button";
-import { setUser } from "../../../../features/user/userSlice";
 
 const Filters = () => {
   const dispatch = useDispatch();
@@ -28,7 +28,7 @@ const Filters = () => {
   };
 
   return (
-    <div className="mt-5 flex items-center gap-5">
+    <div className="mt-7 flex items-center gap-3">
       <div>
         <button
           className="flex items-center gap-2 rounded-lg bg-gray-200 px-3 py-2 text-sm font-medium text-gray-800 dark:bg-gray-700 dark:text-white"
@@ -81,11 +81,10 @@ const Filters = () => {
       </div>
 
       <Button
-        label={"Clear Filter"}
         radius={"lg"}
-        rightIcon={<FilterXIcon className="h-3 w-3" />}
+        rightIcon={<FilterXIcon className="h-4 w-4" />}
         onclick={() => {
-          dispatch(setUser([]));
+          dispatch(setUsers([]));
           dispatch(setDate(null));
           setOpenFilter(false);
         }}

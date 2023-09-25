@@ -21,6 +21,7 @@ const EditTask = ({ openModal, setOpenModal, stageIndex, task, taskIndex }) => {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const [contributors, setContributors] = useState(task.assignedTo);
+  const [dueDate, setDueDate] = useState(task.dueDate.slice(0, 10));
 
   const handleUpdateTask = async () => {
     let contributorsIds = [];
@@ -33,6 +34,7 @@ const EditTask = ({ openModal, setOpenModal, stageIndex, task, taskIndex }) => {
         description: description,
         assignedTo: contributorsIds,
         projectId: details._id,
+        dueDate,
       },
       {
         headers: {
@@ -85,6 +87,19 @@ const EditTask = ({ openModal, setOpenModal, stageIndex, task, taskIndex }) => {
                 onChange={(text) => setDescription(text)}
               />
             </div>
+          </div>
+
+          <div className="-mt-4 mb-7">
+            <label className="mb-1 block text-sm font-semibold text-gray-900 dark:font-medium dark:text-gray-100">
+              Due Date
+            </label>
+            <input
+              className={`block w-full rounded-lg border border-gray-400 p-2 text-sm text-gray-900 outline-none
+          focus:border-blue-500 focus:ring-2 focus:ring-blue-200 dark:bg-gray-700 dark:text-white `}
+              type="date"
+              value={dueDate}
+              onChange={(e) => setDueDate(e.target.value)}
+            />
           </div>
 
           <AssignedToDropdown

@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.text-links a {
+  color: #3b82f6 !important;
+  text-decoration: underline;
+  font-weight: 500;
+}
+
 ::-webkit-scrollbar {
   width: 0px;
 }

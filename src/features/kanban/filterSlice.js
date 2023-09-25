@@ -9,6 +9,9 @@ const filterSlice = createSlice({
   name: "kanbanFilter",
   initialState,
   reducers: {
+    setUsers: (state, action) => {
+      state.users = action.payload;
+    },
     addUser: (state, action) => {
       if (!state.users.includes(action.payload)) {
         state.users.push(action.payload);
@@ -23,6 +26,6 @@ const filterSlice = createSlice({
   },
 });
 
-export const { addUser, removeUser, setDate } = filterSlice.actions;
+export const { setUsers, addUser, removeUser, setDate } = filterSlice.actions;
 
 export default filterSlice.reducer;
