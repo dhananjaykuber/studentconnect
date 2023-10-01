@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormInput from "../../../components/form/FormInput";
 import Button from "../../../components/Button";
 import {
@@ -13,8 +13,18 @@ import {
 import Form from "../../../components/form/Form";
 import Layout from "../../../components/Layout";
 import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { setUser } from "../../../features/user/userSlice";
+import { useNavigate } from "react-router-dom";
+import SocialLoginAndSignup from "../../../components/auth/SocialLoginAndSignup";
 
 const Signup = () => {
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const { user } = useSelector((store) => store.user);
+
   const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -22,6 +32,12 @@ const Signup = () => {
 
   const [usernameError, setUsernameError] = useState(null);
   const [emailError, setEmailError] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      // navigate("/profile");
+    }
+  }, []);
 
   const handleRegister = async () => {
     setUsernameError(null);
@@ -35,10 +51,18 @@ const Signup = () => {
           user_name: username,
           email: email,
           password: password,
+          account_type: "user",
         },
       );
 
-      console.log(res);
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ token: res.data.token, ...res.data.user }),
+      );
+
+      dispatch(setUser({ token: res.data.token, ...res.data.user }));
+
+      navigate("/profile");
     } catch (error) {
       if (error.response?.data?.error[0]?.email) {
         setEmailError(error.response?.data?.error[0]?.email);
@@ -95,27 +119,7 @@ const Signup = () => {
         />
         <Button label={"Signup"} radius={"lg"} onclick={handleRegister} />
 
-        <div className="my-4 flex items-center">
-          <div className="h-[1.2px] flex-1 bg-slate-400 dark:h-[0.9px]"></div>
-          <span className="mx-4 text-xs font-semibold text-slate-500">OR</span>
-          <div className="h-[1.2px] flex-1 bg-slate-400 dark:h-[0.9px]"></div>
-        </div>
-        <div className="flex flex-col">
-          <button
-            type="button"
-            className="mb-2 mr-2 inline-flex w-full items-center justify-center rounded-lg bg-[#24292F] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#24292F]/90 focus:outline-none focus:ring-4 focus:ring-[#24292F]/50 dark:bg-gray-500 dark:hover:bg-gray-400 dark:focus:ring-gray-500"
-          >
-            <FaGithub className="mr-2" />
-            Sign up with Github
-          </button>
-          <button
-            type="button"
-            className="dark:focus:ring-[#4285F4]/55 mb-2 mr-2 inline-flex w-full items-center justify-center rounded-lg bg-[#4285F4] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#4285F4]/90 focus:outline-none focus:ring-4 focus:ring-[#4285F4]/50"
-          >
-            <FaGoogle className="mr-2" />
-            Sign up with Google
-          </button>
-        </div>
+        <SocialLoginAndSignup signup={true} />
       </Form>
     </Layout>
   );

@@ -1,23 +1,70 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FormInput from "../../../components/form/FormInput";
 import Button from "../../../components/Button";
 import { FaEnvelope, FaEye, FaGithub, FaGoogle, FaLock } from "react-icons/fa";
 import Form from "../../../components/form/Form";
 import Layout from "../../../components/Layout";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { setUser } from "../../../features/user/userSlice";
+import SocialLoginAndSignup from "../../../components/auth/SocialLoginAndSignup";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const { user } = useSelector((store) => store.user);
+
+  const [loginId, setLoginId] = useState("");
+  const [password, setPassword] = useState("");
+
+  const [userIdError, setUserIdError] = useState(null);
+  const [passwordError, setPasswordError] = useState(null);
+
+  useEffect(() => {
+    if (user) {
+      // navigate("/profile");
+    }
+  }, []);
+
+  const handleLogin = async () => {
+    setUserIdError(null);
+    setPasswordError(null);
+
+    try {
+      const res = await axios.post(
+        `${import.meta.env.VITE_DJANGO_API}/authentication/login/`,
+        {
+          login_id: loginId,
+          password: password,
+        },
+      );
+
+      localStorage.setItem(
+        "user",
+        JSON.stringify({ token: res.data.token, ...res.data.user }),
+      );
+
+      dispatch(setUser({ token: res.data.token, ...res.data.user }));
+
+      navigate("/profile");
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Layout>
       <Form label={"Login"}>
         <FormInput
-          label="Email"
-          placeholder="studentconnect@gmail.com"
-          type="email"
+          label="Username or Email"
+          placeholder="Username or studentconnect@gmail.com"
+          type="text"
           required={true}
-          name="email"
-          onChange={(text) => setEmail(text)}
+          value={loginId}
+          onChange={(text) => setLoginId(text)}
           leftIcon={<FaEnvelope className="text-sm text-slate-400" />}
         />
         <FormInput
@@ -25,33 +72,14 @@ const Login = () => {
           placeholder="Password"
           type="password"
           required={true}
-          name="password"
+          value={password}
+          onChange={(text) => setPassword(text)}
           leftIcon={<FaLock className="text-sm text-slate-400" />}
           rightIcon={<FaEye className="text-sm text-slate-400" />}
         />
-        <Button label={"Login"} radius={"lg"} />
+        <Button label={"Login"} radius={"lg"} onclick={handleLogin} />
 
-        <div className="my-4 flex items-center">
-          <div className="h-[1.2px] flex-1 bg-slate-400"></div>
-          <span className="mx-4 text-xs font-semibold text-slate-500">OR</span>
-          <div className="h-[1.2px] flex-1 bg-slate-400"></div>
-        </div>
-        <div className="flex flex-col">
-          <button
-            type="button"
-            className="mb-2 mr-2 inline-flex w-full items-center justify-center rounded-lg bg-[#24292F] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#24292F]/90 focus:outline-none focus:ring-4 focus:ring-[#24292F]/50 dark:bg-gray-500 dark:hover:bg-gray-400 dark:focus:ring-gray-500"
-          >
-            <FaGithub className="mr-2" />
-            Sign in with Github
-          </button>
-          <button
-            type="button"
-            className="dark:focus:ring-[#4285F4]/55 mb-2 mr-2 inline-flex w-full items-center justify-center rounded-lg bg-[#4285F4] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#4285F4]/90 focus:outline-none focus:ring-4 focus:ring-[#4285F4]/50"
-          >
-            <FaGoogle className="mr-2" />
-            Sign in with Google
-          </button>
-        </div>
+        <SocialLoginAndSignup signup={false} />
       </Form>
     </Layout>
   );
