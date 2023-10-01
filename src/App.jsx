@@ -10,7 +10,7 @@ import Blogs from "./pages/blogs/Blogs";
 import Login from "./pages/auth/login/Login";
 import KanbanHome from "./pages/kanban/home/KanbanHome";
 import KanbanBoard from "./pages/kanban/board/KanbanBoard";
-import Profile from "./pages/profile/profile";
+import Profile from "./pages/profile/Profile";
 import GithubSuccess from "./pages/auth/github/GithubSuccess";
 
 function App() {
