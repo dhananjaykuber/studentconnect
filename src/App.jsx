@@ -11,6 +11,7 @@ import Login from "./pages/auth/login/Login";
 import KanbanHome from "./pages/kanban/home/KanbanHome";
 import KanbanBoard from "./pages/kanban/board/KanbanBoard";
 import Profile from "./pages/profile/profile";
+import GithubSuccess from "./pages/auth/github/GithubSuccess";
 
 function App() {
   return (
@@ -27,6 +28,8 @@ function App() {
         <Route path="/blogs/:id" element={<Blog />} />
         <Route path="/kanban" element={<KanbanHome />} />
         <Route path="/kanban/:id" element={<KanbanBoard />} />
+
+        <Route path="/github/success" element={<GithubSuccess />} />
       </Routes>
     </Router>
   );

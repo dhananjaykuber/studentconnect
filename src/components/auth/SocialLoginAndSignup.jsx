@@ -4,14 +4,12 @@ import { FaGithub, FaGoogle } from "react-icons/fa";
 
 const SocialLoginAndSignup = ({ signup }) => {
   const handleGithub = async () => {
-    console.log(`${import.meta.env.VITE_GITHUB_AUTH_URI}user repo`);
-
     try {
-      const res = await axios.get(
-        `${import.meta.env.VITE_GITHUB_AUTH_URI}user%20repo`,
-      );
-
-      console.log(res);
+      window.location.href = `https://github.com/login/oauth/authorize?client_id=${
+        import.meta.env.VITE_GITHUB_CLIENT_ID
+      }&redirect_uri=${
+        import.meta.env.VITE_ROOT_URL
+      }/github/success&scope=user%20repo`;
     } catch (error) {
       console.log(error);
     }
