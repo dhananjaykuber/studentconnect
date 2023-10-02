@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FormInput from "../../../form/FormInput";
 import { Search, X } from "lucide-react";
 import axios from "axios";
+import useDebounce from "../../../../hooks/useDebounce";
 
 const AddMembersDropdown = ({ label, memberInfo, setMemberInfo }) => {
   var typingTimer = null;
@@ -9,19 +10,21 @@ const AddMembersDropdown = ({ label, memberInfo, setMemberInfo }) => {
   const [memberName, setMemberName] = useState("");
   const [users, setUsers] = useState(null);
 
-  const handleGetUsers = (text) => {
-    setMemberName(text);
+  const debouncedSearch = useDebounce(memberName, 500);
 
-    clearTimeout(typingTimer);
-
-    typingTimer = setTimeout(async () => {
+  useEffect(() => {
+    async function fetchData() {
       const res = await axios.get(
-        `${import.meta.env.VITE_NODE_API}/kanban/users?user=${text}`,
+        `${import.meta.env.VITE_NODE_API}/kanban/users?user=${memberName}`,
       );
 
+      console.log(res);
+
       setUsers(res.data);
-    }, 2000);
-  };
+    }
+
+    if (debouncedSearch) fetchData();
+  }, [debouncedSearch]);
 
   return (
     <div className="-mt-4 mb-4">
@@ -32,7 +35,7 @@ const AddMembersDropdown = ({ label, memberInfo, setMemberInfo }) => {
           type="text"
           required={true}
           value={memberName}
-          onChange={(text) => handleGetUsers(text)}
+          onChange={(text) => setMemberName(text)}
           rightIcon={<Search className="h-5 w-5 text-sm text-slate-400" />}
         />
       </div>
