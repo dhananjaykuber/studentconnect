@@ -29,6 +29,7 @@ import AuthorizeCode from "./pages/auth/AuthorizeCode.jsx";
 import Blogs from "./pages/blogs/Blogs.jsx";
 import Blog from "./pages/blogs/blog/Blog.jsx";
 import _404 from "./pages/error/_404";
+import ProfileById from "./pages/profile/ProfileById";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -45,6 +46,7 @@ const router = createBrowserRouter(
       </Route>
 
       <Route path="profile" element={<Profile />} />
+      <Route path="profile/:id" element={<ProfileById />} />
 
       <Route path="blogs/" element={<Blogs />}>
         <Route path=":id" element={<Blog />} />

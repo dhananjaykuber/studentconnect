@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import Heading from "../texts/Headings";
 import Paragraph from "../texts/Paragraph";
-import { Link } from "react-router-dom";
 import { FaPeopleArrows } from "react-icons/fa";
 import { CheckIcon, CircleOffIcon, IndianRupee } from "lucide-react";
 import Button from "../Button";
@@ -26,8 +25,7 @@ const SingleContribution = () => {
             Billing infrastructire for software companies
           </Paragraph>
           <span className="inline-flex items-center gap-2 rounded text-xs font-bold text-gray-500">
-            <FaPeopleArrows />
-            Contributors
+            <FaPeopleArrows />3 Contributors
           </span>
         </div>
       </div>
@@ -35,7 +33,8 @@ const SingleContribution = () => {
         <Tag
           label={"Actively Hiring"}
           icon={<CheckIcon className="h-3 w-3" />}
-          color={"green"}
+          spanClasses={"text-green-900 bg-green-100"}
+          iconClasses={"text-green-900"}
         />
       </div>
 
@@ -48,12 +47,14 @@ const SingleContribution = () => {
           <Tag
             label={"Paid"}
             icon={<IndianRupee className="h-3 w-3" />}
-            color={"green"}
+            spanClasses={"text-green-900 bg-green-100"}
+            iconClasses={"text-green-900"}
           />
           <Tag
             label={"Unpaid"}
             icon={<CircleOffIcon className="h-3 w-3" />}
-            color={"red"}
+            spanClasses={"text-red-900 bg-red-100"}
+            iconClasses={"text-red-900"}
           />
         </div>
         <div className="flex items-center gap-3">

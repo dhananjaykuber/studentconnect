@@ -25,10 +25,19 @@ const ContributionDescription = () => {
               Skills
             </Heading>
             <div className="flex flex-wrap gap-3">
-              <Tag label={"Software Engineering"} color={"gray"} />
-              <Tag label={"Full Stack Development"} color={"gray"} />
-              <Tag label={"Developer"} color={"gray"} />
-              <Tag label={"MERN"} color={"gray"} />
+              <Tag
+                label={"Software Engineering"}
+                spanClasses={"text-gray-900 bg-gray-100"}
+              />
+              <Tag
+                label={"Full Stack Development"}
+                spanClasses={"text-gray-900 bg-gray-100"}
+              />
+              <Tag
+                label={"Developer"}
+                spanClasses={"text-gray-900 bg-gray-100"}
+              />
+              <Tag label={"MERN"} spanClasses={"text-gray-900 bg-gray-100"} />
             </div>
           </div>
 
@@ -65,6 +74,7 @@ const ContributionDescription = () => {
           <div className="p-5">
             <FormTextarea
               label={"What interests you about working for this project?"}
+              placeholder={"Write here..."}
             />
             <Button label={"Apply"} radius={"md"} />
           </div>

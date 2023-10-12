@@ -1,17 +1,5 @@
 import React, { useState } from "react";
-import {
-  ChevronDown,
-  ChevronRight,
-  ChevronsRight,
-  FilterIcon,
-  FilterXIcon,
-  Link2Icon,
-  ListFilterIcon,
-  LucideFilter,
-  PanelRightCloseIcon,
-  PlusIcon,
-  UserPlus2,
-} from "lucide-react";
+import { Link2Icon, PlusIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import AddContributors from "./AddContributors";
 import { useSelector } from "react-redux";
