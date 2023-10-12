@@ -29,7 +29,7 @@ const CreateTask = ({ openModal, setOpenModal, stageId }) => {
       {
         title: title,
         description: description,
-        addedBy: user.user_id,
+        addedBy: user._id,
         assignedTo: contributorsIds,
         dueDate: dueDate,
         labels: [""],
@@ -37,7 +37,7 @@ const CreateTask = ({ openModal, setOpenModal, stageId }) => {
       },
       {
         headers: {
-          Authorization: `Basic ${user.user_id}`,
+          Authorization: `Bearer ${user._id}`,
         },
       },
     );

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { FaBars, FaSignInAlt } from "react-icons/fa";
 import Profile from "../assets/profile.png";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import Button from "./Button";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { twMerge } from "tailwind-merge";
+import { logoutUser } from "../features/user/userSlice";
 
 const links = [
   {
@@ -22,10 +24,6 @@ const links = [
     label: "Blogs",
     url: "/blogs",
   },
-  {
-    label: "Kanban",
-    url: "/kanban",
-  },
 ];
 
 const dropdown = [
@@ -37,10 +35,16 @@ const dropdown = [
     label: "Settings",
     url: "/settings",
   },
+  {
+    label: "Logout",
+    url: "/",
+  },
 ];
 
 const Navbar = () => {
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const location = useLocation();
 
@@ -53,6 +57,12 @@ const Navbar = () => {
   // if (location.pathname.includes("/kanban")) {
   //   return null;
   // }
+
+  const handleLogout = () => {
+    localStorage.setItem("user", null);
+    dispatch(logoutUser(null));
+    navigate("/");
+  };
 
   return (
     <nav className="border-b-2 border-gray-100 bg-white font-montserrat dark:border-gray-700  dark:bg-gray-900">
@@ -107,12 +117,13 @@ const Navbar = () => {
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     {dropdown.map((item, index) => (
                       <li key={index}>
-                        <a
-                          href={item.url}
+                        <NavLink
                           className="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
+                          onClick={item.label === "Logout" && handleLogout}
+                          to={item.url}
                         >
                           {item.label}
-                        </a>
+                        </NavLink>
                       </li>
                     ))}
                   </ul>
@@ -151,13 +162,19 @@ const Navbar = () => {
           <ul className="mt-4 flex flex-col rounded-lg border border-gray-100 bg-gray-50 p-4 font-medium dark:border-gray-700 dark:bg-gray-800 md:mt-0 md:flex-row md:space-x-10 md:border-0 md:bg-white md:p-0 md:dark:bg-gray-900">
             {links.map((link, index) => (
               <li key={index}>
-                <Link
+                <NavLink
                   to={link.url}
-                  className="block rounded py-2 pl-3 pr-4 text-sm font-semibold text-gray-900 hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500"
+                  className={({ isActive }) =>
+                    twMerge(
+                      `block rounded py-2 pl-3 pr-4 text-sm font-semibold text-gray-900 hover:bg-gray-100 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700 dark:hover:text-white md:p-0 md:hover:bg-transparent md:hover:text-blue-700 md:dark:hover:bg-transparent md:dark:hover:text-blue-500 ${
+                        isActive && "text-blue-700"
+                      }`,
+                    )
+                  }
                   onClick={() => setShowMobileNav(false)}
                 >
                   {link.label}
-                </Link>
+                </NavLink>
               </li>
             ))}
           </ul>

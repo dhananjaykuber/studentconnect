@@ -49,7 +49,7 @@ const Board = () => {
       },
       {
         headers: {
-          Authorization: `Bearer ${user.user_id}`,
+          Authorization: `Bearer ${user._id}`,
         },
       },
     );

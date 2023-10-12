@@ -25,7 +25,7 @@ const AddContributors = ({ openModal, setOpenModal }) => {
       },
       {
         headers: {
-          Authorization: `Basic ${user.user_id}`,
+          Authorization: `Bearer ${user._id}`,
         },
       },
     );

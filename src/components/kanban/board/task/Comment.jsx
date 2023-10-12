@@ -16,7 +16,7 @@ const Comment = ({ comment, stageIndex, taskIndex, taskId }) => {
       `${import.meta.env.VITE_NODE_API}/kanban/comment/${comment._id}`,
       {
         headers: {
-          Authorization: `Basic ${user.user_id}`,
+          Authorization: `Bearer ${user._id}`,
         },
       },
     );
@@ -42,7 +42,7 @@ const Comment = ({ comment, stageIndex, taskIndex, taskId }) => {
             </span>
           </p>
 
-          {user.user_id === comment.user._id && (
+          {user._id === comment.user._id && (
             <div className="absolute right-2 top-2">
               <Trash2Icon
                 className="h-3 w-3 cursor-pointer text-red-700 dark:text-red-400"

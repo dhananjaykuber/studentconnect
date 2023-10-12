@@ -12,6 +12,7 @@ import {
   createBrowserRouter,
   createRoutesFromElements,
 } from "react-router-dom";
+
 import Root from "./pages/Root.jsx";
 import Home from "./pages/home/Home.jsx";
 import About from "./pages/about/About.jsx";
@@ -47,9 +48,8 @@ const router = createBrowserRouter(
         <Route path=":id" element={<Blog />} />
       </Route>
 
-      <Route path="kanban/" element={<KanbanHome />}>
-        <Route path=":id" element={<KanbanBoard />} />
-      </Route>
+      <Route path="kanban" element={<KanbanHome />} />
+      <Route path="kanban/:id" element={<KanbanBoard />} />
 
       <Route path="open-contributions" element={<OpenContributions />} />
 

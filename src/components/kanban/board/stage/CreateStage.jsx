@@ -28,7 +28,7 @@ const CreateStage = ({ openModal, setOpenModal, stageId }) => {
       },
       {
         headers: {
-          Authorization: `Basic ${user.user_id}`,
+          Authorization: `Bearer ${user._id}`,
         },
       },
     );

@@ -30,7 +30,7 @@ const EditStage = ({ openModal, setOpenModal, stageIndex }) => {
       },
       {
         headers: {
-          Authorization: `Basic ${user.user_id}`,
+          Authorization: `Bearer ${user._id}`,
         },
       },
     );

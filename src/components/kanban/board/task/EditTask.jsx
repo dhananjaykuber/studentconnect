@@ -3,7 +3,6 @@ import Modal from "../../modal/Modal";
 import FormInput from "../../../form/FormInput";
 import Button from "../../../Button";
 import FormTextarea from "../../../form/FormTextarea";
-import { Search } from "lucide-react";
 import AssignedToDropdown from "../dropdowns/AssignedToDropdown";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
@@ -38,7 +37,7 @@ const EditTask = ({ openModal, setOpenModal, stageIndex, task, taskIndex }) => {
       },
       {
         headers: {
-          Authorization: `Basic ${user.user_id}`,
+          Authorization: `Bearer ${user._id}`,
         },
       },
     );
@@ -53,7 +52,7 @@ const EditTask = ({ openModal, setOpenModal, stageIndex, task, taskIndex }) => {
       `${import.meta.env.VITE_NODE_API}/kanban/task/${task._id}`,
       {
         headers: {
-          Authorization: `Basic ${user.user_id}`,
+          Authorization: `Bearer ${user._id}`,
         },
       },
     );

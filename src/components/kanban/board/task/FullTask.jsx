@@ -44,7 +44,7 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
       },
       {
         headers: {
-          Authorization: `Basic ${user.user_id}`,
+          Authorization: `Bearer ${user._id}`,
         },
       },
     );
@@ -58,13 +58,13 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
 
   const handleJoinTask = async () => {
     const alreadyExist = task?.assignedTo?.some(
-      (assigned) => assigned._id === user.user_id,
+      (assigned) => assigned._id === user._id,
     );
 
     if (!alreadyExist) {
       let contributorsIds = [];
       task?.assignedTo?.map((assigned) => contributorsIds.push(assigned._id));
-      contributorsIds.push(user.user_id);
+      contributorsIds.push(user._id);
 
       const res = await axios.put(
         `${import.meta.env.VITE_NODE_API}/kanban/task/${task._id}`,
@@ -73,7 +73,7 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
         },
         {
           headers: {
-            Authorization: `Basic ${user.user_id}`,
+            Authorization: `Bearer ${user._id}`,
           },
         },
       );
@@ -96,7 +96,7 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${user.user_id}`,
+          Authorization: `Bearer ${user._id}`,
         },
       },
     );

@@ -34,7 +34,7 @@ const KanbanBoard = () => {
           `${import.meta.env.VITE_NODE_API}/kanban/project/${id}`,
           {
             headers: {
-              Authorization: `Bearer ${user.user_id}`,
+              Authorization: `Bearer ${user._id}`,
             },
           },
         );
@@ -48,7 +48,7 @@ const KanbanBoard = () => {
           }`,
           {
             headers: {
-              Authorization: `Bearer ${user.user_id}`,
+              Authorization: `Bearer ${user._id}`,
             },
           },
         );
@@ -66,7 +66,7 @@ const KanbanBoard = () => {
   useEffect(() => {
     const socket = io("http://localhost:3000");
 
-    socket.on(`notification_${user.user_id}`, (notification) => {
+    socket.on(`notification_${user._id}`, (notification) => {
       dispatch(addNotification(JSON.parse(notification)));
     });
 
