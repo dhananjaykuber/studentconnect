@@ -12,6 +12,7 @@ import KanbanHome from "./pages/kanban/home/KanbanHome";
 import KanbanBoard from "./pages/kanban/board/KanbanBoard";
 import Profile from "./pages/profile/Profile";
 import AuthorizeCode from "./pages/auth/AuthorizeCode";
+import OpenContributions from "./pages/opencontributions/OpenContributions";
 
 function App() {
   return (
@@ -19,15 +20,21 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
+
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/login" element={<Login />} />
+
         <Route path="/profile" element={<Profile />} />
+
         <Route path="/blogs" element={<Blogs />} />
         <Route path="/blogs/:id" element={<Blog />} />
+
         <Route path="/kanban" element={<KanbanHome />} />
         <Route path="/kanban/:id" element={<KanbanBoard />} />
+
+        <Route path="/open-contributions" element={<OpenContributions />} />
 
         <Route path="/authorize/:provider" element={<AuthorizeCode />} />
       </Routes>

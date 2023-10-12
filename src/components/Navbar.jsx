@@ -124,7 +124,7 @@ const Navbar = () => {
               label={"Login"}
               leftIcon={<FaSignInAlt />}
               onclick={() => navigate("/login")}
-              radius={"lg"}
+              radius={"full"}
             />
           )}
 

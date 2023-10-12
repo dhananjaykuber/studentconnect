@@ -26,6 +26,8 @@ const AuthorizeCode = () => {
 
     const handleSendCode = async () => {
       if (params.provider) {
+        console.log(code);
+
         try {
           const res = await axios.get(
             `${import.meta.env.VITE_DJANGO_API}/authentication/o/auth/${
@@ -38,6 +40,8 @@ const AuthorizeCode = () => {
           );
           dispatch(setUser({ token: res.data.token, ...res.data.user }));
           navigate("/profile");
+
+          console.log(res);
         } catch (error) {
           console.log(error);
         }

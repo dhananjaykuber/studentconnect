@@ -9,13 +9,23 @@ const SocialLoginAndSignup = ({ signup }) => {
         import.meta.env.VITE_GITHUB_CLIENT_ID
       }&redirect_uri=${
         import.meta.env.VITE_ROOT_URL
-      }/github/success&scope=user%20repo`;
+      }/authorize/github&scope=user%20repo`;
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleGoogle = async () => {};
+  const handleGoogle = async () => {
+    try {
+      window.location.href = `https://accounts.google.com/o/oauth2/auth?client_id=${
+        import.meta.env.VITE_GOOGLE_CLIENT_ID
+      }&redirect_uri=${
+        import.meta.env.VITE_ROOT_URL
+      }/authorize/google&scope=openid+email+profile&response_type=code`;
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div>
@@ -36,6 +46,7 @@ const SocialLoginAndSignup = ({ signup }) => {
         <button
           type="button"
           className="dark:focus:ring-[#4285F4]/55 mb-2 mr-2 inline-flex w-full items-center justify-center rounded-lg bg-[#4285F4] px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-[#4285F4]/90 focus:outline-none focus:ring-4 focus:ring-[#4285F4]/50"
+          onClick={handleGoogle}
         >
           <FaGoogle className="mr-2" />
           {signup ? "Sign up" : "Sign in"} with Google

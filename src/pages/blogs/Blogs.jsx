@@ -12,7 +12,7 @@ const Blogs = () => {
               Blogs
             </h2>
             <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquam
+              Static ipsum dolor sit amet consectetur adipisicing elit. Aliquam
               sint neque quisquam nam est! Porro odit iusto voluptas ut
               voluptatem!
             </p>

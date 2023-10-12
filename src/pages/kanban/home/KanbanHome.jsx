@@ -24,17 +24,13 @@ const KanbanHome = () => {
   const handleCreateProject = async () => {
     let membersIds = [user.user_id];
 
-    if (leadInfo._id !== user.user_id) {
-      membersIds.push(leadInfo._id);
-    }
-
     const res = await axios.post(
       `${import.meta.env.VITE_NODE_API}/kanban/project`,
       {
         name: title,
         description: description,
         members: membersIds,
-        lead: leadInfo._id,
+        lead: leadInfo.user_id,
       },
       {
         headers: {
@@ -56,6 +52,7 @@ const KanbanHome = () => {
   useEffect(() => {
     // get all projects in which user is involved
     const handleGetProjects = async () => {
+      console.log(user.user_id);
       const res = await axios.get(
         `${import.meta.env.VITE_NODE_API}/kanban/project`,
         {
