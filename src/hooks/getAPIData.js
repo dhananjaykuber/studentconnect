@@ -1,7 +1,7 @@
-const axios = require("axios");
-const { useState, useEffect } = require("react");
+import axios from "axios";
+import { useEffect, useState } from "react";
 
-const getAPIData = (url) => {
+const getAPIData = (url, headers) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,7 +10,7 @@ const getAPIData = (url) => {
     (async function () {
       setLoading(true);
       try {
-        const res = await axios.get(url);
+        const res = await axios.get(url, headers);
 
         setData(res.data);
       } catch (error) {

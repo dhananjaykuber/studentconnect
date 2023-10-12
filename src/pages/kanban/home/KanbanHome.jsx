@@ -8,17 +8,35 @@ import FormTextarea from "../../../components/form/FormTextarea";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import AddMembersDropdown from "../../../components/kanban/board/dropdowns/AddMembersDropdown";
+import getAPIData from "../../../hooks/getAPIData";
+import Skeleton from "react-loading-skeleton";
 
 const KanbanHome = () => {
   const { user } = useSelector((store) => store.user);
 
   const [openModal, setOpenModal] = useState(false);
 
-  const [projects, setProjects] = useState(null);
+  const [projects, setProjects] = useState([]);
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [leadInfo, setLeadInfo] = useState("");
+
+  // get project from custom hook
+  const { data, loading, error } = getAPIData(
+    `${import.meta.env.VITE_NODE_API}/kanban/project`,
+    {
+      headers: {
+        Authorization: `Bearer ${user._id}`,
+      },
+    },
+  );
+
+  useEffect(() => {
+    if (!loading && !error) {
+      setProjects(data);
+    }
+  }, [data, loading, error]);
 
   // create projects
   const handleCreateProject = async () => {
@@ -48,23 +66,6 @@ const KanbanHome = () => {
 
     setProjects([...projects, data]);
   };
-
-  useEffect(() => {
-    // get all projects in which user is involved
-    const handleGetProjects = async () => {
-      const res = await axios.get(
-        `${import.meta.env.VITE_NODE_API}/kanban/project`,
-        {
-          headers: {
-            Authorization: `Bearer ${user._id}`,
-          },
-        },
-      );
-      setProjects(res.data);
-    };
-
-    handleGetProjects();
-  }, []);
 
   return (
     <Layout>
@@ -123,7 +124,9 @@ const KanbanHome = () => {
           />
         </div>
 
-        {projects?.length >= 1 && (
+        {loading ? (
+          <Skeleton count={5} />
+        ) : (
           <div className="relative overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-sm dark:border-none dark:bg-gray-800">
             <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
               <thead className="bg-gray-50 text-xs uppercase text-gray-900 dark:bg-gray-700 dark:text-gray-200">
