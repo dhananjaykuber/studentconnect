@@ -20,7 +20,7 @@ const Tabs = ({ titles, tabs }) => {
           </Heading>
         ))}
       </div>
-      <div className="p-5">{tabs[active]}</div>
+      <div className="px-2 py-5 md:p-5">{tabs[active]}</div>
     </div>
   );
 };

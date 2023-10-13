@@ -1,11 +1,10 @@
-import { StarIcon } from "lucide-react";
 import React from "react";
 import Paragraph from "../../../texts/Paragraph";
 import Heading from "../../../texts/Headings";
 
 const Project = () => {
   return (
-    <div className="m-2 w-[48%] cursor-pointer gap-2 rounded-md border p-3  dark:border-gray-600">
+    <div className="mx-0 my-2 flex w-[100%] gap-2 rounded-md border p-3 dark:border-gray-600 md:m-2 md:w-[48%]">
       <div>
         <Heading level={6} classes={"mb-2"}>
           heackathon-starter

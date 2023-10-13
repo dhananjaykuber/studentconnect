@@ -8,7 +8,7 @@ import techstacks from "../../../../utils/stackLogos";
 
 const GithubProject = () => {
   return (
-    <div className="m-2 flex w-[48%] gap-2 rounded-md border p-3 dark:border-gray-600">
+    <div className="mx-0 my-2 flex w-[100%] gap-2 rounded-md border p-3 dark:border-gray-600 md:m-2 md:w-[48%]">
       <div>
         <Heading level={6} classes={"mb-2"}>
           heackathon-starter

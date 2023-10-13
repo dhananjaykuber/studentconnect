@@ -29,7 +29,7 @@ const socialIcons = {
 
 const Header = () => {
   return (
-    <div className="flex justify-between gap-10">
+    <div className="flex flex-col-reverse justify-between gap-4 md:flex-row md:gap-10">
       <div>
         <div className="mb-2 flex items-center gap-2">
           <Heading level={4}>Dhananjay Kuber</Heading>
@@ -42,7 +42,7 @@ const Header = () => {
           Software Engineer @ WhatsApp, Meta. Previously worked on Crypto and
           advanced payments integrations at PayPal.
         </Paragraph>
-        <div className="mt-8 flex flex-wrap gap-3">
+        <div className="mt-4 flex flex-wrap gap-3 md:mt-8">
           <Tag
             spanClasses={
               "text-gray-900 py-[2px] dark:text-gray-300 border border-gray-300 font-medium cursor"
@@ -105,7 +105,7 @@ const Header = () => {
         <img
           src="https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
           alt="profile"
-          className="h-48 w-48 rounded-full object-cover"
+          className="h-14 w-14 rounded-full object-cover md:h-48 md:w-48"
         />
       </div>
     </div>
