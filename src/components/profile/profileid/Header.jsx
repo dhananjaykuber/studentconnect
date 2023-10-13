@@ -45,25 +45,25 @@ const Header = () => {
         <div className="mt-8 flex flex-wrap gap-3">
           <Tag
             spanClasses={
-              "text-gray-900 bg-gray-100 border border-gray-300 font-medium cursor"
+              "text-gray-900 py-[2px] dark:text-gray-300 border border-gray-300 font-medium cursor"
             }
             label={"JavaScript"}
           />
           <Tag
             spanClasses={
-              "text-gray-900 bg-gray-100 border border-gray-300 font-medium cursor"
+              "text-gray-900 py-[2px] dark:text-gray-300 border border-gray-300 font-medium cursor"
             }
             label={"Product Management"}
           />
           <Tag
             spanClasses={
-              "text-gray-900 bg-gray-100 border border-gray-300 font-medium cursor"
+              "text-gray-900 py-[2px] dark:text-gray-300 border border-gray-300 font-medium cursor"
             }
             label={"Software Engineer"}
           />
           <Tag
             spanClasses={
-              "text-gray-900 bg-gray-100 border border-gray-300 font-medium cursor"
+              "text-gray-900 py-[2px] dark:text-gray-300 border border-gray-300 font-medium cursor"
             }
             label={"ReactJS"}
           />

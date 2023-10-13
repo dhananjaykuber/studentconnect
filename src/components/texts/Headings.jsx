@@ -1,7 +1,7 @@
 import React from "react";
 import { twMerge } from "tailwind-merge";
 
-function Heading({ level, children, classes }) {
+function Heading({ level, children, classes, onClick }) {
   const TagName = `h${level}`;
 
   const tagClasses = {
@@ -18,6 +18,7 @@ function Heading({ level, children, classes }) {
       className={twMerge(
         `${tagClasses[level]} text-gray-900 dark:text-white ${classes}`,
       )}
+      onClick={onClick}
     >
       {children}
     </TagName>
