@@ -15,6 +15,8 @@ const FormInput = ({
   rightIcon,
   handleFocusCaputer,
   handleOnBlur,
+  minvalue,
+  maxvalue,
 }) => {
   const [localType, setLocalType] = useState(type);
   const [isValid, setIsValid] = useState(true);
@@ -57,6 +59,8 @@ const FormInput = ({
           required={required}
           onFocusCapture={handleFocusCaputer}
           onBlur={handleOnBlur}
+          min={minvalue}
+          max={maxvalue}
           className={`border ${
             error ? "border-red-600" : "border-gray-400"
           }  block w-full rounded-lg text-sm text-gray-900 focus:border-blue-500 focus:ring-2

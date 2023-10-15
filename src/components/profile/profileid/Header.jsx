@@ -32,7 +32,7 @@ const Header = () => {
     <div className="flex flex-col-reverse justify-between gap-4 md:flex-row md:gap-10">
       <div>
         <div className="mb-2 flex items-center gap-2">
-          <Heading level={4}>Dhananjay Kuber</Heading>
+          <Heading level={4}>Bungari Baba</Heading>
           <VerifiedIcon className="h-6 w-6 fill-green-600 text-white dark:text-gray-900" />
           <div className="rounded-full border border-gray-400 p-[3px] dark:border-gray-600">
             <MailIcon className="h-[14px] w-[14px] text-gray-700 dark:text-white " />
