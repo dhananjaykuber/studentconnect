@@ -40,9 +40,11 @@ const FormInput = ({
 
   return (
     <div className="mb-3">
-      <label className="mb-1 block text-sm font-semibold text-gray-900 dark:font-medium dark:text-gray-100">
-        {label}
-      </label>
+      {label && (
+        <label className="mb-1 block text-sm font-semibold text-gray-900 dark:font-medium dark:text-gray-100">
+          {label}
+        </label>
+      )}
       <div className="relative">
         {leftIcon && (
           <div className="letf-0 pointer-events-none absolute inset-y-0 flex items-center pl-3">

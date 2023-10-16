@@ -33,6 +33,10 @@ import ProfileById from "./pages/profile/ProfileById";
 import GenerateQuiz from "./pages/automatic_quiz/GenerateQuiz";
 import AutomaticQuiz from "./pages/automatic_quiz/AutomaticQuiz";
 import AutomaticOpenEnded from "./pages/automatic_quiz/AutomaticOpenEnded";
+import Settings from "./pages/dashboard/settings/Settings";
+import Dashboard from "./pages/dashboard/Dashboard";
+import AddProject from "./pages/dashboard/projects/AddProject";
+import AddBlog from "./pages/dashboard/blogs/AddBlog";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -72,6 +76,12 @@ const router = createBrowserRouter(
         path="automatic-quiz/open-ended/:id"
         element={<AutomaticOpenEnded />}
       />
+
+      {/* User Dashboard (Settings, Blogs, Projects)*/}
+      <Route path="dashboard" element={<Settings />} />
+      <Route path="dashboard/settings" element={<Settings />} />
+      <Route path="dashboard/projects" element={<AddProject />} />
+      <Route path="dashboard/blogs" element={<AddBlog />} />
 
       {/* Error */}
       <Route path="*" element={<_404 />} />

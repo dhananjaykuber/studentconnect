@@ -108,22 +108,22 @@ const Navbar = () => {
                 >
                   <div className="px-4 py-3">
                     <span className="block text-sm text-gray-900 dark:text-white">
-                      Dhananjay Kuber
+                      {user.full_name}
                     </span>
                     <span className="block truncate  text-sm text-gray-500 dark:text-gray-400">
-                      dhananjay@gmail.com
+                      {user?.email}
                     </span>
                   </div>
                   <ul className="py-2" aria-labelledby="user-menu-button">
                     {dropdown.map((item, index) => (
                       <li key={index}>
-                        <NavLink
+                        <Link
                           className="block px-4 py-2 text-sm text-gray-900 hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-600 dark:hover:text-white"
                           onClick={item.label === "Logout" && handleLogout}
                           to={item.url}
                         >
                           {item.label}
-                        </NavLink>
+                        </Link>
                       </li>
                     ))}
                   </ul>
