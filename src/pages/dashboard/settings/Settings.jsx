@@ -16,6 +16,7 @@ import FormTextarea from "../../../components/form/FormTextarea";
 import { FaProductHunt } from "react-icons/fa";
 import Dashboard from "../Dashboard";
 import Paragraph from "../../../components/texts/Paragraph";
+import Button from "../../../components/Button";
 
 const Settings = () => {
   const { user } = useSelector((store) => store.user);
@@ -109,6 +110,13 @@ const Settings = () => {
             />
           </div>
         </div>
+        <Button
+          label={"Save"}
+          radius={"md"}
+          classes={
+            "px-4 py-2 bg-green-600 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 focus:ring-green-300 dark:focus:ring-none"
+          }
+        />
       </div>
     </Dashboard>
   );
