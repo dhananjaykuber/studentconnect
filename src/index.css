@@ -39,3 +39,7 @@
 .modal-open {
   overflow: hidden;
 }
+
+.jodit-wysiwyg {
+  min-height: 300px !important;
+}

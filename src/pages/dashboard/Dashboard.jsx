@@ -33,6 +33,8 @@ const Dashboard = ({ children }) => {
 
   if (open) {
     document.body.classList.add("modal-open");
+  } else {
+    document.body.classList.remove("modal-open");
   }
 
   return (

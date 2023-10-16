@@ -34,9 +34,9 @@ import GenerateQuiz from "./pages/automatic_quiz/GenerateQuiz";
 import AutomaticQuiz from "./pages/automatic_quiz/AutomaticQuiz";
 import AutomaticOpenEnded from "./pages/automatic_quiz/AutomaticOpenEnded";
 import Settings from "./pages/dashboard/settings/Settings";
-import Dashboard from "./pages/dashboard/Dashboard";
-import AddProject from "./pages/dashboard/projects/AddProject";
-import AddBlog from "./pages/dashboard/blogs/AddBlog";
+import DashboardBlogs from "./pages/dashboard/blogs/DashboardBlogs";
+import DashboardProjects from "./pages/dashboard/projects/DashboardProjects";
+import AddBlog from "./pages/write_blog/AddBlog";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -58,6 +58,7 @@ const router = createBrowserRouter(
       <Route path="profile/:id" element={<ProfileById />} />
 
       {/* Blog */}
+      <Route path="write-blog" element={<AddBlog />} />
       <Route path="blogs/" element={<Blogs />}>
         <Route path=":id" element={<Blog />} />
       </Route>
@@ -80,8 +81,8 @@ const router = createBrowserRouter(
       {/* User Dashboard (Settings, Blogs, Projects)*/}
       <Route path="dashboard" element={<Settings />} />
       <Route path="dashboard/settings" element={<Settings />} />
-      <Route path="dashboard/projects" element={<AddProject />} />
-      <Route path="dashboard/blogs" element={<AddBlog />} />
+      <Route path="dashboard/projects" element={<DashboardProjects />} />
+      <Route path="dashboard/blogs" element={<DashboardBlogs />} />
 
       {/* Error */}
       <Route path="*" element={<_404 />} />
