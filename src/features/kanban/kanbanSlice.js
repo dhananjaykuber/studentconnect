@@ -4,6 +4,8 @@ const initialState = {
   details: null,
   stages: null,
   notifications: [],
+  users: [],
+  date: null,
 };
 
 const kanbanSlice = createSlice({
@@ -115,6 +117,20 @@ const kanbanSlice = createSlice({
         (notification) => notification._id !== action.payload,
       );
     },
+    setUsers: (state, action) => {
+      state.users = action.payload;
+    },
+    addUser: (state, action) => {
+      if (!state.users.includes(action.payload)) {
+        state.users.push(action.payload);
+      }
+    },
+    removeUser: (state, action) => {
+      state.users = state.users.filter((user) => user !== action.payload);
+    },
+    setDate: (state, action) => {
+      state.date = action.payload;
+    },
   },
 });
 
@@ -134,6 +150,10 @@ export const {
   addNotification,
   updateNotificationStatus,
   deleteNotification,
+  setUsers,
+  addUser,
+  removeUser,
+  setDate,
 } = kanbanSlice.actions;
 
 export default kanbanSlice.reducer;

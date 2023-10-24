@@ -18,7 +18,7 @@ const Header = () => {
       <Breadcrumb
         toLink={"/kanban"}
         toText={"Projects"}
-        title={`/ Board / ${details?.name}`}
+        title={`/ ${details?.name} / Board`}
       />
 
       <div className="flex flex-col gap-5 sm:flex-row sm:justify-between">

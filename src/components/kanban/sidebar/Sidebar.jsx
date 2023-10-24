@@ -8,25 +8,26 @@ import {
 } from "lucide-react";
 import { twMerge } from "tailwind-merge";
 import { useSelector } from "react-redux";
+import { NavLink, useParams } from "react-router-dom";
 
 const links = [
   {
     id: 1,
     label: "Board",
-    icon: (
-      <LucideKanbanSquare className="h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
-    ),
+    url: "board",
+    icon: LucideKanbanSquare,
   },
   {
     id: 2,
     label: "Project Settings",
-    icon: (
-      <Settings className="h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
-    ),
+    url: "settings",
+    icon: Settings,
   },
 ];
 
-const Sidebar = ({ setScreen }) => {
+const Sidebar = () => {
+  const { id } = useParams();
+
   const { details } = useSelector((store) => store.kanban);
   const { notifications } = useSelector((store) => store.kanban);
   const { openSidebar } = useSelector((store) => store.kanbanSidebar);
@@ -72,39 +73,46 @@ const Sidebar = ({ setScreen }) => {
         )}
       </div>
       <div className="mt-5">
-        <ul>
-          {links.map((link) => (
-            <li className="mb-2" key={link.id}>
-              <div
-                className="group flex cursor-pointer select-none items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-                onClick={() => setScreen(link.label)}
-              >
-                {link.icon}
-                <span className={`ml-3 text-sm ${collapse && "hidden"}`}>
-                  {link.label}
-                </span>
-              </div>
-            </li>
-          ))}
-          <li className="mb-2">
-            <div
-              className="group relative flex cursor-pointer select-none items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-              onClick={() => setScreen("Notifications")}
-            >
-              <span className="absolute top-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white ">
-                {
-                  notifications.filter(
-                    (notification) => notification.status === false,
-                  ).length
-                }
-              </span>
-              <BellIcon className="h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
-              <span className={`ml-3 text-sm ${collapse && "hidden"}`}>
-                Notifications
-              </span>
-            </div>
-          </li>
-        </ul>
+        {links.map((link) => (
+          <NavLink
+            to={`/kanban/${id}/${link.url}`}
+            key={link.id}
+            className={({ isActive }) =>
+              twMerge(
+                `group mb-2 flex cursor-pointer select-none items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800 ${
+                  isActive && "bg-gray-200 dark:bg-gray-800"
+                }`,
+              )
+            }
+          >
+            <link.icon className="h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
+            <span className={`ml-3 text-sm ${collapse && "hidden"}`}>
+              {link.label}
+            </span>
+          </NavLink>
+        ))}
+        <NavLink
+          to={`/kanban/${id}/notifications`}
+          className={({ isActive }) =>
+            twMerge(
+              `group relative mb-2 flex cursor-pointer select-none items-center rounded-lg p-2 text-gray-900 hover:bg-gray-100 dark:text-white dark:hover:bg-gray-800 ${
+                isActive && "bg-gray-200 dark:bg-gray-800"
+              }`,
+            )
+          }
+        >
+          <span className="absolute top-0 flex h-4 w-4 items-center justify-center rounded-full bg-red-500 text-xs text-white ">
+            {
+              notifications.filter(
+                (notification) => notification.status === false,
+              ).length
+            }
+          </span>
+          <BellIcon className="h-5 w-5 text-gray-500 transition duration-75 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white" />
+          <span className={`ml-3 text-sm ${collapse && "hidden"}`}>
+            Notifications
+          </span>
+        </NavLink>
       </div>
     </div>
   );

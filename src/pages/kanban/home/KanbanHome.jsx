@@ -9,9 +9,10 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import AddMembersDropdown from "../../../components/kanban/board/dropdowns/AddMembersDropdown";
 import getAPIData from "../../../hooks/getAPIData";
-import Skeleton from "react-loading-skeleton";
+import postAPIData from "../../../hooks/postAPIData";
 import Loader from "../../../components/Loader";
 import Paragraph from "../../../components/texts/Paragraph";
+import { notifyError, notifySuccess } from "../../../utils/toastsPopup";
 
 const KanbanHome = () => {
   const { user } = useSelector((store) => store.user);
@@ -24,7 +25,7 @@ const KanbanHome = () => {
   const [description, setDescription] = useState("");
   const [leadInfo, setLeadInfo] = useState("");
 
-  // get project from custom hook
+  // get projects
   const { data, loading, error } = getAPIData(
     `${import.meta.env.VITE_NODE_API}/kanban/project`,
     {
@@ -41,33 +42,51 @@ const KanbanHome = () => {
   }, [data, loading, error]);
 
   // create projects
+  const {
+    data: createProjectData,
+    loading: createProjectLoading,
+    error: createProjectError,
+    sendData,
+  } = postAPIData();
+
   const handleCreateProject = async () => {
+    if (title === "" || description === "" || leadInfo === "") {
+      return notifyError("All fields are required.");
+    }
+
     let membersIds = [user._id];
 
-    const res = await axios.post(
+    await sendData(
       `${import.meta.env.VITE_NODE_API}/kanban/project`,
+      {
+        Authorization: `Bearer ${user._id}`,
+      },
       {
         name: title,
         description: description,
         members: membersIds,
         lead: leadInfo._id,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${user._id}`,
-        },
-      },
     );
-
-    const data = { ...res.data, lead: leadInfo };
-
-    setTitle("");
-    setDescription("");
-    setLeadInfo("");
-    setOpenModal(false);
-
-    setProjects([...projects, data]);
   };
+
+  useEffect(() => {
+    if (createProjectData) {
+      const data = { ...createProjectData, lead: leadInfo };
+
+      setTitle("");
+      setDescription("");
+      setLeadInfo("");
+      setOpenModal(false);
+
+      setProjects([...projects, data]);
+
+      notifySuccess("Project created successfully.");
+    }
+    if (createProjectError) {
+      notifyError("Could not create project, try again later.");
+    }
+  }, [createProjectData, createProjectError]);
 
   return (
     <Layout>
@@ -109,6 +128,7 @@ const KanbanHome = () => {
                 radius={"lg"}
                 classes={"-mt-2"}
                 onclick={handleCreateProject}
+                disable={createProjectLoading}
               />
             </>
           }
