@@ -1,16 +1,19 @@
 import { Edit2Icon, Trash2Icon } from "lucide-react";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import Paragraph from "../../../components/texts/Paragraph";
+import Paragraph from "../../texts/Paragraph";
 import deleteAPIData from "../../../hooks/deleteAPIData";
 import { useDispatch, useSelector } from "react-redux";
 import { notifyError, notifySuccess } from "../../../utils/toastsPopup";
 import { deleteBlog } from "../../../features/dashboard/dashboardSlice";
+import EditBlog from "./EditBlog";
 
 const Blog = ({ blog }) => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((store) => store.user);
+
+  const [openModal, setOpenModal] = useState(false);
 
   const { loading, data, error, deleteData } = deleteAPIData();
 
@@ -50,9 +53,11 @@ const Blog = ({ blog }) => {
           <Trash2Icon className="h-3 w-3" onClick={handleDeleteBlog} />
         </div>
         <div className="cursor-pointer rounded-md bg-green-100 p-1 dark:bg-green-700 dark:text-green-300">
-          <Edit2Icon className="h-3 w-3" />
+          <Edit2Icon className="h-3 w-3" onClick={() => setOpenModal(true)} />
         </div>
       </div>
+
+      <EditBlog openModal={openModal} setOpenModal={setOpenModal} blog={blog} />
     </article>
   );
 };

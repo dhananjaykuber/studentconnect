@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Dashboard from "../Dashboard";
-import Blog from "./Blog";
+import Blog from "../../../components/dashboard/blogs/Blog";
 import getAPIData from "../../../hooks/getAPIData";
 import { useDispatch, useSelector } from "react-redux";
 import { FaSpinner } from "react-icons/fa";
@@ -15,13 +15,14 @@ const DashboardBlogs = () => {
   const { data, loading, error } = getAPIData(
     `${import.meta.env.VITE_DJANGO_API}/blogs/user-blogs/`,
     {
-      Authorization: `Token ${user.token}`,
+      headers: {
+        Authorization: `Token ${user?.token}`,
+      },
     },
   );
 
   useEffect(() => {
     if (!loading && !error) {
-      console.log(data);
       dispatch(setBlogs(data.blogs));
     }
   }, [data, loading, error]);
@@ -34,7 +35,7 @@ const DashboardBlogs = () => {
             <FaSpinner className="h-4 w-4 animate-spin text-gray-800 dark:text-gray-300" />
             Loading...
           </div>
-        ) : blogs?.length <= 0 ? (
+        ) : !blogs || blogs?.length <= 0 ? (
           <div className="flex items-center justify-center gap-2 text-sm font-medium dark:text-gray-300">
             No Blogs
           </div>

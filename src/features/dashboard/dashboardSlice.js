@@ -16,9 +16,12 @@ const dashboardSlice = createSlice({
         (blog) => blog.blog_id !== action.payload,
       );
     },
+    addBlog: (state, action) => {
+      state.blogs.push(action.payload);
+    },
   },
 });
 
-export const { setBlogs, deleteBlog } = dashboardSlice.actions;
+export const { setBlogs, deleteBlog, addBlog } = dashboardSlice.actions;
 
 export default dashboardSlice.reducer;

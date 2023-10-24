@@ -1,7 +1,13 @@
 import React from "react";
+import Layout from "../../../components/Layout";
+import Heading from "../../../components/texts/Headings";
 
 const Blog = () => {
-  return <div>Blog</div>;
+  return (
+    <Layout>
+      <Heading level={"3"}>SIngle Blog</Heading>
+    </Layout>
+  );
 };
 
 export default Blog;

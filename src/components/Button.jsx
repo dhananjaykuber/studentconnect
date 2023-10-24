@@ -24,7 +24,7 @@ const Button = ({
     >
       {leftIcon && leftIcon}
       {label}{" "}
-      {disable && (
+      {disable == true && (
         <FaSpinner className="h-4 w-4 animate-spin text-gray-800 dark:text-gray-300" />
       )}
       {rightIcon && rightIcon}
