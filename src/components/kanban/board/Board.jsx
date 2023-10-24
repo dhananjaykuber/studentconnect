@@ -58,7 +58,7 @@ const Board = () => {
   };
 
   return (
-    <div className="overflow-hidden p-3 px-6">
+    <div className="overflow-hidden p-3 px-4 md:px-6">
       <Header />
       <div className="mt-10 flex gap-5 overflow-x-auto">
         <DragDropContext onDragEnd={onDragEnd}>

@@ -1,30 +1,29 @@
 import { useState } from "react";
 import axios from "axios";
 
-const postAPIData = () => {
+const deleteAPIData = () => {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const sendData = async (url, headers, dataToSend) => {
+  const deleteData = async (url, headers) => {
     setError(null);
     setData(null);
 
     setLoading(true);
 
     try {
-      const res = await axios.post(url, dataToSend, { headers });
+      const res = await axios.delete(url, { headers });
 
       setData(res.data);
     } catch (error) {
-      console.log(error);
       setError(error);
     } finally {
       setLoading(false);
     }
   };
 
-  return { loading, data, error, sendData };
+  return { loading, data, error, deleteData };
 };
 
-export default postAPIData;
+export default deleteAPIData;

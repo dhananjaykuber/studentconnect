@@ -9,7 +9,7 @@ const Notifications = () => {
   const { notifications } = useSelector((store) => store.kanban);
 
   return (
-    <div className="w-full overflow-hidden p-3 px-6">
+    <div className="w-full overflow-hidden p-3 px-4 md:px-6">
       <Breadcrumb
         toLink={"#"}
         toText={"Projects"}

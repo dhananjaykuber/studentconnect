@@ -37,12 +37,6 @@ const ThemeSwitcher = () => {
   const switcherButton = useRef(null);
 
   const [activeTheme, setActiveTheme] = useState("light");
-  const [showDropdown, setShowDropdown] = useState(false);
-
-  const dropdownMenuClasses = twMerge(
-    "min-w-max absolute bg-white text-base z-[1000] overflow-hidden float-left list-none text-left rounded-lg shadow-lg m-0 bg-clip-padding border-none dark:bg-gray-800",
-    showDropdown ? "block -translate-x-full -translate-y-full" : "hidden",
-  );
 
   useEffect(() => {
     const theme = localStorage.getItem("theme");
@@ -50,7 +44,6 @@ const ThemeSwitcher = () => {
     document.documentElement.classList.add(theme);
 
     setActiveTheme(theme);
-    setShowDropdown(false);
 
     dispatch(setTheme(theme));
   }, []);
@@ -60,7 +53,6 @@ const ThemeSwitcher = () => {
     localStorage.theme = "dark";
 
     setActiveTheme("dark");
-    setShowDropdown(false);
     dispatch(setTheme("dark"));
   };
 
@@ -69,15 +61,7 @@ const ThemeSwitcher = () => {
     localStorage.theme = "light";
 
     setActiveTheme("light");
-    setShowDropdown(false);
     dispatch(setTheme("light"));
-  };
-
-  const handleClickOutside = (event) => {
-    if (!switcher.current?.contains(event.target)) {
-      setShowDropdown(false);
-      return;
-    }
   };
 
   useEffect(() => {
@@ -90,13 +74,6 @@ const ThemeSwitcher = () => {
     } else {
       setLightTheme();
     }
-  }, []);
-
-  useEffect(() => {
-    window.addEventListener("click", handleClickOutside);
-    return () => {
-      window.removeEventListener("click", handleClickOutside);
-    };
   }, []);
 
   return (
@@ -113,52 +90,16 @@ const ThemeSwitcher = () => {
             type="button"
             id="themeSwitcher"
             aria-expanded="false"
-            onClick={() => setShowDropdown(!showDropdown)}
+            onClick={() => {
+              if (activeTheme === "light") {
+                setDarkTheme();
+              } else {
+                setLightTheme();
+              }
+            }}
           >
             {svg[activeTheme]}
           </button>
-          <ul className={dropdownMenuClasses} aria-labelledby="themeSwitcher">
-            <li>
-              <a
-                className="block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 focus:bg-neutral-200 focus:outline-none active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-100 dark:hover:bg-neutral-600 focus:dark:bg-neutral-600"
-                style={
-                  activeTheme === "light" ? { color: "rgb(101,144,213)" } : {}
-                }
-                data-theme="light"
-                onClick={setLightTheme}
-              >
-                <div className="pointer-events-none">
-                  <div
-                    className="inline-block w-[24px] text-center"
-                    data-theme-icon="light"
-                  >
-                    {svg.light}
-                  </div>
-                  <span data-theme-name="light">Light</span>
-                </div>
-              </a>
-            </li>
-            <li>
-              <a
-                className="block w-full whitespace-nowrap bg-transparent px-3 py-2 text-sm font-normal text-neutral-700 hover:bg-neutral-100 focus:bg-neutral-200 focus:outline-none active:text-neutral-800 active:no-underline disabled:pointer-events-none disabled:bg-transparent disabled:text-neutral-400 dark:text-neutral-100 dark:hover:bg-neutral-600 focus:dark:bg-neutral-600"
-                style={
-                  activeTheme === "dark" ? { color: "rgb(101,144,213)" } : {}
-                }
-                data-theme="dark"
-                onClick={setDarkTheme}
-              >
-                <div className="pointer-events-none">
-                  <div
-                    className="inline-block w-[24px] text-center"
-                    data-theme-icon="dark"
-                  >
-                    {svg.dark}
-                  </div>
-                  <span data-theme-name="dark">Dark</span>
-                </div>
-              </a>
-            </li>
-          </ul>
         </div>
       </div>
     </>

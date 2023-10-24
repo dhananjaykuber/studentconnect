@@ -1,43 +1,18 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Layout from "../../components/Layout";
 import Heading from "../../components/texts/Headings";
 import FormInput from "../../components/form/FormInput";
 import JoditEditor from "jodit-react";
 import { ImagePlusIcon, UploadIcon, X } from "lucide-react";
-import BlogCategoryDropdown from "../../components/blogs/BlogCategoryDropdown";
 import Button from "../../components/Button";
 import { storage } from "../../utils/firebase";
 import postAPIData from "../../hooks/postAPIData";
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage";
 import { useSelector } from "react-redux";
 import { FaSpinner } from "react-icons/fa";
-import { notifySuccess } from "../../utils/toastsPopup";
-import { resetServerContext } from "react-beautiful-dnd";
-
-const blogCategories = [
-  "Engineering",
-  "Programming",
-  "Technology",
-  "Travel",
-  "Food",
-  "Health and Fitness",
-  "Fashion",
-  "Lifestyle",
-  "Entertainment",
-  "Education",
-  "Business",
-  "Finance",
-  "Science",
-  "Art and Design",
-  "Sports",
-  "Music",
-  "Books",
-  "Personal Development",
-  "Parenting",
-  "DIY and Crafts",
-  "Home Improvement",
-  "Gaming",
-];
+import { notifyError, notifySuccess } from "../../utils/toastsPopup";
+import { blogCategories } from "../../utils/constants";
+import capitalize from "../../utils/capitalize";
 
 const AddBlog = () => {
   const { user } = useSelector((store) => store.user);
@@ -46,13 +21,12 @@ const AddBlog = () => {
 
   const [title, setTitle] = useState("");
   const [file, setFile] = useState(null);
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState(blogCategories[0]);
   const [description, setDescription] = useState("");
 
   const [fileLoading, setFileLoading] = useState(false);
 
-  // custom post data hook
-  const { loading, error, sendData } = postAPIData();
+  const { loading, data, error, sendData } = postAPIData();
 
   const handleFileSelect = (e) => {
     const selectedFile = e.target.files[0];
@@ -76,7 +50,12 @@ const AddBlog = () => {
   const handleUploadImage = async () => {
     setFileLoading(true);
 
-    const time = user._id + Date.now();
+    if (title === "" || file == null || tags == null || description === "") {
+      setFileLoading(false);
+      return notifyError("All field is required.");
+    }
+
+    const time = user.user_id + Date.now();
 
     const imageReference = ref(storage, "blogs/" + time);
 
@@ -84,30 +63,42 @@ const AddBlog = () => {
       const snapshot = await uploadBytesResumable(imageReference, file);
       const url = await getDownloadURL(snapshot.ref);
 
-      const res = await sendData(
-        `${import.meta.env.VITE_NODE_API}/blog`,
+      await sendData(
+        `${import.meta.env.VITE_DJANGO_API}/blogs/create/`,
         {
-          Authorization: `Bearer ${user._id}`,
+          Authorization: `Token ${user.token}`,
         },
         {
           title: title,
           description: description,
           banner: url,
-          bannerRef: time,
-          bannerType: snapshot.metadata.contentType?.split("/")[1],
-          categories: tags,
+          banner_ref: time,
+          banner_type: snapshot.metadata.contentType?.split("/")[1],
+          category: tags,
         },
       );
+      setTitle("");
+      setFile(null);
+      setTags(null);
+      setDescription("");
 
-      console.log(res);
-
-      notifySuccess("Blog added.");
+      document.getElementById("previewImage").src = "";
+      document.getElementById("previewImage").classList.add("hidden");
     } catch (error) {
-      console.log(error);
+      notifyError("Could not create blog, try again later.");
     } finally {
       setFileLoading(false);
     }
   };
+
+  useEffect(() => {
+    if (data) {
+      notifySuccess("Blog published successfully.");
+    }
+    if (error) {
+      notifyError("Could not create blog, try again later.");
+    }
+  }, [data, error]);
 
   return (
     <Layout>
@@ -187,11 +178,17 @@ const AddBlog = () => {
             <label className="mb-1 block text-sm font-semibold text-gray-900 dark:font-medium dark:text-gray-100">
               Select Tags
             </label>
-            <BlogCategoryDropdown
-              blogCategories={blogCategories}
-              tags={tags}
-              setTags={setTags}
-            />
+            <select
+              onChange={(e) => setTags(e.target.value)}
+              className="w-full rounded-lg  border border-gray-400 p-2 text-sm outline-none dark:bg-gray-700 dark:text-gray-300"
+              defaultValue={blogCategories[0]}
+            >
+              {blogCategories.map((category, index) => (
+                <option key={index} value={category}>
+                  {capitalize(category)}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div>

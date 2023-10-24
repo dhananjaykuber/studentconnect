@@ -4,6 +4,7 @@ import userReducer from "./features/user/userSlice";
 import kanbanReducer from "./features/kanban/kanbanSlice";
 import sidebarReducer from "./features/kanban/sidebarSlice";
 import filterReducer from "./features/kanban/filterSlice";
+import dashboardReducer from "./features/dashboard/dashboardSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,5 +13,6 @@ export const store = configureStore({
     kanban: kanbanReducer,
     kanbanSidebar: sidebarReducer,
     kanbanFilter: filterReducer,
+    dashboard: dashboardReducer,
   },
 });

@@ -1,9 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import "react-toastify/dist/ReactToastify.css";
-import { ToastContainer } from "react-toastify";
 import "react-loading-skeleton/dist/skeleton.css";
+import { Toaster } from "react-hot-toast";
 
 import { store } from "./store.js";
 import { Provider } from "react-redux";
@@ -92,7 +91,27 @@ const router = createBrowserRouter(
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <Provider store={store}>
+    <Toaster
+      position="top-center"
+      reverseOrder={false}
+      toastOptions={{
+        duration: 5000,
+        success: {
+          duration: 3000,
+          style: {
+            background: "#0bb42a",
+            color: "#fff",
+          },
+        },
+        error: {
+          duration: 3000,
+          style: {
+            background: "#d82a0b",
+            color: "#fff",
+          },
+        },
+      }}
+    />
     <RouterProvider router={router} />
-    <ToastContainer />
   </Provider>,
 );

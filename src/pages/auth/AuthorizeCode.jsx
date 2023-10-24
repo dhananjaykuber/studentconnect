@@ -26,8 +26,6 @@ const AuthorizeCode = () => {
 
     const handleSendCode = async () => {
       if (params.provider) {
-        console.log(code);
-
         try {
           const res = await axios.get(
             `${import.meta.env.VITE_DJANGO_API}/authentication/o/auth/${
@@ -44,6 +42,7 @@ const AuthorizeCode = () => {
           console.log(res);
         } catch (error) {
           console.log(error);
+          navigate(-1);
         }
       }
     };

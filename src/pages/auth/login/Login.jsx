@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { setUser } from "../../../features/user/userSlice";
 import SocialLoginAndSignup from "../../../components/auth/SocialLoginAndSignup";
+import AuthFormFooter from "../../../components/auth/AuthFormFooter";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -80,6 +81,8 @@ const Login = () => {
         <Button label={"Login"} radius={"lg"} onclick={handleLogin} />
 
         <SocialLoginAndSignup signup={false} />
+
+        <AuthFormFooter text={"Don't have an account?"} url={"signup"} />
       </Form>
     </Layout>
   );

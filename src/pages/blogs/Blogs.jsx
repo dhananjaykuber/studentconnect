@@ -1,8 +1,25 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import SingleArticle from "../../components/blogs/SingleArticle";
 import Layout from "../../components/Layout";
+import getAPIData from "../../hooks/getAPIData";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
+import { FaSpinner } from "react-icons/fa";
 
 const Blogs = () => {
+  const [blogs, setBlogs] = useState(null);
+
+  const { data, loading, error } = getAPIData(
+    `${import.meta.env.VITE_DJANGO_API}/blogs/get/`,
+  );
+
+  useEffect(() => {
+    if (!loading && !error) {
+      console.log(data);
+      setBlogs(data.blogs);
+    }
+  }, [data, loading, error]);
+
   return (
     <Layout>
       <section className="bg-white dark:bg-gray-900">
@@ -17,12 +34,18 @@ const Blogs = () => {
               voluptatem!
             </p>
           </div>
-          <div className="grid gap-8 lg:grid-cols-2">
-            <SingleArticle />
-            <SingleArticle />
-            <SingleArticle />
-            <SingleArticle />
-          </div>
+          {loading ? (
+            <div className="flex items-center justify-center gap-2 text-sm font-medium dark:text-gray-300">
+              <FaSpinner className="h-4 w-4 animate-spin text-gray-800 dark:text-gray-300" />
+              Loading...
+            </div>
+          ) : (
+            <div className="grid gap-8 lg:grid-cols-2">
+              {blogs?.map((blog) => (
+                <SingleArticle key={blog.blog_id} blog={blog} />
+              ))}
+            </div>
+          )}
         </div>
 
         <nav aria-label="page navigation" className="flex justify-center ">

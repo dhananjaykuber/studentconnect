@@ -10,6 +10,8 @@ import { useSelector } from "react-redux";
 import AddMembersDropdown from "../../../components/kanban/board/dropdowns/AddMembersDropdown";
 import getAPIData from "../../../hooks/getAPIData";
 import Skeleton from "react-loading-skeleton";
+import Loader from "../../../components/Loader";
+import Paragraph from "../../../components/texts/Paragraph";
 
 const KanbanHome = () => {
   const { user } = useSelector((store) => store.user);
@@ -125,7 +127,9 @@ const KanbanHome = () => {
         </div>
 
         {loading ? (
-          <Skeleton count={5} />
+          <Loader />
+        ) : projects?.length <= 0 ? (
+          <Paragraph>No projects found. Please create new projects</Paragraph>
         ) : (
           <div className="relative overflow-x-auto rounded-lg border border-gray-200 bg-white shadow-sm dark:border-none dark:bg-gray-800">
             <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
@@ -140,7 +144,7 @@ const KanbanHome = () => {
                 </tr>
               </thead>
               <tbody>
-                {projects?.map((project) => (
+                {projects.map((project) => (
                   <tr
                     className="border-b bg-white text-gray-900 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-400"
                     key={project._id}

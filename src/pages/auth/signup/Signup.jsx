@@ -17,6 +17,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { setUser } from "../../../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 import SocialLoginAndSignup from "../../../components/auth/SocialLoginAndSignup";
+import AuthFormFooter from "../../../components/auth/AuthFormFooter";
 
 const Signup = () => {
   const dispatch = useDispatch();
@@ -120,6 +121,8 @@ const Signup = () => {
         <Button label={"Signup"} radius={"lg"} onclick={handleRegister} />
 
         <SocialLoginAndSignup signup={true} />
+
+        <AuthFormFooter text={"Already have an account?"} url={"login"} />
       </Form>
     </Layout>
   );
