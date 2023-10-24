@@ -62,6 +62,7 @@ const router = createBrowserRouter(
         <Route path=":id" element={<Blog />} />
       </Route>
 
+      {/* Add new routes for kanban dashoard */}
       {/* Kanban */}
       <Route path="kanban" element={<KanbanHome />} />
       <Route path="kanban/:id" element={<KanbanBoard />} />
