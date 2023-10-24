@@ -7,7 +7,7 @@ import {
   removeUser,
   setDate,
   setUsers,
-} from "../../../../features/kanban/filterSlice";
+} from "../../../../features/kanban/kanbanSlice";
 import Button from "../../../Button";
 
 const Filters = () => {

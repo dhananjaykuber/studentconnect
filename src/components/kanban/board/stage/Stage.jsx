@@ -7,7 +7,7 @@ import EditStage from "./EditStage";
 import { useSelector } from "react-redux";
 
 const Stage = ({ title, tasks, stageId, stageIndex }) => {
-  const { users } = useSelector((store) => store.kanbanFilter);
+  const { users } = useSelector((store) => store.kanban);
 
   const [openCreateModal, setOpenCreateModal] = useState(false);
   const [openStageEditModal, setOpenStageEditModal] = useState(false);

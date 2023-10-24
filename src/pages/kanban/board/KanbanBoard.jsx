@@ -1,95 +1,127 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../../../components/kanban/sidebar/Sidebar";
-import Layout from "../../../components/Layout";
-import Board from "../../../components/kanban/board/Board";
-import Settings from "../../../components/kanban/settings/Settings";
-import { useNavigate, useParams } from "react-router-dom";
+import Header from "../../../components/kanban/board/header/Header";
+import Stage from "../../../components/kanban/board/stage/Stage";
+import { PlusIcon } from "lucide-react";
+import CreateStage from "../../../components/kanban/board/stage/CreateStage";
 import { useDispatch, useSelector } from "react-redux";
-import io from "socket.io-client";
-import axios from "axios";
+import { DragDropContext } from "react-beautiful-dnd";
 import {
-  addNotification,
-  setNotifications,
+  moveTask,
   setProjectDetails,
   setProjectStages,
 } from "../../../features/kanban/kanbanSlice";
-import Notifications from "../../../components/kanban/notification/Notifications";
+import axios from "axios";
+import KanbanLayout from "../KanbanLayout";
+import getAPIData from "../../../hooks/getAPIData";
+import { useParams } from "react-router-dom";
+import Loader from "../../../components/Loader";
 
 const KanbanBoard = () => {
   const { id } = useParams();
 
   const dispatch = useDispatch();
 
-  const navigate = useNavigate();
-
   const { user } = useSelector((store) => store.user);
+  const { stages } = useSelector((store) => store.kanban);
+  const { details } = useSelector((store) => store.kanban);
 
-  const [screen, setScreen] = useState("Board");
+  const [openModal, setOpenModal] = useState(false);
+
+  const { data, loading, error } = getAPIData(
+    `${import.meta.env.VITE_NODE_API}/kanban/project/${id}`,
+    {
+      headers: {
+        Authorization: `Bearer ${user?._id}`,
+      },
+    },
+  );
 
   useEffect(() => {
-    // get the project related data (details, stages)
-    const getProjectDetails = async () => {
-      try {
-        const res = await axios.get(
-          `${import.meta.env.VITE_NODE_API}/kanban/project/${id}`,
-          {
-            headers: {
-              Authorization: `Bearer ${user._id}`,
-            },
-          },
-        );
+    if (!loading && !error) {
+      dispatch(setProjectDetails(data.project));
+      dispatch(setProjectStages(data.stages));
+    }
+  }, [data, error]);
 
-        dispatch(setProjectDetails(res.data.project));
-        dispatch(setProjectStages(res.data.stages));
+  const onDragEnd = async (result) => {
+    const { source, destination } = result;
 
-        const notifi = await axios.get(
-          `${import.meta.env.VITE_NODE_API}/kanban/notification/${
-            res.data.project._id
-          }`,
-          {
-            headers: {
-              Authorization: `Bearer ${user._id}`,
-            },
-          },
-        );
+    if (!destination) {
+      return;
+    }
 
-        dispatch(setNotifications(notifi.data));
-      } catch (error) {
-        // current user is not involved in this project
-        navigate("/kanban");
-      }
-    };
-    getProjectDetails();
-  }, []);
+    if (
+      source.index === destination.index &&
+      source.droppableId === destination.droppableId
+    ) {
+      return;
+    }
+    if (source.droppableId === destination.droppableId) {
+      dispatch(moveTask(result));
+      return;
+    }
 
-  // Socket Connection
-  useEffect(() => {
-    const socket = io("http://localhost:3000");
+    const stageIndex = stages.findIndex(
+      (stage) => stage._id === source.droppableId,
+    );
+    const taskId = stages[stageIndex].tasks[source.index]._id;
 
-    socket.on(`notification_${user._id}`, (notification) => {
-      dispatch(addNotification(JSON.parse(notification)));
-    });
+    await axios.put(
+      `${import.meta.env.VITE_NODE_API}/kanban/move-task/${taskId}`,
+      {
+        destinationStage: destination.droppableId,
+        title: stages[stageIndex].title,
+        projectId: details,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${user._id}`,
+        },
+      },
+    );
 
-    return () => {
-      socket.disconnect();
-    };
-  }, []);
+    dispatch(moveTask(result));
+  };
 
   return (
-    <Layout classes={"mx-0 px-0 py-0 min-w-full"}>
-      <div className="flex">
-        <Sidebar screen={screen} setScreen={setScreen} />
-        {screen === "Board" ? (
-          <Board />
-        ) : screen === "Project Settings" ? (
-          <Settings />
-        ) : screen === "Notifications" ? (
-          <Notifications />
-        ) : (
-          <Board />
-        )}
-      </div>
-    </Layout>
+    <KanbanLayout>
+      {loading ? (
+        <div className="flex h-[80vh] w-full items-center justify-center">
+          <Loader />
+        </div>
+      ) : (
+        <div className="overflow-hidden p-3 px-4 md:px-6">
+          <Header />
+          <div className="mt-10 flex gap-5 overflow-x-auto">
+            <DragDropContext onDragEnd={onDragEnd}>
+              {stages?.map((stage, index) => (
+                <Stage
+                  key={stage._id}
+                  title={stage.title}
+                  tasks={stage.tasks}
+                  stageId={stage._id}
+                  stageIndex={index}
+                />
+              ))}
+            </DragDropContext>
+
+            <div className="select-none">
+              <div className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Add another group
+              </div>
+              <div
+                className="mt-4 flex h-fit min-w-[300px] cursor-pointer items-center justify-center gap-2 rounded-lg border-2 border-dashed border-gray-300 p-3 py-10 text-gray-500 hover:bg-gray-100 dark:border-gray-500 dark:hover:bg-gray-800 lg:min-w-[350px]"
+                onClick={() => setOpenModal(true)}
+              >
+                <PlusIcon className="h-6 w-6" />
+              </div>
+
+              <CreateStage openModal={openModal} setOpenModal={setOpenModal} />
+            </div>
+          </div>
+        </div>
+      )}
+    </KanbanLayout>
   );
 };
 

@@ -27,7 +27,7 @@ const monthNames = [
 const Task = ({ task, index, stageIndex }) => {
   const [searchParam] = useSearchParams();
 
-  const { users, date } = useSelector((store) => store.kanbanFilter);
+  const { users, date } = useSelector((store) => store.kanban);
 
   const [fullDescriptionModal, setFullDescriptionModal] = useState(false);
   const [editModal, setEditModal] = useState(false);

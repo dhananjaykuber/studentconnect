@@ -28,7 +28,7 @@ const Notification = ({ notification }) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${user._id}`,
+          Authorization: `Bearer ${user?._id}`,
         },
       },
     );
@@ -37,7 +37,7 @@ const Notification = ({ notification }) => {
   };
 
   const handleDeleteNotification = async (_id) => {
-    const res = await axios.delete(
+    await axios.delete(
       `${import.meta.env.VITE_NODE_API}/kanban/notification/${_id}`,
       {
         headers: {
@@ -82,7 +82,7 @@ const Notification = ({ notification }) => {
           </p>
           <Link
             to={`${import.meta.env.VITE_ROOT_URL}/kanban/${
-              details._id
+              details?._id
             }?taskId=${notification.task}`}
             target="_blank"
             className="flex"

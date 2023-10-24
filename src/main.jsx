@@ -27,15 +27,17 @@ import OpenContributions from "./pages/open_contributions/OpenContributions.jsx"
 import AuthorizeCode from "./pages/auth/AuthorizeCode.jsx";
 import Blogs from "./pages/blogs/Blogs.jsx";
 import Blog from "./pages/blogs/blog/Blog.jsx";
-import _404 from "./pages/error/_404";
-import ProfileById from "./pages/profile/ProfileById";
-import GenerateQuiz from "./pages/automatic_quiz/GenerateQuiz";
-import AutomaticQuiz from "./pages/automatic_quiz/AutomaticQuiz";
-import AutomaticOpenEnded from "./pages/automatic_quiz/AutomaticOpenEnded";
-import Settings from "./pages/dashboard/settings/Settings";
-import DashboardBlogs from "./pages/dashboard/blogs/DashboardBlogs";
-import DashboardProjects from "./pages/dashboard/projects/DashboardProjects";
-import AddBlog from "./pages/write_blog/AddBlog";
+import _404 from "./pages/error/_404.jsx";
+import ProfileById from "./pages/profile/ProfileById.jsx";
+import GenerateQuiz from "./pages/automatic_quiz/GenerateQuiz.jsx";
+import AutomaticQuiz from "./pages/automatic_quiz/AutomaticQuiz.jsx";
+import AutomaticOpenEnded from "./pages/automatic_quiz/AutomaticOpenEnded.jsx";
+import Settings from "./pages/dashboard/settings/Settings.jsx";
+import DashboardBlogs from "./pages/dashboard/blogs/DashboardBlogs.jsx";
+import DashboardProjects from "./pages/dashboard/projects/DashboardProjects.jsx";
+import AddBlog from "./pages/write_blog/AddBlog.jsx";
+import KanbanSettings from "./pages/kanban/settings/KanbanSettings.jsx";
+import KanbanNotifications from "./pages/kanban/notifications/KanbanNotifications.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -66,6 +68,12 @@ const router = createBrowserRouter(
       {/* Kanban */}
       <Route path="kanban" element={<KanbanHome />} />
       <Route path="kanban/:id" element={<KanbanBoard />} />
+      <Route path="kanban/:id/board" element={<KanbanBoard />} />
+      <Route path="kanban/:id/settings" element={<KanbanSettings />} />
+      <Route
+        path="kanban/:id/notifications"
+        element={<KanbanNotifications />}
+      />
 
       {/* Open Contributions */}
       <Route path="open-contributions" element={<OpenContributions />} />
