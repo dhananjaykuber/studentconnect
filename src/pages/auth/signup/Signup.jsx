@@ -63,7 +63,7 @@ const Signup = () => {
 
       dispatch(setUser({ token: res.data.token, ...res.data.user }));
 
-      navigate("/profile");
+      navigate("/dashboard");
     } catch (error) {
       if (error.response?.data?.error[0]?.email) {
         setEmailError(error.response?.data?.error[0]?.email);

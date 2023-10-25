@@ -31,13 +31,14 @@ const KanbanBoard = () => {
     `${import.meta.env.VITE_NODE_API}/kanban/project/${id}`,
     {
       headers: {
-        Authorization: `Bearer ${user?._id}`,
+        Authorization: `Bearer ${user?.user_id}`,
       },
     },
   );
 
   useEffect(() => {
     if (!loading && !error) {
+      console.log(data.project);
       dispatch(setProjectDetails(data.project));
       dispatch(setProjectStages(data.stages));
     }
@@ -75,7 +76,7 @@ const KanbanBoard = () => {
       },
       {
         headers: {
-          Authorization: `Bearer ${user._id}`,
+          Authorization: `Bearer ${user.user_id}`,
         },
       },
     );

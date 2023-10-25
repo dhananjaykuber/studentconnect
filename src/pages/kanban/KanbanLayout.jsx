@@ -21,7 +21,7 @@ const KanbanLayout = ({ children }) => {
     `${import.meta.env.VITE_NODE_API}/kanban/notification/${id}`,
     {
       headers: {
-        Authorization: `Bearer ${user?._id}`,
+        Authorization: `Bearer ${user?.user_id}`,
       },
     },
   );
@@ -32,11 +32,13 @@ const KanbanLayout = ({ children }) => {
     }
   }, [data, error]);
 
+  console.log(`notification_${user.user_id}`);
+
   // Socket Connection
   useEffect(() => {
     const socket = io("http://localhost:3000");
 
-    socket.on(`notification_${user._id}`, (notification) => {
+    socket.on(`notification_${user.user_id}`, (notification) => {
       dispatch(addNotification(JSON.parse(notification)));
     });
 

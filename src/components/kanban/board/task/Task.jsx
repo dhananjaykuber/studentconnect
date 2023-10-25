@@ -104,14 +104,14 @@ const Task = ({ task, index, stageIndex }) => {
             </div>
           )}
         </Draggable>
-        <EditTask
+        {/* <EditTask
           openModal={editModal}
           setOpenModal={setEditModal}
           isDragDisabled={true}
           stageIndex={stageIndex}
           task={task}
           taskIndex={index}
-        />
+        /> */}
         <FullTask
           openModal={fullDescriptionModal}
           setOpenModal={setFullDescriptionModal}

@@ -42,7 +42,7 @@ const AuthorizeCode = () => {
           console.log(res);
         } catch (error) {
           console.log(error);
-          navigate(-1);
+          // navigate(-1);
         }
       }
     };

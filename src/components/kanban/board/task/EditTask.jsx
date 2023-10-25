@@ -24,7 +24,9 @@ const EditTask = ({ openModal, setOpenModal, stageIndex, task, taskIndex }) => {
 
   const handleUpdateTask = async () => {
     let contributorsIds = [];
-    contributors?.map((contributor) => contributorsIds.push(contributor._id));
+    contributors?.map((contributor) =>
+      contributorsIds.push(contributor.user_id),
+    );
 
     const res = await axios.put(
       `${import.meta.env.VITE_NODE_API}/kanban/task/${task._id}`,
@@ -37,7 +39,7 @@ const EditTask = ({ openModal, setOpenModal, stageIndex, task, taskIndex }) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${user._id}`,
+          Authorization: `Bearer ${user.user_id}`,
         },
       },
     );
@@ -52,7 +54,7 @@ const EditTask = ({ openModal, setOpenModal, stageIndex, task, taskIndex }) => {
       `${import.meta.env.VITE_NODE_API}/kanban/task/${task._id}`,
       {
         headers: {
-          Authorization: `Bearer ${user._id}`,
+          Authorization: `Bearer ${user.user_id}`,
         },
       },
     );

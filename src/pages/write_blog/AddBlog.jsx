@@ -13,6 +13,8 @@ import { FaSpinner } from "react-icons/fa";
 import { notifyError, notifySuccess } from "../../utils/toastsPopup";
 import { blogCategories } from "../../utils/constants";
 import capitalize from "../../utils/capitalize";
+import { Link } from "react-router-dom";
+import JoinImage from "../../../public/iamges/join.svg";
 
 const AddBlog = () => {
   const { user } = useSelector((store) => store.user);
@@ -100,6 +102,24 @@ const AddBlog = () => {
     }
   }, [data, error]);
 
+  if (!user) {
+    return (
+      <Layout
+        classes={
+          "min-h-[80vh] flex items-center gap-10 justify-center md:flex-row flex-col"
+        }
+      >
+        <h4 className="text-center text-base font-medium text-gray-900 dark:text-gray-300">
+          Please Login / Signup to add blog.{" "}
+          <Link className="block underline md:inline" to={"/signup"}>
+            Click here to Signup.
+          </Link>
+        </h4>
+        <img src={JoinImage} alt="hero-image" className="w-[50%] md:w-[20%]" />
+      </Layout>
+    );
+  }
+
   return (
     <Layout>
       <div>
@@ -108,13 +128,7 @@ const AddBlog = () => {
           <Button
             label={loading | fileLoading ? "Publishing" : "Publish"}
             radius={"lg"}
-            leftIcon={
-              loading | fileLoading ? (
-                <FaSpinner className="h-4 w-4 animate-spin" />
-              ) : (
-                <UploadIcon className="h-4 w-4" />
-              )
-            }
+            leftIcon={<UploadIcon className="h-4 w-4" />}
             classes={"px-5"}
             disable={loading | fileLoading}
             onclick={handleUploadImage}

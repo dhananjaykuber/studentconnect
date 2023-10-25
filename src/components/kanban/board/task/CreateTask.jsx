@@ -20,16 +20,20 @@ const CreateTask = ({ openModal, setOpenModal, stageId }) => {
   const [contributors, setContributors] = useState([]);
 
   const handleCreateTask = async () => {
+    console.log(contributors);
+
     let contributorsIds = [];
 
-    contributors?.map((contributor) => contributorsIds.push(contributor._id));
+    contributors?.map((contributor) =>
+      contributorsIds.push(contributor.user_id),
+    );
 
     const res = await axios.post(
       `${import.meta.env.VITE_NODE_API}/kanban/task/${stageId}`,
       {
         title: title,
         description: description,
-        addedBy: user._id,
+        addedBy: user.user_id,
         assignedTo: contributorsIds,
         dueDate: dueDate,
         labels: [""],
@@ -37,7 +41,7 @@ const CreateTask = ({ openModal, setOpenModal, stageId }) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${user._id}`,
+          Authorization: `Bearer ${user.user_id}`,
         },
       },
     );

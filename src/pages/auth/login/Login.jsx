@@ -50,7 +50,7 @@ const Login = () => {
 
       dispatch(setUser({ token: res.data.token, ...res.data.user }));
 
-      navigate("/profile");
+      navigate("/dashboard");
     } catch (error) {
       console.log(error);
     }

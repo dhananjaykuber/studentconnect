@@ -12,7 +12,7 @@ const AssignedToDropdown = ({ contributors, setContributors }) => {
 
   const handleAddContributor = async (data) => {
     if (
-      contributors.filter((contributor) => contributor._id === data._id)
+      contributors.filter((contributor) => contributor.user_id === data.user_id)
         .length <= 0
     ) {
       setContributors([...contributors, data]);

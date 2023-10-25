@@ -3,11 +3,8 @@ import Button from "../../../components/Button";
 import { Link } from "react-router-dom";
 import Modal from "../../../components/kanban/modal/Modal";
 import Layout from "../../../components/Layout";
-import FormInput from "../../../components/form/FormInput";
 import FormTextarea from "../../../components/form/FormTextarea";
-import axios from "axios";
 import { useSelector } from "react-redux";
-import AddMembersDropdown from "../../../components/kanban/board/dropdowns/AddMembersDropdown";
 import getAPIData from "../../../hooks/getAPIData";
 import postAPIData from "../../../hooks/postAPIData";
 import Loader from "../../../components/Loader";
@@ -24,22 +21,48 @@ const KanbanHome = () => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [leadInfo, setLeadInfo] = useState("");
+  const [projectId, setProjectId] = useState("");
+  const [projectUrl, setProjectUrl] = useState("");
 
   // get projects
   const { data, loading, error } = getAPIData(
     `${import.meta.env.VITE_NODE_API}/kanban/project`,
     {
       headers: {
-        Authorization: `Bearer ${user._id}`,
+        Authorization: `Bearer ${user.user_id}`,
       },
     },
   );
 
   useEffect(() => {
     if (!loading && !error) {
+      console.log(data);
       setProjects(data);
     }
   }, [data, loading, error]);
+
+  // get projects for projectdropdown
+  const [dropdownProjects, setDropdownProjects] = useState(null);
+
+  const {
+    data: dropdownData,
+    loading: dropdownLoading,
+    error: dropdownError,
+  } = getAPIData(
+    `${import.meta.env.VITE_DJANGO_API}/projects/get/owner/${user.user_id}/`,
+    {
+      headers: {
+        Authorization: `Token ${user.token}`,
+      },
+    },
+  );
+
+  useEffect(() => {
+    if (!dropdownLoading && !dropdownError) {
+      console.log("Projects: ", dropdownData.projects);
+      setDropdownProjects(dropdownData.projects);
+    }
+  }, [dropdownData, dropdownLoading]);
 
   // create projects
   const {
@@ -54,18 +77,17 @@ const KanbanHome = () => {
       return notifyError("All fields are required.");
     }
 
-    let membersIds = [user._id];
-
     await sendData(
       `${import.meta.env.VITE_NODE_API}/kanban/project`,
       {
-        Authorization: `Bearer ${user._id}`,
+        Authorization: `Bearer ${user.user_id}`,
       },
       {
         name: title,
         description: description,
-        members: membersIds,
-        lead: leadInfo._id,
+        lead: leadInfo,
+        projectId,
+        projectUrl,
       },
     );
   };
@@ -99,14 +121,43 @@ const KanbanHome = () => {
             <>
               <div className="mb-4 grid gap-4 sm:grid-cols-2">
                 <div className="sm:col-span-2">
-                  <FormInput
-                    label="Project Name"
-                    placeholder="Write your team name, project name"
-                    type="text"
-                    required={true}
-                    value={title}
-                    onChange={(text) => setTitle(text)}
-                  />
+                  <div className="mb-3">
+                    <label className="mb-1 block text-sm font-semibold text-gray-900 dark:font-medium dark:text-gray-100">
+                      Select Project
+                    </label>
+                    <select
+                      onChange={(e) => {
+                        const selectedOption =
+                          e.target.options[e.target.selectedIndex];
+                        setTitle(e.target.value);
+                        setDescription(
+                          selectedOption.getAttribute("data-description"),
+                        );
+                        setLeadInfo(selectedOption.getAttribute("data-lead"));
+                        setProjectId(
+                          selectedOption.getAttribute("data-projectId"),
+                        );
+                        setProjectUrl(
+                          selectedOption.getAttribute("data-projectUrl"),
+                        );
+                      }}
+                      className="w-full rounded-lg  border border-gray-400 p-2 text-sm font-medium outline-none dark:bg-gray-700 dark:text-gray-300"
+                    >
+                      <option hidden={true}>Select Project</option>
+                      {dropdownProjects?.map((dropdownproject) => (
+                        <option
+                          key={dropdownproject.project_id}
+                          value={dropdownproject.project_name}
+                          data-description={dropdownproject.project_description}
+                          data-lead={dropdownproject.project_owner}
+                          data-projectId={dropdownproject.project_id}
+                          data-projectUrl={dropdownproject.project_url}
+                        >
+                          {dropdownproject.project_name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
                   <FormTextarea
                     label="Description"
                     placeholder="Description"
@@ -114,12 +165,6 @@ const KanbanHome = () => {
                     required={true}
                     value={description}
                     onChange={(text) => setDescription(text)}
-                  />
-                  <div className="mt-7"></div>
-                  <AddMembersDropdown
-                    memberInfo={leadInfo}
-                    setMemberInfo={setLeadInfo}
-                    label={"Project Lead"}
                   />
                 </div>
               </div>
@@ -178,7 +223,7 @@ const KanbanHome = () => {
                       </Link>
                     </td>
                     <td className="px-6 py-4">
-                      <Link to="#">{project.lead.user_name}</Link>
+                      <Link to="#">{project.lead?.user_name}</Link>
                     </td>
                   </tr>
                 ))}
