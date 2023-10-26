@@ -7,6 +7,7 @@ import KanbanLayout from "../KanbanLayout";
 import getAPIData from "../../../hooks/getAPIData";
 import { setProjectDetails } from "../../../features/kanban/kanbanSlice";
 import Loader from "../../../components/Loader";
+import Paragraph from "../../../components/texts/Paragraph";
 
 const KanbanNotifications = () => {
   const dispatch = useDispatch();
@@ -49,14 +50,18 @@ const KanbanNotifications = () => {
           <div className="mb-5 text-xl font-semibold text-gray-900 dark:text-gray-300">
             Notifications
           </div>
-          <div>
-            {notifications.map((notification) => (
-              <Notification
-                notification={notification}
-                key={notification._id}
-              />
-            ))}
-          </div>
+          {notifications?.length <= 0 ? (
+            <Paragraph>No notifications 🔕</Paragraph>
+          ) : (
+            <div>
+              {notifications.map((notification) => (
+                <Notification
+                  notification={notification}
+                  key={notification._id}
+                />
+              ))}
+            </div>
+          )}
         </div>
       )}
     </KanbanLayout>

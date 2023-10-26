@@ -86,7 +86,7 @@ const Task = ({ task, index, stageIndex }) => {
                         children={
                           <Link to="#" className="-ml-2">
                             <img
-                              src={assigned.profile_image}
+                              src={assigned?.profile_image}
                               className="h-8 w-8 select-none rounded-full border-[1px] border-gray-300 dark:border-gray-600"
                             />
                           </Link>
@@ -104,14 +104,14 @@ const Task = ({ task, index, stageIndex }) => {
             </div>
           )}
         </Draggable>
-        {/* <EditTask
+        <EditTask
           openModal={editModal}
           setOpenModal={setEditModal}
           isDragDisabled={true}
           stageIndex={stageIndex}
           task={task}
           taskIndex={index}
-        /> */}
+        />
         <FullTask
           openModal={fullDescriptionModal}
           setOpenModal={setFullDescriptionModal}

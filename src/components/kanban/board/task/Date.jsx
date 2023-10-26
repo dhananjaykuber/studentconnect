@@ -12,19 +12,21 @@ const DateLabel = ({ dueDate, monthNames }) => {
     <div
       className={twMerge(
         `flex items-center justify-center gap-2 rounded-lg bg-purple-200 p-1 px-2 ${
-          daysLeft < 0 && "bg-red-200"
+          daysLeft < 0 ? "bg-red-200" : "bg-green-300"
         }`,
       )}
     >
       <FaClock
         className={twMerge(
-          `h-3 w-3 text-purple-800 ${daysLeft < 0 && "text-red-800"}`,
+          `h-3 w-3 text-purple-800 ${
+            daysLeft < 0 ? "text-red-800" : "text-green-900"
+          }`,
         )}
       />
       <span
         className={twMerge(
           `select-none text-xs font-semibold text-purple-800 ${
-            daysLeft < 0 && "text-red-800"
+            daysLeft < 0 ? "text-red-800" : "text-green-900"
           }`,
         )}
       >

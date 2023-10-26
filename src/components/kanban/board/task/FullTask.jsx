@@ -44,7 +44,7 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${user._id}`,
+          Authorization: `Bearer ${user.user_id}`,
         },
       },
     );
@@ -73,7 +73,7 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
         },
         {
           headers: {
-            Authorization: `Bearer ${user._id}`,
+            Authorization: `Bearer ${user.user_id}`,
           },
         },
       );
@@ -96,7 +96,7 @@ const FullTask = ({ openModal, setOpenModal, task, stageIndex, taskIndex }) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${user._id}`,
+          Authorization: `Bearer ${user.user_id}`,
         },
       },
     );

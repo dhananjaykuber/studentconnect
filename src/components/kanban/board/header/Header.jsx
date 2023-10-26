@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link2Icon, PlusIcon } from "lucide-react";
+import { Github, Link2Icon, PlusIcon } from "lucide-react";
 import { Link } from "react-router-dom";
 import AddContributors from "./AddContributors";
 import { useSelector } from "react-redux";
@@ -36,6 +36,9 @@ const Header = () => {
               notifySuccess("Link copied");
             }}
           />
+          <Link to={details?.projectUrl} target="_blank">
+            <Github className="h-6 w-6 cursor-pointer rounded-md bg-gray-200 p-1 text-gray-800 dark:bg-gray-800 dark:text-gray-100" />
+          </Link>
         </div>
         <div className="flex gap-5">
           <div

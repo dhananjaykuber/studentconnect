@@ -32,8 +32,6 @@ const KanbanLayout = ({ children }) => {
     }
   }, [data, error]);
 
-  console.log(`notification_${user.user_id}`);
-
   // Socket Connection
   useEffect(() => {
     const socket = io("http://localhost:3000");

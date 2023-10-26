@@ -28,7 +28,7 @@ const Notification = ({ notification }) => {
       },
       {
         headers: {
-          Authorization: `Bearer ${user?._id}`,
+          Authorization: `Bearer ${user?.user_id}`,
         },
       },
     );
@@ -41,7 +41,7 @@ const Notification = ({ notification }) => {
       `${import.meta.env.VITE_NODE_API}/kanban/notification/${_id}`,
       {
         headers: {
-          Authorization: `Bearer ${user._id}`,
+          Authorization: `Bearer ${user.user_id}`,
         },
       },
     );

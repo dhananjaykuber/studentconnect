@@ -38,7 +38,6 @@ const KanbanBoard = () => {
 
   useEffect(() => {
     if (!loading && !error) {
-      console.log(data.project);
       dispatch(setProjectDetails(data.project));
       dispatch(setProjectStages(data.stages));
     }

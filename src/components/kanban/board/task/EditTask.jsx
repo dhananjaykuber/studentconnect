@@ -20,7 +20,7 @@ const EditTask = ({ openModal, setOpenModal, stageIndex, task, taskIndex }) => {
   const [title, setTitle] = useState(task.title);
   const [description, setDescription] = useState(task.description);
   const [contributors, setContributors] = useState(task.assignedTo);
-  const [dueDate, setDueDate] = useState(task.dueDate.slice(0, 10));
+  const [dueDate, setDueDate] = useState(task?.dueDate?.slice(0, 10));
 
   const handleUpdateTask = async () => {
     let contributorsIds = [];

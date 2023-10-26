@@ -16,7 +16,7 @@ const Comment = ({ comment, stageIndex, taskIndex, taskId }) => {
       `${import.meta.env.VITE_NODE_API}/kanban/comment/${comment._id}`,
       {
         headers: {
-          Authorization: `Bearer ${user._id}`,
+          Authorization: `Bearer ${user.user_id}`,
         },
       },
     );
