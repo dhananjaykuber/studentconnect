@@ -54,9 +54,9 @@ const Navbar = () => {
   const [showProfile, setShowProfile] = useState(false);
   const [showMobileNav, setShowMobileNav] = useState(false);
 
-  // if (location.pathname.includes("/kanban")) {
-  //   return null;
-  // }
+  if (location.pathname.includes("/educator")) {
+    return null;
+  }
 
   const handleLogout = () => {
     localStorage.setItem("user", null);

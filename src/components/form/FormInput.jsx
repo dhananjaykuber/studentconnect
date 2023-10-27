@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 const FormInput = ({
+  className,
   label,
   type,
   placeholder,
@@ -39,7 +41,7 @@ const FormInput = ({
   };
 
   return (
-    <div className="mb-3">
+    <div className={twMerge(`mb-3 ${className}`)}>
       {label && (
         <label className="mb-1 block text-sm font-semibold text-gray-900 dark:font-medium dark:text-gray-100">
           {label}
