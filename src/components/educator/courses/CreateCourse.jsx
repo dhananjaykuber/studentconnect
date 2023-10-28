@@ -3,13 +3,18 @@ import Modal from "../../Modal";
 import FormInput from "../../form/FormInput";
 import FormTextarea from "../../form/FormTextarea";
 import Button from "../../Button";
+import { notifyError } from "../../../utils/toastsPopup";
 
 const CreateCourse = ({ openModal, setOpenModal }) => {
   const [courseName, setCourseName] = useState("");
   const [description, setDescription] = useState("");
   const [coverImage, setCoverImage] = useState("");
 
-  const handleAddCourse = async () => {};
+  const handleAddCourse = async () => {
+    if (courseName.length <= 0 || description.length <= 0) {
+      return notifyError("Please fill required fields.");
+    }
+  };
 
   return (
     <Modal

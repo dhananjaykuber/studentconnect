@@ -2,13 +2,27 @@ import React, { useState } from "react";
 import FormInput from "../../../form/FormInput";
 import { FilePlus2Icon } from "lucide-react";
 import Button from "../../../Button";
+import { notifyError } from "../../../../utils/toastsPopup";
 
 const File = ({ setShowContentUploader }) => {
   const [name, setName] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
 
-  const handleFileSelect = async () => {};
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
 
+  // complete this when api is completed
   const handleUploadFile = async () => {
+    if (name.length <= 0) {
+      return notifyError("Please fill required fields.");
+    }
+
+    if (selectedFile) {
+      const formData = new FormData();
+      formData.append("file", selectedFile);
+    }
+
     setShowContentUploader(false);
   };
 
@@ -23,25 +37,13 @@ const File = ({ setShowContentUploader }) => {
         value={name}
         onChange={(text) => setName(text)}
       />
-      <div>
-        <label className="mb-1 block text-sm font-semibold text-gray-900 dark:font-medium dark:text-gray-100">
-          Choose File *
-        </label>
-        <label
-          htmlFor="fileInput"
-          className="flex items-center gap-3 rounded-lg border  border-gray-400 p-2 text-sm dark:bg-gray-700 dark:text-gray-300 md:w-[300px]"
-        >
-          Choose file
-          <FilePlus2Icon className="h-4 w-4 text-gray-600 dark:text-gray-300" />
-        </label>
-        <input
-          type="file"
-          name="fileInput"
-          id="fileInput"
-          className="hidden"
-          onChange={handleFileSelect}
-        />
-      </div>
+      <FormInput
+        label="Choose File *"
+        type="file"
+        required={true}
+        onChange={handleFileChange}
+        className={"mb-0"}
+      />
       <Button
         label={"Submit"}
         radius={"lg"}

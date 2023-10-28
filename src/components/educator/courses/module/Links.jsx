@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import Button from "../../../Button";
 import FormInput from "../../../form/FormInput";
+import { notifyError } from "../../../../utils/toastsPopup";
 
 const Links = ({ setShowContentUploader }) => {
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
 
   const handleUploadLink = async () => {
+    if (title.length <= 0 || link.length <= 0) {
+      return notifyError("Please fill required fields.");
+    }
+
     setShowContentUploader(false);
   };
 

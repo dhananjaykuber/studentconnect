@@ -1,6 +1,7 @@
 import React, { useRef, useState } from "react";
 import JoditEditor from "jodit-react";
 import Button from "../../../Button";
+import { notifyError } from "../../../../utils/toastsPopup";
 
 const Content = ({ setShowContentUploader }) => {
   const richTextAreaRef = useRef();
@@ -8,6 +9,10 @@ const Content = ({ setShowContentUploader }) => {
   const [description, setDescription] = useState("");
 
   const handleUploadContent = async () => {
+    if (description.length <= 0) {
+      return notifyError("Please fill required fields.");
+    }
+
     setShowContentUploader(false);
   };
 

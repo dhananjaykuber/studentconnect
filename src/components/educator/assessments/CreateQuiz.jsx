@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import FormInput from "../../form/FormInput";
-import {
-  CheckIcon,
-  PlusCircle,
-  PlusCircleIcon,
-  Trash2Icon,
-} from "lucide-react";
+import { CheckIcon, PlusCircleIcon, Trash2Icon } from "lucide-react";
 import Button from "../../Button";
 import { twMerge } from "tailwind-merge";
+import { notifyError } from "../../../utils/toastsPopup";
 
 const CreateQuiz = ({ setAddQuiz }) => {
   const [question, setQuestion] = useState("");
   const [options, setOptions] = useState([""]);
-  const [answer, setAnswer] = useState();
+  const [answer, setAnswer] = useState(null);
 
   const handleOptionChange = (index, text) => {
     const updatedOptions = [...options];
@@ -31,7 +27,15 @@ const CreateQuiz = ({ setAddQuiz }) => {
   };
 
   const handleSubmitQuestion = async () => {
-    console.log(answer);
+    const blankOption = options.some((item) => item === "" || item === null);
+
+    if (question.length <= 0) {
+      return notifyError("Please fill the question.");
+    } else if (blankOption) {
+      return notifyError("Option cannot be blank.");
+    } else if (answer == null) {
+      return notifyError("Please select the answer.");
+    }
 
     setAddQuiz(false);
   };

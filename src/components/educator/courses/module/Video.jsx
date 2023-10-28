@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import FormInput from "../../../form/FormInput";
 import Button from "../../../Button";
+import { notifyError } from "../../../../utils/toastsPopup";
 
 const Video = ({ setShowContentUploader }) => {
   const [title, setTitle] = useState("");
   const [link, setLink] = useState("");
 
   const handleUploadVideo = async () => {
+    if (title.length <= 0 || link.length <= 0) {
+      return notifyError("Please fill required fields.");
+    }
+
     setShowContentUploader(false);
   };
 

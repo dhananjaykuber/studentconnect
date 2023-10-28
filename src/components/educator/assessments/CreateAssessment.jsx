@@ -2,10 +2,16 @@ import React, { useState } from "react";
 import Modal from "../../Modal";
 import FormInput from "../../form/FormInput";
 import Button from "../../Button";
+import { notifyError } from "../../../utils/toastsPopup";
 
 const CreateAssessment = ({ openModal, setOpenModal }) => {
   const [moduleName, setModuleName] = useState("");
-  const handleAddAssessment = async () => {};
+
+  const handleAddAssessment = async () => {
+    if (moduleName.length <= 0) {
+      return notifyError("Please fill required field.");
+    }
+  };
 
   return (
     <Modal

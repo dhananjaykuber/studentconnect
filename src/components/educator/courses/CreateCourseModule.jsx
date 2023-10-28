@@ -2,11 +2,16 @@ import React, { useState } from "react";
 import Modal from "../../Modal";
 import FormInput from "../../form/FormInput";
 import Button from "../../Button";
+import { notifyError } from "../../../utils/toastsPopup";
 
 const CreateCourseModule = ({ openModal, setOpenModal }) => {
   const [moduleName, seeModuleName] = useState("");
 
-  const handleAddModule = async () => {};
+  const handleAddModule = async () => {
+    if (moduleName.length <= 0) {
+      return notifyError("Please fill required field.");
+    }
+  };
 
   return (
     <Modal

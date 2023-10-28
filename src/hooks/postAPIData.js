@@ -16,6 +16,8 @@ const postAPIData = () => {
       const res = await axios.post(url, dataToSend, { headers });
 
       setData(res.data);
+
+      return res.data;
     } catch (error) {
       console.log(error);
       setError(error);
