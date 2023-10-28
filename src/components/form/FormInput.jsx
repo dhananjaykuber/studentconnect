@@ -21,15 +21,10 @@ const FormInput = ({
   maxvalue,
 }) => {
   const [localType, setLocalType] = useState(type);
-  const [isValid, setIsValid] = useState(true);
 
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
-
-    // const response = validator(inputValue);
-
-    // setIsValid(response); // Update the validity state
-    onChange(inputValue); // Pass the input value to
+    onChange(inputValue);
   };
 
   const handleIconClick = () => {
@@ -81,9 +76,6 @@ const FormInput = ({
           </div>
         )}
       </div>
-      {/* {!isValid?.isValid && error === null && (
-        <span className="mt-2 text-sm text-red-600">{isValid?.msg}</span>
-      )} */}
       {error && <span className="mt-2 text-sm text-red-600">{error}</span>}
     </div>
   );

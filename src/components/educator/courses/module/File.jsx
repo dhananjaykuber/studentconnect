@@ -1,9 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import FormInput from "../../../form/FormInput";
 import { FilePlus2Icon } from "lucide-react";
 import Button from "../../../Button";
 
-const File = () => {
+const File = ({ setShowContentUploader }) => {
+  const [name, setName] = useState("");
+
+  const handleFileSelect = async () => {};
+
+  const handleUploadFile = async () => {
+    setShowContentUploader(false);
+  };
+
   return (
     <div className="flex flex-col gap-5 lg:flex-row lg:items-center">
       <FormInput
@@ -12,10 +20,10 @@ const File = () => {
         required={true}
         placeholder={"File Name"}
         className={"mb-0 md:w-[300px]"}
-        // value={moduleName}
-        // onChange={(text) => seeModuleName(text)}
+        value={name}
+        onChange={(text) => setName(text)}
       />
-      <div className="-mt-3">
+      <div>
         <label className="mb-1 block text-sm font-semibold text-gray-900 dark:font-medium dark:text-gray-100">
           Choose File *
         </label>
@@ -31,14 +39,14 @@ const File = () => {
           name="fileInput"
           id="fileInput"
           className="hidden"
-          //   onChange={handleFileSelect}
+          onChange={handleFileSelect}
         />
       </div>
       <Button
         label={"Submit"}
         radius={"lg"}
-        classes={"px-3 py-2 md:-mb-3 h-fit w-fit"}
-        //   onclick={handleAddModule}
+        classes={"px-3 py-2 md:-mb-5 h-fit w-fit"}
+        onclick={handleUploadFile}
       />
     </div>
   );

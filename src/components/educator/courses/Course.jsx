@@ -23,7 +23,7 @@ const Course = () => {
 
       <Link
         to={`/educator/courses/b2d7997a-74ca-11ee-b962-0242ac120002/module`}
-        className="text-sm font-semibold text-blue-700 underline"
+        className="text-xs font-medium text-blue-700 underline dark:text-blue-400"
       >
         Manage Course
       </Link>

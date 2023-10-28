@@ -14,7 +14,7 @@ const Courses = () => {
       <div className="text-white ">
         <div className="flex items-center justify-between">
           <Heading level={4} classes={"font-semibold"}>
-            All Modules
+            Courses / Cloud Computing
           </Heading>
           <button
             className="rounded-full border bg-gray-500 dark:border-gray-600 dark:bg-gray-800"
@@ -31,10 +31,6 @@ const Courses = () => {
       </div>
 
       <div className="mt-8 flex flex-wrap gap-3">
-        <Module />
-        <Module />
-        <Module />
-        <Module />
         <Module />
       </div>
 

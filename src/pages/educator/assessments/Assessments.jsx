@@ -1,98 +1,43 @@
 import React, { useState } from "react";
+import Sidebar from "../../../components/educator/Sidebar";
+import Heading from "../../../components/texts/Headings";
+import Tag from "../../../components/tag/Tag";
+import { PlusIcon } from "lucide-react";
+import CreateAssessment from "../../../components/educator/assessments/CreateAssessment";
+import Assessment from "../../../components/educator/assessments/Assessment";
 
 const Assessments = () => {
-  const [questions, setQuestions] = useState([
-    { text: "", options: ["", ""], correct: [false, false] },
-  ]);
-
-  const handleAddQuestion = () => {
-    setQuestions([
-      ...questions,
-      { text: "", options: ["", ""], correct: [false, false] },
-    ]);
-  };
-
-  const handleAddOption = (questionIndex) => {
-    const newQuestions = [...questions];
-    newQuestions[questionIndex].options.push("");
-    newQuestions[questionIndex].correct.push(false); // Initially, new options are not correct
-    setQuestions(newQuestions);
-  };
-
-  const handleTextChange = (questionIndex, text) => {
-    const newQuestions = [...questions];
-    newQuestions[questionIndex].text = text;
-    setQuestions(newQuestions);
-  };
-
-  const handleOptionChange = (questionIndex, optionIndex, text) => {
-    const newQuestions = [...questions];
-    newQuestions[questionIndex].options[optionIndex] = text;
-    setQuestions(newQuestions);
-  };
-
-  const handleCorrectChange = (questionIndex, optionIndex) => {
-    const newQuestions = [...questions];
-    newQuestions[questionIndex].correct[optionIndex] =
-      !newQuestions[questionIndex].correct[optionIndex];
-    setQuestions(newQuestions);
-  };
-
-  const handleRemoveOption = (questionIndex, optionIndex) => {
-    const newQuestions = [...questions];
-    newQuestions[questionIndex].options.splice(optionIndex, 1);
-    newQuestions[questionIndex].correct.splice(optionIndex, 1); // Remove the corresponding correct value
-    setQuestions(newQuestions);
-  };
-
-  const handleRemoveQuestion = (questionIndex) => {
-    const newQuestions = [...questions];
-    newQuestions.splice(questionIndex, 1);
-    setQuestions(newQuestions);
-  };
+  const [openModal, setOpenModal] = useState(false);
 
   return (
-    <div>
-      {questions.map((question, questionIndex) => (
-        <div key={questionIndex}>
-          <input
-            type="text"
-            placeholder="Question"
-            value={question.text}
-            onChange={(e) => handleTextChange(questionIndex, e.target.value)}
-          />
-          <button onClick={() => handleAddOption(questionIndex)}>
-            Add Option
-          </button>
-          {question.options.map((option, optionIndex) => (
-            <div key={optionIndex}>
-              <input
-                type="text"
-                placeholder="Option"
-                value={option}
-                onChange={(e) =>
-                  handleOptionChange(questionIndex, optionIndex, e.target.value)
-                }
-              />
-              <input
-                type="checkbox"
-                checked={question.correct[optionIndex]}
-                onChange={() => handleCorrectChange(questionIndex, optionIndex)}
-              />
-              <button
-                onClick={() => handleRemoveOption(questionIndex, optionIndex)}
-              >
-                Remove Option
-              </button>
-            </div>
-          ))}
-          <button onClick={() => handleRemoveQuestion(questionIndex)}>
-            Remove Question
+    <Sidebar>
+      <div className="text-white ">
+        <div className="flex items-center justify-between">
+          <Heading level={4} classes={"font-semibold"}>
+            All Assessments
+          </Heading>
+          <button
+            className="rounded-full border border-gray-500 dark:border-gray-700 dark:bg-gray-800"
+            onClick={() => setOpenModal(true)}
+          >
+            <Tag
+              icon={<PlusIcon className="text-gray-800 dark:text-white" />}
+              label={"Create Assessment"}
+              iconClasses={"w-4 h-4"}
+              spanClasses={
+                "font-medium text-white text-gray-800 dark:text-white"
+              }
+            />
           </button>
         </div>
-      ))}
-      <button onClick={handleAddQuestion}>Add New Question</button>
-    </div>
+      </div>
+
+      <div className="mt-8 flex flex-wrap gap-3">
+        <Assessment />
+      </div>
+
+      <CreateAssessment openModal={openModal} setOpenModal={setOpenModal} />
+    </Sidebar>
   );
 };
 

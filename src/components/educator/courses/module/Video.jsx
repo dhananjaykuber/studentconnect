@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import FormInput from "../../../form/FormInput";
 import Button from "../../../Button";
 
-const Video = () => {
+const Video = ({ setShowContentUploader }) => {
+  const [title, setTitle] = useState("");
+  const [link, setLink] = useState("");
+
+  const handleUploadVideo = async () => {
+    setShowContentUploader(false);
+  };
+
   return (
     <div className="flex flex-col gap-5 lg:flex-row lg:items-center">
       <FormInput
@@ -10,24 +17,24 @@ const Video = () => {
         type="text"
         required={true}
         placeholder={"Video Title"}
-        className={"md:w-[300px]"}
-        // value={moduleName}
-        // onChange={(text) => seeModuleName(text)}
+        className={"mb-0 md:w-[300px]"}
+        value={title}
+        onChange={(text) => setTitle(text)}
       />
       <FormInput
         label="Video Url *"
         type="text"
         required={true}
         placeholder={"Video Url"}
-        className={"md:w-[300px]"}
-        // value={moduleName}
-        // onChange={(text) => seeModuleName(text)}
+        className={"mb-0 md:w-[300px]"}
+        value={link}
+        onChange={(text) => setLink(text)}
       />
       <Button
         label={"Submit"}
         radius={"lg"}
-        classes={"px-3 py-2 mt-0 md:-mb-3 h-fit w-fit"}
-        //   onclick={handleAddModule}
+        classes={"px-3 py-2 mt-0 md:-mb-5 h-fit w-fit"}
+        onclick={handleUploadVideo}
       />
     </div>
   );

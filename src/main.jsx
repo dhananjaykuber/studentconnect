@@ -42,6 +42,7 @@ import Dashboard from "./pages/educator/dashboard/Dashboard";
 import Courses from "./pages/educator/courses/Courses";
 import Assessments from "./pages/educator/assessments/Assessments";
 import CourseModules from "./pages/educator/courses/CourseModules";
+import CreateQuizAssessment from "./pages/educator/assessments/CreateQuizAssessment";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -99,6 +100,10 @@ const router = createBrowserRouter(
       <Route path="educator/courses" element={<Courses />} />
       <Route path="educator/courses/:id/module" element={<CourseModules />} />
       <Route path="educator/assessments" element={<Assessments />} />
+      <Route
+        path="educator/assessments/:id/quiz"
+        element={<CreateQuizAssessment />}
+      />
 
       {/* Error */}
       <Route path="*" element={<_404 />} />
