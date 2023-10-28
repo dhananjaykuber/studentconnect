@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { twMerge } from "tailwind-merge";
 
 const FormInput = ({
+  className,
   label,
   type,
   placeholder,
@@ -19,15 +21,10 @@ const FormInput = ({
   maxvalue,
 }) => {
   const [localType, setLocalType] = useState(type);
-  const [isValid, setIsValid] = useState(true);
 
   const handleInputChange = (event) => {
     const inputValue = event.target.value;
-
-    // const response = validator(inputValue);
-
-    // setIsValid(response); // Update the validity state
-    onChange(inputValue); // Pass the input value to
+    onChange(inputValue);
   };
 
   const handleIconClick = () => {
@@ -39,7 +36,7 @@ const FormInput = ({
   };
 
   return (
-    <div className="mb-3">
+    <div className={twMerge(`mb-3 ${className}`)}>
       {label && (
         <label className="mb-1 block text-sm font-semibold text-gray-900 dark:font-medium dark:text-gray-100">
           {label}
@@ -79,9 +76,6 @@ const FormInput = ({
           </div>
         )}
       </div>
-      {/* {!isValid?.isValid && error === null && (
-        <span className="mt-2 text-sm text-red-600">{isValid?.msg}</span>
-      )} */}
       {error && <span className="mt-2 text-sm text-red-600">{error}</span>}
     </div>
   );

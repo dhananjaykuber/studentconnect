@@ -43,3 +43,17 @@
 .jodit-wysiwyg {
   min-height: 300px !important;
 }
+
+input[type="file"] {
+  color: transparent;
+  cursor: pointer;
+}
+
+input[type="file"]::file-selector-button {
+  background-color: transparent;
+  color: #fff;
+  padding: 0px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
