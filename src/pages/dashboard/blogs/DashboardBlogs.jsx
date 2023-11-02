@@ -5,6 +5,7 @@ import getAPIData from "../../../hooks/getAPIData";
 import { useDispatch, useSelector } from "react-redux";
 import { FaSpinner } from "react-icons/fa";
 import { setBlogs } from "../../../features/dashboard/dashboardSlice";
+import Skeleton from "react-loading-skeleton";
 
 const DashboardBlogs = () => {
   const dispatch = useDispatch();
@@ -31,10 +32,7 @@ const DashboardBlogs = () => {
     <Dashboard>
       <div className="flex flex-wrap">
         {loading ? (
-          <div className="flex items-center justify-center gap-2 text-sm font-medium dark:text-gray-300">
-            <FaSpinner className="h-4 w-4 animate-spin text-gray-800 dark:text-gray-300" />
-            Loading...
-          </div>
+          <BlogLoadingSkeleton count={3} />
         ) : !blogs || blogs?.length <= 0 ? (
           <div className="flex items-center justify-center gap-2 text-sm font-medium dark:text-gray-300">
             No Blogs
@@ -48,3 +46,18 @@ const DashboardBlogs = () => {
 };
 
 export default DashboardBlogs;
+
+const BlogLoadingSkeleton = ({ count }) => {
+  return Array(count)
+    .fill(0)
+    .map((item, index) => (
+      <article className="m-2 rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800 md:w-[45%] lg:w-[30%]">
+        <Skeleton />
+        <Skeleton width={100} height={12} />
+        <div className="flex items-center gap-2">
+          <Skeleton height={25} width={25} circle={true} />
+          <Skeleton height={25} width={25} circle={true} />
+        </div>
+      </article>
+    ));
+};
