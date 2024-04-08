@@ -34,18 +34,13 @@ const Blogs = () => {
               voluptatem!
             </p>
           </div>
-          {loading ? (
-            <div className="flex items-center justify-center gap-2 text-sm font-medium dark:text-gray-300">
-              <FaSpinner className="h-4 w-4 animate-spin text-gray-800 dark:text-gray-300" />
-              Loading...
-            </div>
-          ) : (
-            <div className="grid gap-8 lg:grid-cols-2">
-              {blogs?.map((blog) => (
-                <SingleArticle key={blog.blog_id} blog={blog} />
-              ))}
-            </div>
-          )}
+
+          <div className="grid gap-8 lg:grid-cols-2">
+            {loading && <BlogLoadingSkeleton count={2} />}
+            {blogs?.map((blog) => (
+              <SingleArticle key={blog.blog_id} blog={blog} />
+            ))}
+          </div>
         </div>
 
         <nav aria-label="page navigation" className="flex justify-center ">
@@ -115,3 +110,20 @@ const Blogs = () => {
 };
 
 export default Blogs;
+
+const BlogLoadingSkeleton = ({ count }) => {
+  return Array(count)
+    .fill(0)
+    .map((item, index) => (
+      <article className="rounded-lg border border-gray-200 bg-white p-6 shadow-md dark:border-gray-700 dark:bg-gray-800">
+        <Skeleton />
+        <Skeleton width={100} height={12} />
+        <Skeleton height={10} />
+        <Skeleton height={10} />
+        <div className="flex items-center gap-5">
+          <Skeleton height={30} width={30} circle={true} />
+          <Skeleton height={12} width={100} />
+        </div>
+      </article>
+    ));
+};
