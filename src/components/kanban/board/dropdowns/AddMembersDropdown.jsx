@@ -10,7 +10,7 @@ const AddMembersDropdown = ({ label, memberInfo, setMemberInfo }) => {
   const [memberName, setMemberName] = useState("");
   const [users, setUsers] = useState(null);
 
-  const debouncedSearch = useDebounce(memberName, 500);
+  const debouncedSearch = useDebounce(memberName, 500); 
 
   useEffect(() => {
     async function fetchData() {

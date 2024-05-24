@@ -5,7 +5,7 @@ import Project from "./Project";
 
 const ProfileProject = () => {
   return (
-    <div className="mt-14 border-t pt-10 dark:border-gray-800 ">
+    <div className="mt-14 border-t pt-10 dark:border-gray-800">
       <div className="mb-4 flex items-center gap-3">
         <div className="relative w-fit">
           <LightbulbIcon className="h-8 w-8 dark:text-gray-100" />
