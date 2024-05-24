@@ -31,10 +31,10 @@ const dropdown = [
     label: "Dashboard",
     url: "/dashboard",
   },
-  {
-    label: "Settings",
-    url: "/settings",
-  },
+  // {
+  //   label: "Settings",
+  //   url: "/settings",
+  // },
   {
     label: "Logout",
     url: "/",

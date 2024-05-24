@@ -6,6 +6,7 @@ import {
   LightbulbIcon,
   PenBoxIcon,
   UserCircle2Icon,
+  SquareKanban,
 } from "lucide-react";
 import Sidebar from "../../components/Sidebar";
 import { twMerge } from "tailwind-merge";
@@ -16,15 +17,20 @@ const navigations = [
     url: "/dashboard/settings",
     icon: UserCircle2Icon,
   },
-  {
-    title: "Projects",
-    url: "/dashboard/projects",
-    icon: LightbulbIcon,
-  },
+  // {
+  //   title: "Projects",
+  //   url: "/dashboard/projects",
+  //   icon: LightbulbIcon,
+  // },
   {
     title: "Blogs",
     url: "/dashboard/blogs",
     icon: PenBoxIcon,
+  },
+  {
+    title: "Kanban",
+    url: "/kanban",
+    icon: SquareKanban,
   },
 ];
 

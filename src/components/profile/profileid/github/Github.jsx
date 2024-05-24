@@ -1,13 +1,38 @@
 import { VerifiedIcon } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import Paragraph from "../../../texts/Paragraph";
 import GithubProject from "./GithubProject";
 import GitHubCalendar from "react-github-calendar";
 import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
 const Github = () => {
   const { theme } = useSelector((store) => store.theme);
+
+  const { id } = useParams(); // Get the userId from the URL params
+
+  const [username, setUsername] = useState("");
+
+  useEffect(() => {
+    const getProjects = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_DJANGO_API}/projects/get/owner/${id}`,
+        );
+
+        const projectOwnerUrl = res?.data?.projects[0].project_owner_url;
+        const url = new URL(projectOwnerUrl);
+        const username = url.pathname.slice(1);
+        setUsername(username);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getProjects();
+  }, []);
 
   return (
     <div>
@@ -24,7 +49,7 @@ const Github = () => {
       </div>
 
       <div className="mb-12 dark:text-gray-200">
-        <GitHubCalendar username="dhananjaykuber" fontSize={12} />
+        <GitHubCalendar username={username} fontSize={12} />
       </div>
 
       <div className="flex items-center justify-between">
@@ -40,12 +65,12 @@ const Github = () => {
         </div>
       </div>
 
-      <div className="mt-2 flex flex-wrap">
+      {/* <div className="mt-2 flex flex-wrap">
         <GithubProject />
         <GithubProject />
         <GithubProject />
         <GithubProject />
-      </div>
+      </div> */}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Heading from "../../texts/Headings";
 import {
   GithubIcon,
@@ -8,10 +8,12 @@ import {
   MailIcon,
   TwitterIcon,
   VerifiedIcon,
+  Mail,
 } from "lucide-react";
 import Paragraph from "../../texts/Paragraph";
 import Tag from "../../tag/Tag";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
 const socialIcons = {
   github: <GithubIcon className="h-4 w-4 text-gray-800 dark:text-gray-500" />,
@@ -28,21 +30,57 @@ const socialIcons = {
 };
 
 const Header = () => {
+  const { id } = useParams(); // Get the userId from the URL params
+
+  const [userData, setUserData] = useState([]);
+  const [ownerImamge, setOwnerImage] = useState("");
+
+  useEffect(() => {
+    const getUserData = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_DJANGO_API}/projects/get/owner/${id}`,
+        );
+
+        console.log(res);
+
+        const userRes = await axios.get(
+          `${
+            import.meta.env.VITE_DJANGO_API
+          }/authentication/get/profile/?username=${id}`,
+        );
+
+        const projectOwnerUrl = res?.data?.projects[0].project_owner_url;
+        const url = new URL(projectOwnerUrl);
+        const username = url.pathname.slice(1);
+
+        setUserData({ ...userRes?.data?.data, github: username });
+        setOwnerImage(`https://avatars.githubusercontent.com/${username}`);
+      } catch (e) {
+        console.log(e);
+      }
+    };
+
+    getUserData();
+  }, []);
+
   return (
     <div className="flex flex-col-reverse justify-between gap-4 md:flex-row md:gap-10">
       <div>
         <div className="mb-2 flex items-center gap-2">
-          <Heading level={4}>Dhananjay Kuber</Heading>
+          <Heading level={4}>{userData.full_name}</Heading>
           <VerifiedIcon className="h-6 w-6 fill-green-600 text-white dark:text-gray-900" />
           <div className="rounded-full border border-gray-400 p-[3px] dark:border-gray-600">
-            <MailIcon className="h-[14px] w-[14px] text-gray-700 dark:text-white " />
+            <a href={`mailto:${userData.email}`}>
+              <MailIcon className="h-[14px] w-[14px] text-gray-700 dark:text-white " />
+            </a>
           </div>
         </div>
-        <Paragraph>
+        {/* <Paragraph>
           Software Engineer @ WhatsApp, Meta. Previously worked on Crypto and
           advanced payments integrations at PayPal.
-        </Paragraph>
-        <div className="mt-4 flex flex-wrap gap-3 md:mt-8">
+        </Paragraph> */}
+        {/* <div className="mt-4 flex flex-wrap gap-3 md:mt-8">
           <Tag
             spanClasses={
               "text-gray-900 py-[2px] dark:text-gray-300 border border-gray-300 font-medium cursor"
@@ -67,9 +105,9 @@ const Header = () => {
             }
             label={"ReactJS"}
           />
-        </div>
+        </div> */}
         <div className="mt-5 flex flex-wrap gap-4">
-          <Link
+          {/* <Link
             to={"#"}
             className="rounded-full border border-gray-400 p-1 hover:bg-gray-100 dark:hover:bg-gray-800"
           >
@@ -98,14 +136,14 @@ const Header = () => {
             className="rounded-full border border-gray-400 p-1 hover:bg-gray-100 dark:hover:bg-gray-800"
           >
             {socialIcons["portfolio"]}
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div>
         <img
-          src="https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80"
+          src={ownerImamge}
           alt="profile"
-          className="h-14 w-14 rounded-full object-cover md:h-48 md:w-48"
+          className="md:h-35 md:w-35 h-14 w-14 rounded-full object-cover"
         />
       </div>
     </div>
