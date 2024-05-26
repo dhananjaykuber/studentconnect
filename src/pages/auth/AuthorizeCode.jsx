@@ -21,7 +21,7 @@ const AuthorizeCode = () => {
     const code = searchParams.get("code");
 
     if (user) {
-      navigate("/profile");
+      navigate("/dashboard");
     }
 
     const handleSendCode = async () => {
@@ -37,7 +37,7 @@ const AuthorizeCode = () => {
             JSON.stringify({ token: res.data.token, ...res.data.user }),
           );
           dispatch(setUser({ token: res.data.token, ...res.data.user }));
-          navigate("/profile");
+          navigate("/dashboard");
 
           console.log(res);
         } catch (error) {

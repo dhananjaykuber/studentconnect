@@ -7,6 +7,7 @@ import {
   PenBoxIcon,
   UserCircle2Icon,
   SquareKanban,
+  Code2Icon,
 } from "lucide-react";
 import Sidebar from "../../components/Sidebar";
 import { twMerge } from "tailwind-merge";
@@ -36,6 +37,11 @@ const navigations = [
     title: "Kanban",
     url: "/kanban",
     icon: SquareKanban,
+  },
+  {
+    title: "Coding Test",
+    url: "http://localhost:5174/test",
+    icon: Code2Icon,
   },
 ];
 

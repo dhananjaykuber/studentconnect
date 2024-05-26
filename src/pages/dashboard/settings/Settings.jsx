@@ -27,11 +27,18 @@ const Settings = () => {
         <div className="mb-9">
           <Seperator icon={UserCircleIcon} text={"Basic Profile"} />
           <div>
+            <FormInput label="Username" type="text" value={user.user_name} />
             <FormInput
               label="Full Name"
               type="text"
               required={true}
               value={user.full_name}
+            />
+            <FormInput
+              label="Email"
+              type="email"
+              required={true}
+              value={user.email}
             />
             <FormTextarea label={"Brief Bio"} placeholder={"Write here..."} />
           </div>
@@ -110,13 +117,13 @@ const Settings = () => {
             />
           </div>
         </div> */}
-        <Button
+        {/* <Button
           label={"Save"}
           radius={"md"}
           classes={
             "px-4 py-2 bg-green-600 hover:bg-green-700 dark:bg-green-600 dark:hover:bg-green-700 focus:ring-green-300 dark:focus:ring-none"
           }
-        />
+        /> */}
       </div>
     </Dashboard>
   );

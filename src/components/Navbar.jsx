@@ -34,7 +34,7 @@ const links = [
   },
   {
     label: "Data Flow",
-    url: "/open-contributions",
+    url: "http://localhost:5174/",
   },
 ];
 

@@ -54,7 +54,7 @@ const OpenContributions = () => {
               />
             ))
           ) : (
-            <div>No contributions found</div>
+            <Paragraph>No contributions found</Paragraph>
           )}
         </div>
       )}

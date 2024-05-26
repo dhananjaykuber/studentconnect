@@ -47,7 +47,7 @@ const ContributionDescription = ({ contribution, setOpenModal }) => {
       <div className="flex flex-col items-center justify-center">
         <Heading level={4}>{contribution.contribution_title}</Heading>
         <Paragraph classes={"text-base mb-3"}>
-          {contribution.contribution_description}
+          {contribution.contribution_desctiption}
         </Paragraph>
       </div>
       <div className="mt-10 flex flex-col gap-7 lg:flex-row">
