@@ -20,10 +20,14 @@ const Home = () => {
               Igniting Connections Among Students
             </h2>
             <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Minus
-              iste repellendus reprehenderit possimus saepe ex rerum expedita
-              praesentium molestias commodi! Lorem ipsum dolor sit amet
-              consectetur, adipisicing elit!
+              Student Connect is a transformative web application designed to
+              enhance student collaboration, communication. By igniting
+              connections among students, the platform serves as a centralized
+              hub where individuals exchange ideas, and support each other's
+              learning journey. Additionally, the platform offers tools for data
+              visualization, code editor. With Student Connect, students have
+              the opportunity to engage deeply with their peers, share
+              knowledge, and thrive in their academic endeavors.
             </p>
             <Button
               label={"Join Student Connect"}

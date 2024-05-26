@@ -5,6 +5,8 @@ import getAPIData from "../../hooks/getAPIData";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import { FaSpinner } from "react-icons/fa";
+import { PlusIcon } from "lucide-react";
+import Button from "../../components/Button";
 
 const Blogs = () => {
   const [blogs, setBlogs] = useState(null);
@@ -28,11 +30,15 @@ const Blogs = () => {
             <h2 className="mb-2 text-3xl font-bold text-gray-900 dark:text-white md:text-4xl">
               Blogs
             </h2>
-            <p className="mb-4 text-sm text-gray-500 dark:text-gray-400">
-              Static ipsum dolor sit amet consectetur adipisicing elit. Aliquam
-              sint neque quisquam nam est! Porro odit iusto voluptas ut
-              voluptatem!
-            </p>
+            <div className="mt-5">
+              <a href="/write-blog">
+                <Button
+                  label={"Add New Blog"}
+                  radius={"md"}
+                  rightIcon={<PlusIcon />}
+                />
+              </a>
+            </div>
           </div>
 
           <div className="grid gap-8 lg:grid-cols-2">

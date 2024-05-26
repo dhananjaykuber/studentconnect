@@ -36,7 +36,7 @@ const Settings = () => {
             <FormTextarea label={"Brief Bio"} placeholder={"Write here..."} />
           </div>
         </div>
-        <div className="mb-9">
+        {/* <div className="mb-9">
           <Seperator icon={Link2Icon} text={"Social Links"} />
           <Paragraph classes={"text-gray-900 text-xs font-medium mb-3"}>
             Note: You only need to only add your username.
@@ -99,8 +99,8 @@ const Settings = () => {
               />
             </div>
           </div>
-        </div>
-        <div>
+        </div> */}
+        {/* <div>
           <Seperator icon={Contact2Icon} text={"Contact Info"} />
           <div>
             <FormInput
@@ -109,7 +109,7 @@ const Settings = () => {
               placeholder={"Mobile Number"}
             />
           </div>
-        </div>
+        </div> */}
         <Button
           label={"Save"}
           radius={"md"}

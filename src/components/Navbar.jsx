@@ -12,17 +12,29 @@ const links = [
     label: "Home",
     url: "/",
   },
-  {
-    label: "About",
-    url: "/about",
-  },
-  {
-    label: "Contact",
-    url: "/contact",
-  },
+  // {
+  //   label: "About",
+  //   url: "/about",
+  // },
+  // {
+  //   label: "Contact",
+  //   url: "/contact",
+  // },
   {
     label: "Blogs",
     url: "/blogs",
+  },
+  {
+    label: "Open Contributions",
+    url: "/open-contributions",
+  },
+  {
+    label: "Kanban",
+    url: "/kanban",
+  },
+  {
+    label: "Data Flow",
+    url: "/open-contributions",
   },
 ];
 

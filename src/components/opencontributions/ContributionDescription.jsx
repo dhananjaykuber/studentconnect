@@ -1,22 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
 import Heading from "../texts/Headings";
 import Paragraph from "../texts/Paragraph";
 import Tag from "../tag/Tag";
 import { Link } from "react-router-dom";
 import { GithubIcon, Globe2Icon } from "lucide-react";
-import Form from "../form/Form";
 import FormTextarea from "../form/FormTextarea";
 import Button from "../Button";
+import axios from "axios";
+import { useSelector } from "react-redux";
+import { notifyError, notifySuccess } from "../../utils/toastsPopup";
 
-const ContributionDescription = () => {
+const ContributionDescription = ({ contribution, setOpenModal }) => {
+  const { user } = useSelector((store) => store.user);
+
+  const [description, setDescription] = useState("");
+
+  const handleApplyForContribution = async () => {
+    console.log("hi");
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_DJANGO_API}/contributions/submit/`,
+        {
+          submission_description: description,
+          contribution_id: contribution.contribution_id,
+        },
+        {
+          headers: {
+            Authorization: `Token ${user.token}`,
+          },
+        },
+      );
+      // Handle success response if needed
+      console.log(response.data);
+      notifySuccess("Application sent successfully");
+
+      setOpenModal(false);
+    } catch (error) {
+      // Handle error
+      notifyError("Error while submitting application. Please try again.");
+      console.error("Error submitting contribution:", error);
+    }
+  };
+
   return (
     <div>
       <div className="flex flex-col items-center justify-center">
-        <Heading level={4}>How to quickly deploy a static website</Heading>
+        <Heading level={4}>{contribution.contribution_title}</Heading>
         <Paragraph classes={"text-base mb-3"}>
-          Billing infrastructire for software companies
+          {contribution.contribution_description}
         </Paragraph>
-        <Heading level={3}>Full Stack Engineer</Heading>
       </div>
       <div className="mt-10 flex flex-col gap-7 lg:flex-row">
         <div className="w-full lg:w-2/3">
@@ -26,57 +58,42 @@ const ContributionDescription = () => {
             </Heading>
             <div className="flex flex-wrap gap-3">
               <Tag
-                label={"Software Engineering"}
+                label={contribution.contribution_skills}
                 spanClasses={"text-gray-900 bg-gray-100"}
               />
-              <Tag
-                label={"Full Stack Development"}
-                spanClasses={"text-gray-900 bg-gray-100"}
-              />
-              <Tag
-                label={"Developer"}
-                spanClasses={"text-gray-900 bg-gray-100"}
-              />
-              <Tag label={"MERN"} spanClasses={"text-gray-900 bg-gray-100"} />
             </div>
-          </div>
-
-          <div className="mb-3">
-            <Heading level={6} classes={"mb-2"}>
-              About this role
-            </Heading>
-            <Paragraph>
-              We're building our founding team and are looking for a full stack
-              developer who can take ownership of one stream of product
-              development. Your primary roles and responsibilities will evolve
-              over time as the team grows.
-            </Paragraph>
           </div>
 
           <LinkWithIcon
             label={"Website"}
             icon={<Globe2Icon className="h-4 w-4" />}
-            link={"www.website.com"}
+            link={contribution.contribution_website}
           />
 
           <LinkWithIcon
             label={"Github"}
             icon={<GithubIcon className="h-4 w-4" />}
-            link={"www.website.com"}
+            link={contribution.contribution_github}
           />
         </div>
         <div className="h-fit w-full rounded-2xl border border-gray-500 sm:mb-7 lg:w-1/3">
           <div className="flex items-center justify-center rounded-tl-2xl rounded-tr-2xl bg-blue-700 p-5">
             <Heading level={6} classes={"text-white font-semibold"}>
-              Apply to Zenskar
+              Contribute to {contribution.contribution_title}
             </Heading>
           </div>
           <div className="p-5">
             <FormTextarea
-              label={"What interests you about working for this project?"}
+              label={"What interests you to contribute for this project?"}
               placeholder={"Write here..."}
+              value={description}
+              onChange={(text) => setDescription(text)}
             />
-            <Button label={"Apply"} radius={"md"} />
+            <Button
+              label={"Apply"}
+              radius={"md"}
+              onclick={handleApplyForContribution}
+            />
           </div>
         </div>
       </div>

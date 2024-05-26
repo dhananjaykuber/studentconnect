@@ -28,6 +28,11 @@ const navigations = [
     icon: PenBoxIcon,
   },
   {
+    title: "Contributions",
+    url: "/dashboard/contributions",
+    icon: SquareKanban,
+  },
+  {
     title: "Kanban",
     url: "/kanban",
     icon: SquareKanban,

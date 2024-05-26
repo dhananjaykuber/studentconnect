@@ -43,6 +43,7 @@ import Courses from "./pages/educator/courses/Courses";
 import Assessments from "./pages/educator/assessments/Assessments";
 import CourseModules from "./pages/educator/courses/CourseModules";
 import CreateQuizAssessment from "./pages/educator/assessments/CreateQuizAssessment";
+import Contributions from "./pages/dashboard/contributions/Contributions.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -94,6 +95,7 @@ const router = createBrowserRouter(
       <Route path="dashboard/settings" element={<Settings />} />
       <Route path="dashboard/projects" element={<DashboardProjects />} />
       <Route path="dashboard/blogs" element={<DashboardBlogs />} />
+      <Route path="dashboard/contributions" element={<Contributions />} />
 
       {/* Educator (Dashboard, Courses, Assessment)  */}
       <Route path="educator" element={<Dashboard />} />
